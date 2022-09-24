@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-import 'registration.dart';
 
 class LogInPage extends StatefulWidget {
   const LogInPage({Key? key}) : super(key: key);
@@ -19,13 +18,13 @@ class _LogInPageState extends State<LogInPage> {
     return TextFormField(
       maxLength: 30,
       keyboardType: TextInputType.text,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
           hintText: "Username",
           hintStyle: TextStyle(
             color: Colors.white,
           )),
       maxLines: 1,
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.white,
       ),
       validator: (username) {
@@ -40,14 +39,14 @@ class _LogInPageState extends State<LogInPage> {
   Widget _buildPasswordField() {
     return TextFormField(
       maxLength: 30,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
           hintText: "Password",
           hintStyle: TextStyle(
             color: Colors.white,
           )),
       maxLines: 1,
       obscureText: true,
-      style: TextStyle(
+      style: const TextStyle(
         color: Colors.white,
       ),
       validator: (password) {
@@ -64,7 +63,7 @@ class _LogInPageState extends State<LogInPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Log In",
+          "Sign In",
         ),
         backgroundColor: Colors.black87,
       ),
@@ -109,7 +108,7 @@ class _LogInPageState extends State<LogInPage> {
                         print("Not Saved");
                       }
                     },
-                    child: const Text("Save"),
+                    child: const Text("Sign In"),
                   ),
                 ),
                 const SizedBox(
@@ -157,7 +156,7 @@ class HelpValidator {
 
   static String? validatePassword(String value) {
     if (value.isEmpty) {
-      return "Name cannot be empty";
+      return "Password cannot be empty";
     }
     if (value.length < 5) {
       return "Length must be more than 5 charactors";
