@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'registration.dart';
 
 class LogInPage extends StatefulWidget {
@@ -68,9 +69,8 @@ class _LogInPageState extends State<LogInPage> {
         backgroundColor: Colors.black87,
       ),
       body: SingleChildScrollView(
-
         child: Container(
-          height: 300.0,
+          height: 400.0,
           width: 300.0,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -112,6 +112,29 @@ class _LogInPageState extends State<LogInPage> {
                     child: const Text("Save"),
                   ),
                 ),
+                const SizedBox(
+                  height: 50.0,
+                ),
+                Container(
+                  child: Center(
+                    child: RichText(
+                      text: TextSpan(
+                        text: "Don't have an account? ",
+                        style: TextStyle(color: Colors.white),
+                        children: [
+                          TextSpan(
+                              text: "Click Here!",
+                              style: TextStyle(color: Colors.blueAccent),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.of(context).pushNamed("/register");
+                                  print("Tapped!");
+                                }),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -127,7 +150,7 @@ class HelpValidator {
       return "Name cannot be empty";
     }
     if (value.length < 5) {
-      return "Length must be more than 5 characators";
+      return "Length must be more than 5 charactors";
     }
     return null;
   }
@@ -137,7 +160,7 @@ class HelpValidator {
       return "Name cannot be empty";
     }
     if (value.length < 5) {
-      return "Length must be more than 5 characators";
+      return "Length must be more than 5 charactors";
     }
     return null;
   }
