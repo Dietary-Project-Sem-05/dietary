@@ -1,5 +1,6 @@
+import 'package:dietary_project/screens/general_info_page.dart';
 import 'package:flutter/material.dart';
-import 'screens/login_page.dart';
+import 'screens/general_info_page.dart';
 import 'screens/registration.dart';
 
 void main() {
@@ -13,12 +14,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        // brightness: Brightness.dark,
         primarySwatch: Colors.blue,
       ),
-      home: LogInPage(),
+      home: GeneralInfoPage(),
       routes: <String, WidgetBuilder>{
-        "/register": (context)=>RegisterPage()
+        "/register": (context)=>RegisterPage(),
+        "/general_info": (context)=>GeneralInfoPage(),
       },
     );
   }
