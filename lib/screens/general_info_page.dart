@@ -313,7 +313,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
         fontSize: 12.5,
       ),
       validator: (text) {
-        return HelpValidator.validateMedicalCondictions(text);
+        return HelpValidator.validateMedicalConditions(text);
       },
       onSaved: (text) {
         _medicalCondition = text!;
@@ -531,7 +531,7 @@ class HelpValidator {
     return null;
   }
 
-  static String? validateMedicalCondictions(value) {
+  static String? validateMedicalConditions(value) {
     if (value.isEmpty) {
       return "Cannot be empty";
     }
