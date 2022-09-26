@@ -1,5 +1,6 @@
 import 'package:dietary_project/screens/dashboard.dart';
 import 'package:dietary_project/screens/general_info_page.dart';
+import 'package:dietary_project/screens/login_page.dart';
 import 'package:flutter/material.dart';
 import 'screens/general_info_page.dart';
 import 'screens/registration.dart';
@@ -15,8 +16,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       // remove the debug banner
-      // debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        brightness: Brightness.dark,
         primarySwatch: Colors.blue,
       ),
       home: DashBoardPage(),
