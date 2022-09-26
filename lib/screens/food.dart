@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class FoodPage extends StatefulWidget {
+  const FoodPage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<FoodPage> createState() => _FoodPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _FoodPageState extends State<FoodPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: Text('Food Details'),
         backgroundColor: Colors.black87,
       ),
       body: Container(),

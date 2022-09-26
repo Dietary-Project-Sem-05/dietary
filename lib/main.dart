@@ -1,3 +1,4 @@
+import 'package:dietary_project/screens/dashboard.dart';
 import 'package:dietary_project/screens/general_info_page.dart';
 import 'package:flutter/material.dart';
 import 'screens/general_info_page.dart';
@@ -13,10 +14,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // remove the debug banner
+      // debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: GeneralInfoPage(),
+      home: DashBoardPage(),
       routes: <String, WidgetBuilder>{
         "/register": (context)=>RegisterPage(),
         "/general_info": (context)=>GeneralInfoPage(),
