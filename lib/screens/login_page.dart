@@ -1,5 +1,10 @@
+import 'package:dietary_project/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:dietary_project/DatabaseHandler/DbHelper.dart';
+import 'package:dietary_project/Model/user_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LogInPage extends StatefulWidget {
   const LogInPage({Key? key}) : super(key: key);
@@ -9,10 +14,73 @@ class LogInPage extends StatefulWidget {
 }
 
 class _LogInPageState extends State<LogInPage> {
+  Future<SharedPreferences> _pref = SharedPreferences.getInstance();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   var _username;
   var _password;
+  var dbHelper;
+
+  @override
+  void initState() {
+    super.initState();
+    dbHelper = DbHelper();
+  }
+
+  logIn() async{
+    await dbHelper.getLoginUser(_username, _password).then((userData) {
+      if (userData != null) {
+        Fluttertoast.showToast(
+            msg: "Welcome",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.green,
+            textColor: Colors.black87,
+            fontSize: 16.0
+        );
+
+        setSP(userData).whenComplete(() {
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (_) => DashBoardPage()),
+                  (Route<dynamic> route) => false);
+        });
+      } else {
+        Fluttertoast.showToast(
+            msg: "User not found",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.black87,
+            fontSize: 16.0
+        );
+      }
+    }).catchError((error) {
+      print(error);
+      Fluttertoast.showToast(
+          msg: "Erro123r: "+error,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.black87,
+          fontSize: 16.0
+      );
+    });
+  }
+
+  Future setSP(UserModel user) async {
+    final SharedPreferences sp = await _pref;
+
+    sp.setString("user_id", user.user_id!);
+    sp.setString("user_name", user.user_name!);
+    sp.setString("first_name", user.first_name!);
+    sp.setString("last_name", user.last_name!);
+    sp.setString("email", user.email!);
+    sp.setString("password", user.password!);
+  }
 
   Widget _buildUserNameField() {
     return TextFormField(
@@ -104,6 +172,8 @@ class _LogInPageState extends State<LogInPage> {
                         _formKey.currentState!.save();
                         print(_username);
                         print(_password);
+
+                        logIn();
                       } else {
                         print("Not Saved");
                       }

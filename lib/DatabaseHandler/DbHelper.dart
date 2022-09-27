@@ -35,13 +35,13 @@ class DbHelper {
 
   _onCreate(Database db, int intVersion) async {
     await db.execute("CREATE TABLE $Table_User ("
-        " $C_UserID INTEGER AUTOINCREMENT, "
-        " $C_UserName TEXT, "
-        " $C_FirstName TEXT, "
-        " $C_LastName TEXT, "
-        " $C_Email TEXT,"
-        " $C_Password TEXT, "
-        " PRIMARY KEY ($C_UserID)"
+        " $C_UserID INTEGER PRIMARY KEY AUTOINCREMENT, "
+        " $C_UserName TEXT NOT NULL, "
+        " $C_FirstName TEXT NOT NULL, "
+        " $C_LastName TEXT NOT NULL, "
+        " $C_Email TEXT NOT NULL, "
+        " $C_Password TEXT NOT NULL, "
+        " UNIQUE ($C_UserName) "
         ")");
   }
 
@@ -59,6 +59,18 @@ class DbHelper {
 
     if (res.length > 0) {
       return UserModel.fromMap(res.first);
+    }
+
+    return null;
+  }
+
+  Future<String?> checkUserName(String userName) async {
+    var dbClient = await db;
+    var res = await dbClient!.rawQuery("SELECT * FROM $Table_User WHERE "
+        "$C_UserName = '$userName'");
+
+    if (res.length > 0) {
+      return "Error";
     }
 
     return null;

@@ -1,5 +1,8 @@
 import 'package:dietary_project/screens/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:dietary_project/DatabaseHandler/DbHelper.dart';
+import 'package:dietary_project/Model/user_model.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -16,9 +19,56 @@ class _RegisterPageState extends State<RegisterPage> {
   var _password;
   var _email;
   var _username;
+  var dbHelper;
 
-  signUp(){
-    print("OK");
+  @override
+  void initState() {
+    super.initState();
+    dbHelper = DbHelper();
+  }
+
+  signUp() async{
+    UserModel userMd = UserModel(_firstName, _lastName, _username, _email, _password);
+
+    await dbHelper.checkUserName(_username).then((userData) {
+      if (userData != null){
+        return Fluttertoast.showToast(
+            msg: "Username exist!",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.black87,
+            fontSize: 16.0
+        );
+      }
+    });
+
+    await dbHelper.saveData(userMd).then((userData) {
+      Fluttertoast.showToast(
+          msg: "Successfully Saved",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.black87,
+          fontSize: 16.0
+      );
+
+       Navigator.push(
+           context, MaterialPageRoute(builder: (_) => LogInPage()));
+    }).catchError((error) {
+      print(error);
+      Fluttertoast.showToast(
+          msg: "Not Saved "+ error,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.black87,
+          fontSize: 16.0
+      );
+    });
   }
 
   //TextController to read text entered in text field
