@@ -17,6 +17,10 @@ class _RegisterPageState extends State<RegisterPage> {
   var _email;
   var _username;
 
+  signUp(){
+    print("OK");
+  }
+
   //TextController to read text entered in text field
   TextEditingController passwordEntered = TextEditingController();
   TextEditingController confirmPasswordEntered = TextEditingController();
@@ -173,7 +177,7 @@ class _RegisterPageState extends State<RegisterPage> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             image: const DecorationImage(
-              image: AssetImage("assets/back.jpg"),
+              image: AssetImage("lib/assets/images/back.jpg"),
               fit: BoxFit.cover,
             ),
           ),
@@ -220,6 +224,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         print(_firstName);
                         print(_lastName);
                         print(_email);
+                        signUp();
                       } else {
                         print("Not Saved");
                       }
