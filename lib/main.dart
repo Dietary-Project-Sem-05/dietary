@@ -1,3 +1,4 @@
+import 'package:dietary_project/screens/meal_plan_page.dart';
 import 'package:flutter/material.dart';
 import 'screens/home_page.dart';
 
@@ -11,8 +12,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      theme: ThemeData.dark().copyWith(
+        colorScheme: ColorScheme.dark(),
+        // primarySwatch: Colors.blue,
       ),
       home: HomePage(),
     );
