@@ -170,7 +170,7 @@ class _MealPlanPageState extends State<MealPlanPage> {
                               child: FittedBox(
                                 child: Image.asset(
                                   'lib/assets/images/lunch-today.jpg',
-                                  width: 120.0,
+                                  width: 50.0,
                                 ),
                                 fit: BoxFit.fill,
                               ),
