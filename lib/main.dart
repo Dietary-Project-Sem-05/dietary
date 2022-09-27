@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         primarySwatch: Colors.blue,
       ),
-      home: DashBoardPage(),
+      home: LogInPage(),
       routes: <String, WidgetBuilder>{
         "/register": (context)=>RegisterPage(),
         "/general_info": (context)=>GeneralInfoPage(),
