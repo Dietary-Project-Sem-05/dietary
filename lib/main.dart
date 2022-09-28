@@ -1,6 +1,9 @@
-import 'package:dietary_project/screens/meal_plan_page.dart';
+import 'package:dietary_project/screens/dashboard.dart';
+import 'package:dietary_project/screens/general_info_page.dart';
+import 'package:dietary_project/screens/login_page.dart';
 import 'package:flutter/material.dart';
-import 'screens/home_page.dart';
+import 'screens/general_info_page.dart';
+import 'screens/registration.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,11 +15,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.dark().copyWith(
-        colorScheme: ColorScheme.dark(),
-        // primarySwatch: Colors.blue,
+      // remove the debug banner
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: LogInPage(),
+      routes: <String, WidgetBuilder>{
+        "/register": (context)=>RegisterPage(),
+        "/general_info": (context)=>GeneralInfoPage(),
+      },
     );
   }
 }
