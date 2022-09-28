@@ -46,3 +46,15 @@ const kMealTimeTextStyle = TextStyle(
   fontWeight: FontWeight.w500,
   color: kMealTimeTextColor,
 );
+
+const kMealPlanButtonTextStyle = TextStyle(
+  fontSize: 16.0,
+  fontWeight: FontWeight.w800,
+  color: kMealBgColor,
+);
+
+const kExpandButtonTextStyle = TextStyle(
+  color: Color(0xEEFFFFFF),
+  fontSize: 18.0,
+  fontWeight: FontWeight.w500,
+);
