@@ -146,7 +146,7 @@ class _LogInPageState extends State<LogInPage> {
         height: 100,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/images/food_bg.jpg"),
+            image: AssetImage("lib/assets/images/food_bg.jpg"),
             repeat: ImageRepeat.repeat,
           ),
         ),
