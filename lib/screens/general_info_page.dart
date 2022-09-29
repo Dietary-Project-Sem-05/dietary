@@ -386,7 +386,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           image: const DecorationImage(
-            image: AssetImage("lib/assets/images/back.jpg"),
+            image: AssetImage("assets/back.jpg"),
             fit: BoxFit.cover,
           ),
         ),

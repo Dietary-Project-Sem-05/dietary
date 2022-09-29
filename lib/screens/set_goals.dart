@@ -155,7 +155,7 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Set Goal'),
-        backgroundColor: Colors.black87,
+        backgroundColor: Colors.black38,
       ),
       body: Container(
         height: 400.0,
@@ -163,7 +163,7 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           image: const DecorationImage(
-            image: AssetImage("lib/assets/images/back.jpg"),
+            image: AssetImage("assets/back.jpg"),
             fit: BoxFit.cover,
           ),
         ),

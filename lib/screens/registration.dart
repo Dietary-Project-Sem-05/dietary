@@ -227,7 +227,7 @@ class _RegisterPageState extends State<RegisterPage> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             image: const DecorationImage(
-              image: AssetImage("lib/assets/images/back.jpg"),
+              image: AssetImage("assets/back.jpg"),
               fit: BoxFit.cover,
             ),
           ),
@@ -274,7 +274,6 @@ class _RegisterPageState extends State<RegisterPage> {
                         print(_firstName);
                         print(_lastName);
                         print(_email);
-                        signUp();
                       } else {
                         print("Not Saved");
                       }
