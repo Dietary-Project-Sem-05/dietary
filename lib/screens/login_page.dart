@@ -186,6 +186,7 @@ class _LogInPageState extends State<LogInPage> {
                           _formKey.currentState!.save();
                           print(_username);
                           print(_password);
+                          logIn();
                         } else {
                           print("Not Saved");
                         }

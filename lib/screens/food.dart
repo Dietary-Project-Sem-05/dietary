@@ -93,7 +93,7 @@ class _FoodPageState extends State<FoodPage> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5),
                   child: Image.asset(
-                    'assets/images/$food_img_path',
+                    'lib/assets/images/$food_img_path',
                     fit: BoxFit.fill,
                   ),
                 ),

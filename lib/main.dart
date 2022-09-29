@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       ),
 
 
-      home: GeneralInfoPage(),
+      home: LogInPage(),
 
       routes: <String, WidgetBuilder>{
         "/register": (context)=>RegisterPage(),
