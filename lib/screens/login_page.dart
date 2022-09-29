@@ -2,8 +2,8 @@ import 'package:dietary_project/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:dietary_project/DatabaseHandler/DbHelper.dart';
-import 'package:dietary_project/Model/user_model.dart';
+import 'package:dietary_project/DatabaseHandler/AccountDbHelper.dart';
+import 'package:dietary_project/Model/account_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LogInPage extends StatefulWidget {
@@ -24,7 +24,7 @@ class _LogInPageState extends State<LogInPage> {
   @override
   void initState() {
     super.initState();
-    dbHelper = DbHelper();
+    dbHelper = AccountDbHelper();
   }
 
   logIn() async{
@@ -71,7 +71,7 @@ class _LogInPageState extends State<LogInPage> {
     });
   }
 
-  Future setSP(UserModel user) async {
+  Future setSP(AccountModel user) async {
     final SharedPreferences sp = await _pref;
 
     // sp.setString("user_id", user.user_id!);

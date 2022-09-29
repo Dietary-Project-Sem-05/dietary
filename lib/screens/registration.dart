@@ -1,7 +1,7 @@
 import 'package:dietary_project/screens/login_page.dart';
 import 'package:flutter/material.dart';
-import 'package:dietary_project/DatabaseHandler/DbHelper.dart';
-import 'package:dietary_project/Model/user_model.dart';
+import 'package:dietary_project/DatabaseHandler/AccountDbHelper.dart';
+import 'package:dietary_project/Model/account_model.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -24,11 +24,11 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   void initState() {
     super.initState();
-    dbHelper = DbHelper();
+    dbHelper = AccountDbHelper();
   }
 
   signUp() async{
-    UserModel userMd = UserModel(_firstName, _lastName, _username, _email, _password);
+    AccountModel userMd = AccountModel(_firstName, _lastName, _username, _email, _password);
 
     await dbHelper.checkUserName(_username).then((userData) {
       if (userData != null){
