@@ -9,18 +9,21 @@ class NavDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
+            margin: EdgeInsets.only(top: 62.3),
             child: Text(
               'Menu',
-              style: TextStyle(color: Colors.white, fontSize: 25),
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 30,
+              ),
             ),
             decoration: BoxDecoration(
-                color: Colors.green,
+                color: Colors.blueAccent,
                 image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage('lib/assets/images/back.jpg'))),
+                    image: AssetImage('lib/assets/images/goal.png'))),
           ),
           ListTile(
-            leading: Icon(Icons.input),
+            leading: Icon(Icons.input,),
             title: Text('Welcome'),
             onTap: () => {},
           ),

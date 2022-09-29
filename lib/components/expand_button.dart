@@ -12,7 +12,7 @@ class ExpandButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       style: ElevatedButton.styleFrom(
-        primary: Color(0xEE1565c0),
+        primary: Color(0xEE1565c0).withOpacity(0.7),
       ),
       onPressed: () {},
       icon: Icon(
