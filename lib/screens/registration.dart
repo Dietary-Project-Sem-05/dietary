@@ -274,6 +274,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         print(_firstName);
                         print(_lastName);
                         print(_email);
+                        signUp();
                       } else {
                         print("Not Saved");
                       }
