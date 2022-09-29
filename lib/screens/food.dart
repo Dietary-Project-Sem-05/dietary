@@ -35,23 +35,12 @@ class _FoodPageState extends State<FoodPage> {
 
   // Need to get the food details for this array
   List<FoodItem> food_details = [
-  FoodItem("Rice", 100, "food_bg.jpg", 12.5, 20.5, 3.4),
-  FoodItem("Hoppers", 100, "food_bg.jpg", 12.5, 20.5, 3.4),
-  FoodItem("Pasta", 100, "food_bg.jpg", 12.5, 20.5, 3.4),
-  FoodItem("Noodles", 100, "food_bg.jpg", 12.5, 20.5, 3.4),
-  FoodItem("Hoppers", 100, "food_bg.jpg", 12.5, 20.5, 3.4),
-  FoodItem("Pasta", 100, "food_bg.jpg", 12.5, 20.5, 3.4),
-  FoodItem("Noodles", 100, "food_bg.jpg", 12.5, 20.5, 3.4),
-  FoodItem("Hoppers", 100, "food_bg.jpg", 12.5, 20.5, 3.4),
-  FoodItem("Pasta", 100, "food_bg.jpg", 12.5, 20.5, 3.4),
-  FoodItem("Noodles", 100, "food_bg.jpg", 12.5, 20.5, 3.4),
-  FoodItem("Hoppers", 100, "food_bg.jpg", 12.5, 20.5, 3.4),
-  FoodItem("Pasta", 100, "food_bg.jpg", 12.5, 20.5, 3.4),
-  FoodItem("Noodles", 100, "food_bg.jpg", 12.5, 20.5, 3.4),
-  FoodItem("Hoppers", 100, "food_bg.jpg", 12.5, 20.5, 3.4),
-  FoodItem("Pasta", 100, "food_bg.jpg", 12.5, 20.5, 3.4),
-  FoodItem("Noodles", 100, "food_bg.jpg", 12.5, 20.5, 3.4),
-
+    FoodItem("Rice", 100, "rice.jpeg", 12.5, 20.5, 3.4),
+    FoodItem("Hoppers", 100, "hoppers.jpeg", 12.5, 20.5, 3.4),
+    FoodItem("Pasta", 100, "pasta.jpeg", 12.5, 20.5, 3.4),
+    FoodItem("Noodles", 100, "noodles.jpeg", 12.5, 20.5, 3.4),
+    FoodItem("Bread", 100, "bread.jpeg", 12.6, 22.2, 11.2),
+    FoodItem("Burger", 400, "burger.jpeg", 1000, 200, 100),
   ];
 
 
@@ -59,12 +48,12 @@ class _FoodPageState extends State<FoodPage> {
     return Container(
       margin: const EdgeInsets.symmetric(
           horizontal: 10,
-          vertical: 10,
+          vertical: 12,
       ),
       padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Colors.black54,
+        color: Colors.black.withOpacity(0.85),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -93,7 +82,7 @@ class _FoodPageState extends State<FoodPage> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5),
                   child: Image.asset(
-                    'lib/assets/images/$food_img_path',
+                    'lib/assets/images/foods/$food_img_path',
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -118,7 +107,7 @@ class _FoodPageState extends State<FoodPage> {
       padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Colors.black12,
+        color: Colors.black.withOpacity(0.9),
       ),
       child: const Text(
         "+ Request new Food",
@@ -126,7 +115,8 @@ class _FoodPageState extends State<FoodPage> {
           letterSpacing: 6,
           wordSpacing: 5,
           color: Colors.blue,
-        ),),
+        ),
+      ),
     );
   }
 
@@ -142,62 +132,57 @@ class _FoodPageState extends State<FoodPage> {
         backgroundColor: Colors.black38,
       ),
 
-      body: Column(
-          children: [
-            Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
-            child: TextField(
-              onChanged: (value) {
-              setState(() {
-                search_string = value.toLowerCase();
-                });
-                },
-                decoration: const InputDecoration(
-                labelText: 'Search',
-                suffixIcon: Icon(Icons.search),
-                ),
-              ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: food_details.length, // TODO: number of items in the db need to be added to here
-                  itemBuilder: (context, index){
-                    return _foodItem(
-                      food_details[index].name,
-                      food_details[index].per_amount,
-                      food_details[index].path,
-                      food_details[index].calories,
-                      food_details[index].carbs,
-                      food_details[index].fats,
-                    );
-                  }
-              ),
-            ),
-            _addNewFood(),
-          ],
+      body: Container(
+        constraints: const BoxConstraints.expand(),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("lib/assets/images/food_colored.jpg"),
+            repeat: ImageRepeat.repeat,
+          )
         ),
 
+        child:Stack(
+          children: [
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
+                  child: TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        search_string = value.toLowerCase();
+                      });
+                    },
+                    decoration: const InputDecoration(
+                      labelText: 'Search',
+                      suffixIcon: Icon(Icons.search),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: food_details.length, // TODO: number of items in the db need to be added to here
+                      itemBuilder: (context, index){
+                        return _foodItem(
+                          food_details[index].name,
+                          food_details[index].per_amount,
+                          food_details[index].path,
+                          food_details[index].calories,
+                          food_details[index].carbs,
+                          food_details[index].fats,
+                        );
+                      }
+                  ),
+                ),
+                _addNewFood(),
+              ],
+            ),
+          ],
+        )
+      )
 
-      // body: SingleChildScrollView(
-      //   // TODO: Need to add a fixed search bar in here
-      //   child: Column(
-      //     children: [
-      //       _addNewFood(),
-      //       // Load food data from the database to here
-      //       _foodItem("Rice", 10, "food_bg.jpg", 12.5, 2.5, 3.5),
-      //       _foodItem("Rice", 100, "food_bg.jpg", 12.5, 2.5, 3.5),
-      //       _foodItem("Rice", 100, "food_bg.jpg", 12.5, 2.5, 3.5),
-      //       _foodItem("Rice", 100, "food_bg.jpg", 12.5, 2.5, 3.5),
-      //       _foodItem("Rice", 100, "food_bg.jpg", 12.5, 2.5, 3.5),
-      //       _foodItem("Rice", 100, "food_bg.jpg", 12.5, 2.5, 3.5),
-      //       _foodItem("Rice", 100, "food_bg.jpg", 12.5, 2.5, 3.5),
-      //       _foodItem("Rice", 100, "food_bg.jpg", 12.5, 2.5, 3.5),
-      //       _foodItem("Rice", 100, "food_bg.jpg", 12.5, 2.5, 3.5),
-      //       _foodItem("Rice", 100, "food_bg.jpg", 12.5, 2.5, 3.5),
-      //     ],
-      //   ),
-      // ),
+
     );
   }
 }
