@@ -17,13 +17,15 @@ class NavDrawer extends StatelessWidget {
           child: ListView(
             padding: EdgeInsets.zero,
             children: <Widget>[
-              DrawerHeader(
+              const DrawerHeader(
                 margin: EdgeInsets.only(top: 62.3),
                 decoration: BoxDecoration(
-                    color: Colors.blue[900],
-                    image: const DecorationImage(
-                        image: AssetImage('lib/assets/images/goal.png'))),
-                child: const Text(
+                    color: Colors.transparent,
+                    image: DecorationImage(
+                        image: AssetImage('lib/assets/images/goal.png')
+                    ),
+                ),
+                child: Text(
                   'Menu',
                   style: TextStyle(
                     color: Colors.black,
