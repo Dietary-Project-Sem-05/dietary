@@ -222,7 +222,22 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
                                   // print(_currentWeight);
                                 }
                               },
-                              child: const Text("Save"),
+                              child: FittedBox(
+                                fit: BoxFit.fill,
+                                child: Row(
+                                  children: const [
+                                    Text(
+                                        "Set Goal",
+                                      style: TextStyle(
+                                        letterSpacing: 3
+                                      ),
+                                    ),
+                                    Icon(Icons.flag),
+                                  ],
+                                ),
+                              )
+
+                              
                             ),
                           ),
                         ],

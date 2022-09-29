@@ -61,7 +61,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
           ),
           BottomNavyBarItem(
             icon: Icon(
-              Icons.newspaper_outlined,
+              Icons.list_alt,
               color: _currentIndex == 1 ? Colors.blue : Colors.grey,
             ),
             title: Text(
@@ -97,7 +97,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
           ),
           BottomNavyBarItem(
             icon: Icon(
-              Icons.accessibility,
+              Icons.flag,
               color: _currentIndex == 4 ? Colors.blue : Colors.grey,
             ),
             title: Text(
