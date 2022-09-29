@@ -71,7 +71,7 @@ class _LogInPageState extends State<LogInPage> {
             letterSpacing: 2,
           ),
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.black38,
       ),
       body: Container(
         constraints: const BoxConstraints.expand(),
@@ -96,7 +96,7 @@ class _LogInPageState extends State<LogInPage> {
             padding: const EdgeInsets.all(10.0),
             // alignment: Alignment.center,
             // color: Colors.black87,
-            child: Form(
+            child : Form(
               key: _formKey,
               child: Column(
                 children: [
