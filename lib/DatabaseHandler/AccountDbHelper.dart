@@ -1,13 +1,13 @@
-import 'package:dietary_project/Model/user_model.dart';
+import 'package:dietary_project/Model/account_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'dart:io' as io;
 
-class DbHelper {
+class AccountDbHelper {
   static Database? _db;
 
-  static const String DB_Name = 'test.db';
+  static const String DB_Name = 'dietary.db';
   static const String Table_User = 'user';
   static const int Version = 1;
 
@@ -45,20 +45,20 @@ class DbHelper {
         ")");
   }
 
-  Future<int> saveData(UserModel user) async {
+  Future<int> saveData(AccountModel user) async {
     var dbClient = await db;
     var res = await dbClient!.insert(Table_User, user.toMap());
     return res;
   }
 
-  Future<UserModel?> getLoginUser(String userName, String password) async {
+  Future<AccountModel?> getLoginUser(String userName, String password) async {
     var dbClient = await db;
     var res = await dbClient!.rawQuery("SELECT * FROM $Table_User WHERE "
         "$C_UserName = '$userName' AND "
         "$C_Password = '$password'");
 
     if (res.length > 0) {
-      return UserModel.fromMap(res.first);
+      return AccountModel.fromMap(res.first);
     }
 
     return null;
@@ -76,7 +76,7 @@ class DbHelper {
     return null;
   }
 
-  Future<int> updateUser(UserModel user) async {
+  Future<int> updateUser(AccountModel user) async {
     var dbClient = await db;
     var res = await dbClient!.update(Table_User, user.toMap(),
         where: '$C_UserName = ?', whereArgs: [user.user_id]);

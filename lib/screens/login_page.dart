@@ -2,8 +2,8 @@ import 'package:dietary_project/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:dietary_project/DatabaseHandler/DbHelper.dart';
-import 'package:dietary_project/Model/user_model.dart';
+import 'package:dietary_project/DatabaseHandler/AccountDbHelper.dart';
+import 'package:dietary_project/Model/account_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LogInPage extends StatefulWidget {
@@ -24,7 +24,7 @@ class _LogInPageState extends State<LogInPage> {
   @override
   void initState() {
     super.initState();
-    dbHelper = DbHelper();
+    dbHelper = AccountDbHelper();
   }
 
   logIn() async{
@@ -71,10 +71,10 @@ class _LogInPageState extends State<LogInPage> {
     });
   }
 
-  Future setSP(UserModel user) async {
+  Future setSP(AccountModel user) async {
     final SharedPreferences sp = await _pref;
 
-    sp.setString("user_id", user.user_id!);
+    // sp.setString("user_id", user.user_id!);
     sp.setString("user_name", user.user_name!);
     sp.setString("first_name", user.first_name!);
     sp.setString("last_name", user.last_name!);
@@ -216,10 +216,7 @@ class _LogInPageState extends State<LogInPage> {
 class HelpValidator {
   static String? validateUsername(String value) {
     if (value.isEmpty) {
-      return "Name cannot be empty";
-    }
-    if (value.length < 5) {
-      return "Length must be more than 5 charactors";
+      return "Username cannot be empty";
     }
     return null;
   }
@@ -227,9 +224,6 @@ class HelpValidator {
   static String? validatePassword(String value) {
     if (value.isEmpty) {
       return "Password cannot be empty";
-    }
-    if (value.length < 5) {
-      return "Length must be more than 5 charactors";
     }
     return null;
   }

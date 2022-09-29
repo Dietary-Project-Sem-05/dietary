@@ -1,7 +1,7 @@
 import 'package:dietary_project/screens/login_page.dart';
 import 'package:flutter/material.dart';
-import 'package:dietary_project/DatabaseHandler/DbHelper.dart';
-import 'package:dietary_project/Model/user_model.dart';
+import 'package:dietary_project/DatabaseHandler/AccountDbHelper.dart';
+import 'package:dietary_project/Model/account_model.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -24,11 +24,11 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   void initState() {
     super.initState();
-    dbHelper = DbHelper();
+    dbHelper = AccountDbHelper();
   }
 
   signUp() async{
-    UserModel userMd = UserModel(_firstName, _lastName, _username, _email, _password);
+    AccountModel userMd = AccountModel(_firstName, _lastName, _username, _email, _password);
 
     await dbHelper.checkUserName(_username).then((userData) {
       if (userData != null){
@@ -294,10 +294,10 @@ class _RegisterPageState extends State<RegisterPage> {
 class HelpValidator {
   static String? validateUsername(String value) {
     if (value.isEmpty) {
-      return "Name cannot be empty";
+      return "Username cannot be empty";
     }
     if (value.length < 8) {
-      return "Length must be more than 8 charactors";
+      return "Length must be more than 8 characters";
     }
     return null;
   }
@@ -307,7 +307,7 @@ class HelpValidator {
       return "Password cannot be empty";
     }
     if (value.length < 8) {
-      return "Length must be more than 8 charactors";
+      return "Length must be more than 8 characters";
     }
     if (!RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)").hasMatch(value)) {
       return "Password is not strong";
@@ -329,7 +329,7 @@ class HelpValidator {
 
   static String? validateFirstName(String value) {
     if (value.isEmpty) {
-      return "First name cannot be empty";
+      return "First Name cannot be empty";
     }
     return null;
   }
@@ -346,7 +346,7 @@ class HelpValidator {
       return "Email cannot be empty";
     }
     if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]").hasMatch(value)) {
-      return 'Please enter a valid Email';
+      return 'Invalid Email';
     }
     return null;
   }
