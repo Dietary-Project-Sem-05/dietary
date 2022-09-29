@@ -155,7 +155,7 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Set Goal'),
-        backgroundColor: Colors.black87,
+        backgroundColor: Colors.black38,
       ),
       body: Container(
         height: 400.0,
@@ -163,7 +163,7 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           image: const DecorationImage(
-            image: AssetImage("assets/back.jpg"),
+            image: AssetImage("lib/assets/images/back.jpg"),
             fit: BoxFit.cover,
           ),
         ),
@@ -228,26 +228,26 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
 class HelpValidator {
   static String? validateStartingWeight(value) {
     if (value.isEmpty) {
-      return "Cannot be empty";
+      return "Weight cannot be empty";
     }
     if (int.parse(value) <= 0) {
-      return "Value must be positive";
+      return "Weight must be positive";
     }
     if (int.parse(value) > 600) {
-      return "Value is not in range";
+      return "Weight is not in range";
     }
     return null;
   }
 
   static String? validateExpectedWeight(value) {
     if (value.isEmpty) {
-      return "Cannot be empty";
+      return "Weight cannot be empty";
     }
     if (int.parse(value) <= 0) {
-      return "Value must be positive";
+      return "Weight must be positive";
     }
     if (int.parse(value) > 600) {
-      return "Value is not in range";
+      return "Weight is not in range";
     }
     return null;
   }
@@ -260,20 +260,27 @@ class HelpValidator {
   }
 
   static String? validateExpectedDate(
-      value, _startingDate) {
-    final startingDate = DateTime.parse(_startingDate);
-    final expirationDate = DateTime.parse(value);
-    final bool isExpired = expirationDate.isAfter(startingDate);
+      expDate, _startingDate) {
 
-    if (value.isEmpty) {
-      return "Date cannot be empty";
+    if (expDate.isEmpty) {
+      return "Expected date cannot be empty";
     }
-    if ((_startingDate != null) && !isExpired) {
-      return "Invalid Date";
+    else if(_startingDate.isEmpty){
+      return "Starting date cannot be empty";
     }
-    if(expirationDate.difference(startingDate).inDays > 30){
-      return "More than 30 days";
+    else{
+      print(_startingDate);
+      final startingDate = DateTime.parse(_startingDate);
+      final expirationDate = DateTime.parse(expDate);
+      final bool isExpired = expirationDate.isAfter(startingDate);
+
+      if ((_startingDate != null) && !isExpired) {
+        return "Invalid Date";
+      }
+      if(expirationDate.difference(startingDate).inDays > 30){
+        return "More than 30 days diff";
+      }
+      return null;
     }
-    return null;
   }
 }

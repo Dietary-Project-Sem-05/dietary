@@ -1,7 +1,8 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+import 'package:dietary_project/screens/food_prefferences.dart';
 import 'package:dietary_project/screens/food.dart';
 import 'package:dietary_project/screens/home_page.dart';
-import 'package:dietary_project/screens/meal_plan.dart';
+import 'package:dietary_project/screens/meal_plan_page.dart';
 import 'package:dietary_project/screens/set_goals.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +20,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
     HomePage(),
     MealPlanPage(),
     FoodPage(),
+    PrefPage(),
     SetGoalsPage(),
   ];
 
@@ -83,13 +85,25 @@ class _DashBoardPageState extends State<DashBoardPage> {
           ),
           BottomNavyBarItem(
             icon: Icon(
-              Icons.accessibility,
+              Icons.favorite,
               color: _currentIndex == 3 ? Colors.blue : Colors.grey,
+            ),
+            title: Text(
+              "Preferences",
+              style: TextStyle(
+                color: _currentIndex == 3 ? Colors.blue : Colors.grey,
+              ),
+            ),
+          ),
+          BottomNavyBarItem(
+            icon: Icon(
+              Icons.accessibility,
+              color: _currentIndex == 4 ? Colors.blue : Colors.grey,
             ),
             title: Text(
               "Set Gaols",
               style: TextStyle(
-                color: _currentIndex == 3 ? Colors.blue : Colors.grey,
+                color: _currentIndex == 4 ? Colors.blue : Colors.grey,
               ),
             ),
           ),
