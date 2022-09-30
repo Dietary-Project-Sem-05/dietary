@@ -1,6 +1,5 @@
 import 'package:dietary_project/Model/account_model.dart';
 
-
 class GeneralUserModel extends AccountModel{
   DateTime? dob;
   String? gender;

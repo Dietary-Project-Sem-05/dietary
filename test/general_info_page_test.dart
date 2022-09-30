@@ -33,7 +33,7 @@ void main(){
     expect(result, "Value must be positive");
   });
 
-  test("Value of Weight more than 300 cm field returns error string", () {
+  test("Value of Weight more than 800 cm field returns error string", () {
     var result = HelpValidator.validateHeight("800");
     expect(result, "Value is not in range");
   });
