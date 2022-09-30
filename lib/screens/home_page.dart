@@ -1,4 +1,9 @@
+import 'package:dietary_project/screens/login_page.dart';
+import 'package:dietary_project/screens/profile.dart';
+import 'package:dietary_project/screens/settings.dart';
 import 'package:flutter/material.dart';
+
+import 'faq.dart';
 
 class NavDrawer extends StatelessWidget {
   @override
@@ -33,30 +38,60 @@ class NavDrawer extends StatelessWidget {
                   ),
                 ),
               ),
-              ListTile(
-                leading: Icon(Icons.input,),
-                title: Text('Welcome'),
-                onTap: () => {},
-              ),
+              // ListTile(
+              //   leading: Icon(Icons.input,),
+              //   title: Text('Welcome'),
+              //   onTap: () => {
+              //     Navigator.push(
+              //         context,
+              //         MaterialPageRoute(builder: (context) => LogInPage()
+              //         )
+              //     ),
+              //   },
+              // ),
               ListTile(
                 leading: Icon(Icons.verified_user),
                 title: Text('Profile'),
-                onTap: () => {Navigator.of(context).pop()},
+                onTap: () => {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ProfilePage()
+                      )
+                  ),
+                },
               ),
               ListTile(
                 leading: Icon(Icons.settings),
                 title: Text('Settings'),
-                onTap: () => {Navigator.of(context).pop()},
+                onTap: () => {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SettingsPage()
+                      )
+                  ),
+                },
               ),
               ListTile(
                 leading: Icon(Icons.border_color),
                 title: Text('FAQ'),
-                onTap: () => {Navigator.of(context).pop()},
+                onTap: () => {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FaqPage()
+                      )
+                  ),
+                },
               ),
               ListTile(
                 leading: Icon(Icons.exit_to_app),
                 title: Text('Logout'),
-                onTap: () => {Navigator.of(context).pop()},
+                onTap: () => {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => LogInPage()
+                      )
+                  ),
+                },
               ),
             ],
           ),

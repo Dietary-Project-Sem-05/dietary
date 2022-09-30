@@ -175,7 +175,7 @@ class _FoodPageState extends State<FoodPage> {
                       }
                   ),
                 ),
-                _addNewFood(),
+                _addNewFood(), // TODO: add a floating button to add new food
               ],
             ),
           ],
