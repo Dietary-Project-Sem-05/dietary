@@ -279,7 +279,12 @@ class _RegisterPageState extends State<RegisterPage> {
                         print("Not Saved");
                       }
                     },
-                    child: const Text("Sign In"),
+                    child: const Text("Sign Up",
+                      style: TextStyle(
+                        letterSpacing: 2
+                      ),
+
+                    ),
                   ),
                 ),
               ],
