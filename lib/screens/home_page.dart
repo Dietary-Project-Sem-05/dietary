@@ -2,7 +2,8 @@ import 'package:dietary_project/screens/login_page.dart';
 import 'package:dietary_project/screens/profile.dart';
 import 'package:dietary_project/screens/settings.dart';
 import 'package:flutter/material.dart';
-
+// import 'package:shared_preferences/shared_preferences.dart';
+// import 'dart:async';
 import 'faq.dart';
 
 class NavDrawer extends StatelessWidget {
@@ -85,7 +86,11 @@ class NavDrawer extends StatelessWidget {
               ListTile(
                 leading: Icon(Icons.exit_to_app),
                 title: Text('Logout'),
-                onTap: () => {
+                onTap: () async => {
+
+                  // SharedPreferences preferences = await SharedPreferences.getInstance();
+                  // await preferences.clear();
+
                   Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => LogInPage()
