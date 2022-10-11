@@ -105,7 +105,7 @@ class _PrefPageState extends State<PrefPage>{
                   Title(
                     color: Colors.red,
                     child: const Text(
-                      "Preferred food",
+                      "Not Preferred food",
                       style: TextStyle(
                         color: Colors.red,
                         fontSize: 38,
