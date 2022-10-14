@@ -226,6 +226,11 @@ class _RegisterPageState extends State<RegisterPage> {
           width: 300.0,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
+            image: const DecorationImage(
+              image: AssetImage("lib/assets/images/back.jpg"),
+              fit: BoxFit.cover,
+            ),
+
           ),
           margin: const EdgeInsets.symmetric(horizontal: 45.0, vertical: 40.0),
           padding: const EdgeInsets.all(10.0),
