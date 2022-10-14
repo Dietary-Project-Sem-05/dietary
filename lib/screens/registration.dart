@@ -227,7 +227,7 @@ class _RegisterPageState extends State<RegisterPage> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             image: const DecorationImage(
-              image: AssetImage("assets/back.jpg"),
+              image: AssetImage("lib/assets/images/back.jpg"),
               fit: BoxFit.cover,
             ),
           ),
