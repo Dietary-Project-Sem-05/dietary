@@ -77,6 +77,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _buildFirstNameField() {
     return TextFormField(
+      key: Key("firstName"),
       maxLength: 30,
       keyboardType: TextInputType.text,
       decoration: const InputDecoration(
@@ -99,6 +100,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _buildLastNameField() {
     return TextFormField(
+      key: Key("lastName"),
       maxLength: 30,
       keyboardType: TextInputType.text,
       decoration: const InputDecoration(
@@ -121,6 +123,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _buildUserNameField() {
     return TextFormField(
+      key: Key("username"),
       maxLength: 30,
       keyboardType: TextInputType.text,
       decoration: const InputDecoration(
@@ -143,6 +146,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _buildEmailField() {
     return TextFormField(
+      key: Key("email"),
       maxLength: 50,
       keyboardType: TextInputType.emailAddress,
       decoration: const InputDecoration(
@@ -165,6 +169,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _buildPasswordField() {
     return TextFormField(
+      key: Key("password"),
       maxLength: 30,
       keyboardType: TextInputType.text,
       obscureText: true,
@@ -188,6 +193,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _buildAgainPasswordField() {
     return TextFormField(
+      key: Key("againPassword"),
       maxLength: 30,
       keyboardType: TextInputType.text,
       obscureText: true,

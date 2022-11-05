@@ -109,6 +109,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
 
   Widget _buildDobField(BuildContext context) {
     return TextFormField(
+      key: Key("dob"),
       controller: dateinput,
       //editing controller of this TextField
       decoration: const InputDecoration(
@@ -153,6 +154,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
 
   Widget _buildWeightField() {
     return TextFormField(
+      key: Key("weight"),
       maxLength: 30,
       keyboardType: TextInputType.number,
       decoration: const InputDecoration(
@@ -176,6 +178,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
 
   Widget _buildHeightField() {
     return TextFormField(
+      key: Key("height"),
       maxLength: 30,
       keyboardType: TextInputType.number,
       decoration: const InputDecoration(
@@ -199,6 +202,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
 
   Widget _buildActivityType() {
     return DropdownButtonFormField(
+      key: Key("activityType"),
       value: selectedValueActivity,
       onChanged: (String? newValue) {
         setState(() {
@@ -224,6 +228,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
 
   Widget _buildGenderType() {
     return DropdownButtonFormField(
+      key: Key("genderType"),
       value: selectedValueGender,
       onChanged: (String? newValue) {
         setState(() {
@@ -249,6 +254,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
 
   Widget _buildExerciseType() {
     return DropdownButtonFormField(
+      key: Key("exerciseType"),
       value: selectedValueExercise,
       onChanged: (String? newValue) {
         setState(() {
@@ -274,6 +280,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
 
   Widget _buildMealPreferenceType() {
     return DropdownButtonFormField(
+      key: Key("mealPreferenceType"),
       value: selectedValueMealPreference,
       onChanged: (String? newValue) {
         setState(() {
@@ -299,6 +306,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
 
   Widget _buildMedicalField() {
     return TextFormField(
+      key: Key("medicalField"),
       maxLength: 30,
       maxLines: 2,
       keyboardType: TextInputType.text,
@@ -323,6 +331,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
 
   Widget _buildStartingDayType() {
     return DropdownButtonFormField(
+      key: Key("startingDayType"),
       value: selectedValueStarting,
       onChanged: (String? newValue) {
         setState(() {
@@ -348,6 +357,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
 
   Widget _buildNotificationDayType() {
     return DropdownButtonFormField(
+      key: Key("notificationDayType"),
       value: selectedValueNotification,
       onChanged: (String? newValue) {
         setState(() {

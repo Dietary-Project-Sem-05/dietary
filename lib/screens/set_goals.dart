@@ -22,6 +22,7 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
 
   Widget _buildCurrentWeightField() {
     return TextFormField(
+      key: Key("currentWeight"),
       maxLength: 5,
       keyboardType: TextInputType.number,
       decoration: const InputDecoration(
@@ -45,6 +46,7 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
 
   Widget _buildExpectedWeightField() {
     return TextFormField(
+      key: Key("expectedWeight"),
       maxLength: 5,
       keyboardType: TextInputType.number,
       decoration: const InputDecoration(
@@ -68,6 +70,7 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
 
   Widget _buildCurrentDateField(BuildContext context) {
     return TextFormField(
+      key: Key("currentDate"),
       controller: startingDateInput,
       //editing controller of this TextField
       decoration: const InputDecoration(
@@ -110,6 +113,7 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
 
   Widget _buildExpectedDateField(BuildContext context) {
     return TextFormField(
+      key: Key("expectedDate"),
       controller: expectedDateInput,
       //editing controller of this TextField
       decoration: const InputDecoration(
