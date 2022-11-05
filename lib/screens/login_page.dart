@@ -84,6 +84,7 @@ class _LogInPageState extends State<LogInPage> {
 
   Widget _buildUserNameField() {
     return TextFormField(
+      key: const Key("username"),
       maxLength: 30,
       keyboardType: TextInputType.text,
       decoration: const InputDecoration(
@@ -107,6 +108,7 @@ class _LogInPageState extends State<LogInPage> {
 
   Widget _buildPasswordField() {
     return TextFormField(
+      key: const Key("password"),
       maxLength: 15,
       decoration: const InputDecoration(
           hintText: "Password",
@@ -181,6 +183,7 @@ class _LogInPageState extends State<LogInPage> {
                   ),
                   Container(
                     child: ElevatedButton(
+                      key: const Key("sign_in_btn"),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
