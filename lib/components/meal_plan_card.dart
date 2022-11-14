@@ -16,19 +16,29 @@ class MealPlanCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          color: kContainerColor,
+          color: kMealBgColor.withOpacity(0.9),
         ),
         margin: EdgeInsets.symmetric(horizontal: 5.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Container(
-              padding: EdgeInsets.all(10.0),
-              child: FittedBox(
+              padding: const EdgeInsets.all(0.0),
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(10),
+                  topLeft: Radius.circular(10)
+                ),
+              ),
+
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(10),
+                  topRight: Radius.circular(10)
+                ),
                 child: Image.asset(
                   image.toString(),
                 ),
-                fit: BoxFit.fill,
               ),
             ),
             const Divider(
@@ -43,7 +53,7 @@ class MealPlanCard extends StatelessWidget {
             Center(
               child: Text(
                 label.toString(),
-                style: GoogleFonts.roboto(textStyle: kMealTimeTextStyle),
+                style: GoogleFonts.roboto(textStyle: kMealHeadingTextStyle, color: Colors.white),
               ),
             ),
             SizedBox(

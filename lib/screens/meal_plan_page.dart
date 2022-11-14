@@ -18,8 +18,18 @@ class _MealPlanPageState extends State<MealPlanPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Meal Plans'),
+        backgroundColor: Colors.black38,
       ),
       body: Container(
+        constraints: const BoxConstraints.expand(),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("lib/assets/images/food_colored.jpg"),
+            repeat: ImageRepeat.repeat,
+          )
+
+
+        ),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -28,7 +38,7 @@ class _MealPlanPageState extends State<MealPlanPage> {
                 margin: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
                 padding: EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
-                  color: kContainerColor,
+                  color: Colors.black.withOpacity(0.8),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 child: Column(
@@ -100,6 +110,7 @@ class _MealPlanPageState extends State<MealPlanPage> {
                       'All Plans',
                       style: GoogleFonts.roboto(
                         textStyle: kMealDayTextStyle,
+                        color: Colors.white,
                       ),
                     ),
                     SizedBox(

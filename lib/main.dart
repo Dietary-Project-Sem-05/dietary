@@ -1,6 +1,7 @@
 import 'package:dietary_project/screens/dashboard.dart';
 import 'package:dietary_project/screens/food_prefferences.dart';
 import 'package:dietary_project/screens/general_info_page.dart';
+import 'package:dietary_project/screens/home_page.dart';
 import 'package:dietary_project/screens/login_page.dart';
 import 'package:flutter/material.dart';
 import 'screens/general_info_page.dart';
@@ -28,7 +29,6 @@ class MyApp extends StatelessWidget {
 
       routes: <String, WidgetBuilder>{
         "/register": (context)=>RegisterPage(),
-        "/general_info": (context)=>GeneralInfoPage(),
       },
     );
   }

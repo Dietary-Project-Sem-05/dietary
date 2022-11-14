@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 
 class SetGoalsPage extends StatefulWidget {
@@ -21,6 +22,7 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
 
   Widget _buildCurrentWeightField() {
     return TextFormField(
+      key: Key("currentWeight"),
       maxLength: 5,
       keyboardType: TextInputType.number,
       decoration: const InputDecoration(
@@ -44,6 +46,7 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
 
   Widget _buildExpectedWeightField() {
     return TextFormField(
+      key: Key("expectedWeight"),
       maxLength: 5,
       keyboardType: TextInputType.number,
       decoration: const InputDecoration(
@@ -67,6 +70,7 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
 
   Widget _buildCurrentDateField(BuildContext context) {
     return TextFormField(
+      key: Key("currentDate"),
       controller: startingDateInput,
       //editing controller of this TextField
       decoration: const InputDecoration(
@@ -109,6 +113,7 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
 
   Widget _buildExpectedDateField(BuildContext context) {
     return TextFormField(
+      key: Key("expectedDate"),
       controller: expectedDateInput,
       //editing controller of this TextField
       decoration: const InputDecoration(
@@ -158,69 +163,100 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
         backgroundColor: Colors.black38,
       ),
       body: Container(
-        height: 400.0,
-        width: 350.0,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+        constraints: const BoxConstraints.expand(),
+        decoration: const BoxDecoration(
           image: const DecorationImage(
             image: AssetImage("lib/assets/images/back.jpg"),
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
           ),
         ),
-        margin: const EdgeInsets.symmetric(horizontal: 45.0, vertical: 145.0),
-        padding: const EdgeInsets.all(20.0),
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: _buildCurrentWeightField(),
+
+        child: Column(
+          children: [
+            Expanded(
+                child:Container(
+                  height: 400.0,
+                  width: 350.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  margin: const EdgeInsets.symmetric(horizontal: 45.0, vertical: 145.0),
+                  padding: const EdgeInsets.all(20.0),
+                  child: Form(
+                    key: _formKey,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: _buildCurrentWeightField(),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: _buildExpectedWeightField(),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: _buildCurrentDateField(context),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: _buildExpectedDateField(context),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 50.0,
+                          ),
+                          Container(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  _formKey.currentState!.save();
+                                  // print(_startingDate);
+                                  // print(_expectedDate);
+                                  // print(_expectedWeight);
+                                  // print(_currentWeight);
+                                }
+                              },
+                              child: FittedBox(
+                                fit: BoxFit.fill,
+                                child: Row(
+                                  children: const [
+                                    Text(
+                                        "Set Goal",
+                                      style: TextStyle(
+                                        letterSpacing: 3
+                                      ),
+                                    ),
+                                    Icon(Icons.flag),
+                                  ],
+                                ),
+                              )
+
+                              
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: _buildExpectedWeightField(),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: _buildCurrentDateField(context),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: _buildExpectedDateField(context),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 50.0,
-                ),
-                Container(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState!.save();
-                        // print(_startingDate);
-                        // print(_expectedDate);
-                        // print(_expectedWeight);
-                        // print(_currentWeight);
-                      }
-                    },
-                    child: const Text("Save"),
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
-      ),
+            )
+
+          ],
+        )
+
+
+      )
+
     );
   }
 }

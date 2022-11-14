@@ -12,7 +12,7 @@ class LightMealPlanRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.0),
+      padding: EdgeInsets.only(left: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -42,7 +42,7 @@ class LightMealPlanRow extends StatelessWidget {
             child: FittedBox(
               child: Image.asset(
                 image.toString(),
-                width: 120.0,
+                width: 130.0,
               ),
               fit: BoxFit.fill,
             ),
