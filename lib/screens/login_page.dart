@@ -1,10 +1,10 @@
-import 'package:dietary_project/screens/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:dietary_project/DatabaseHandler/AccountDbHelper.dart';
 import 'package:dietary_project/Model/account_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dietary_project/DatabaseHandler/AccountDBHandler.dart';
+import 'package:dietary_project/screens/dashboard.dart';
 
 class LogInPage extends StatefulWidget {
   const LogInPage({Key? key}) : super(key: key);
@@ -20,15 +20,17 @@ class _LogInPageState extends State<LogInPage> {
   var _username;
   var _password;
   var dbHelper;
+  var dbHandler;
 
   @override
   void initState() {
     super.initState();
-    dbHelper = AccountDbHelper();
+    dbHandler = AccountDBHandler();
+    dbHandler.initDatabaseConnection();
   }
 
   logIn() async{
-    await dbHelper.getLoginUser(_username, _password).then((userData) {
+    await dbHandler.getLoginUser(_username, _password).then((userData) {
       if (userData != null) {
         Fluttertoast.showToast(
             msg: "Welcome",
@@ -46,7 +48,8 @@ class _LogInPageState extends State<LogInPage> {
               MaterialPageRoute(builder: (_) => DashBoardPage()),
                   (Route<dynamic> route) => false);
         });
-      } else {
+      }
+      else {
         Fluttertoast.showToast(
             msg: "User not found",
             toastLength: Toast.LENGTH_SHORT,
@@ -60,7 +63,7 @@ class _LogInPageState extends State<LogInPage> {
     }).catchError((error) {
       print(error);
       Fluttertoast.showToast(
-          msg: "Erro123r: "+error,
+          msg: "Error: "+error,
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.TOP,
           timeInSecForIosWeb: 1,
@@ -74,7 +77,8 @@ class _LogInPageState extends State<LogInPage> {
   Future setSP(AccountModel user) async {
     final SharedPreferences sp = await _pref;
 
-    // sp.setString("user_id", user.user_id!);
+    sp.setInt("user_id", user.getUserId!);
+    sp.setInt("user_no", user.getUserNo!);
     sp.setString("user_name", user.user_name!);
     sp.setString("first_name", user.first_name!);
     sp.setString("last_name", user.last_name!);

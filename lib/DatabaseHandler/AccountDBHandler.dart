@@ -71,7 +71,8 @@ class AccountDBHandler {
     return accountNo;
   }
 
-  Future<void> saveGeneralInfoData(GeneralUserModel model, int accountNo) async {
+  Future<void> saveGeneralInfoData(
+      GeneralUserModel model, int accountNo) async {
     var conn = await connection;
 
     await conn.transaction((ctx) async {
@@ -89,5 +90,39 @@ class AccountDBHandler {
             "id": accountNo,
           });
     });
+  }
+
+  Future<AccountModel?> getLoginUser(String userName, String password) async {
+    var conn = await connection;
+
+    List<List<dynamic>>? loginResults;
+
+    await conn.transaction((ctx) async {
+      loginResults = await ctx.query(
+          'SELECT * FROM "Account" WHERE username = @usernameValue AND password = @passwordValue',
+          substitutionValues: {
+            "usernameValue": userName,
+            "passwordValue": password,
+          });
+    });
+
+    if ((loginResults?.length)! > 0) {
+      List? firstItem = loginResults?.first;
+
+      AccountModel accMdl = AccountModel(
+        firstItem![3],
+        firstItem[4],
+        firstItem[5],
+        firstItem[6],
+        firstItem[7],
+      );
+
+      accMdl.setUserId = firstItem[0];
+      accMdl.setUserNo = firstItem[1];
+
+      return accMdl;
+    } else {
+      return null;
+    }
   }
 }
