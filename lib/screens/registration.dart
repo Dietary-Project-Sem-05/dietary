@@ -1,3 +1,4 @@
+import 'package:dietary_project/screens/general_info_page.dart';
 import 'package:dietary_project/screens/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:dietary_project/DatabaseHandler/AccountDbHelper.dart';
@@ -31,11 +32,12 @@ class _RegisterPageState extends State<RegisterPage> {
     dbHandler.initDatabaseConnection();
   }
 
-  signUp() async{
-    AccountModel userMd = AccountModel(_firstName, _lastName, _username, _email, _password);
+  signUp() async {
+    AccountModel userMd =
+        AccountModel(_firstName, _lastName, _username, _email, _password);
 
     await dbHandler.checkUserName(_username).then((userData) {
-      if (userData == "Error"){
+      if (userData == "Error") {
         return Fluttertoast.showToast(
             msg: "Username exist!",
             toastLength: Toast.LENGTH_SHORT,
@@ -43,10 +45,16 @@ class _RegisterPageState extends State<RegisterPage> {
             timeInSecForIosWeb: 1,
             backgroundColor: Colors.red,
             textColor: Colors.black87,
-            fontSize: 16.0
-        );
-      }else{
-        dbHandler.saveData(userMd).then((userData) {
+            fontSize: 16.0);
+      } else {
+        dbHandler.saveRegistrationData(userMd).then((userData) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => GeneralInfoPage(
+                        account_no: userData,
+                      )));
+
           return Fluttertoast.showToast(
               msg: "Successfully Saved",
               toastLength: Toast.LENGTH_SHORT,
@@ -54,27 +62,20 @@ class _RegisterPageState extends State<RegisterPage> {
               timeInSecForIosWeb: 1,
               backgroundColor: Colors.green,
               textColor: Colors.black87,
-              fontSize: 16.0
-          );
-
-          Navigator.push(
-              context, MaterialPageRoute(builder: (_) => LogInPage()));
+              fontSize: 16.0);
         }).catchError((error) {
           print(error);
           return Fluttertoast.showToast(
-              msg: "Not Saved "+ error,
+              msg: "Not Saved " + error,
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.TOP,
               timeInSecForIosWeb: 1,
               backgroundColor: Colors.red,
               textColor: Colors.black87,
-              fontSize: 16.0
-          );
+              fontSize: 16.0);
         });
       }
     });
-
-
   }
 
   //TextController to read text entered in text field
@@ -286,11 +287,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         print("Not Saved");
                       }
                     },
-                    child: const Text("Sign Up",
-                      style: TextStyle(
-                        letterSpacing: 2
-                      ),
-
+                    child: const Text(
+                      "Sign Up",
+                      style: TextStyle(letterSpacing: 2),
                     ),
                   ),
                 ),
