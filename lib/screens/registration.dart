@@ -1,7 +1,6 @@
 import 'package:dietary_project/screens/general_info_page.dart';
 import 'package:dietary_project/screens/login_page.dart';
 import 'package:flutter/material.dart';
-import 'package:dietary_project/DatabaseHandler/AccountDbHelper.dart';
 import 'package:dietary_project/Model/account_model.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:dietary_project/DatabaseHandler/AccountDBHandler.dart';
@@ -27,7 +26,6 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   void initState() {
     super.initState();
-    dbHelper = AccountDbHelper();
     dbHandler = AccountDBHandler();
     dbHandler.initDatabaseConnection();
   }
