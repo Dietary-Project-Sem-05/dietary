@@ -1,4 +1,5 @@
 import 'package:dietary_project/Model/account_model.dart';
+import 'package:dietary_project/Model/general_user_model.dart';
 import 'dart:io' as io;
 import 'package:postgres/postgres.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -40,9 +41,10 @@ class AccountDBHandler {
     return null;
   }
 
-  Future<void> saveData(AccountModel user) async {
+  Future<int?> saveRegistrationData(AccountModel user) async {
     var conn = await connection;
     List<List<dynamic>>? gUserResults;
+    int? accountNo;
 
     await conn.transaction((ctx) async {
       gUserResults = await ctx.query(
@@ -51,18 +53,40 @@ class AccountDBHandler {
             "gender": 'Temp',
           });
 
-      var account_no = await gUserResults![0][0];
+      accountNo = await gUserResults![0][0];
 
       await ctx.query(
           'INSERT INTO "Account"("accountNo", "firstName", "lastName", username, email, password) VALUES '
           '(@accountNo, @firstName, @lastName, @username, @email, @password);',
           substitutionValues: {
-            "accountNo": account_no,
+            "accountNo": accountNo,
             "firstName": user.first_name,
             "lastName": user.last_name,
             "username": user.user_name,
             "email": user.email,
             "password": user.password,
+          });
+    });
+
+    return accountNo;
+  }
+
+  Future<void> saveGeneralInfoData(GeneralUserModel model, int accountNo) async {
+    var conn = await connection;
+
+    await conn.transaction((ctx) async {
+      await ctx.query(
+          'UPDATE "GeneralUser" SET "dateOfBirth"=@dateOfBirth, weight=@weight, height=@height, "activityTime"=@activityTime, "goalType"=@goalType, "dietGoal"=@dietGoal, "medicalConditions"=@medicalConditions, gender=@gender WHERE id=@id;',
+          substitutionValues: {
+            "dateOfBirth": model.dob,
+            "weight": model.weight,
+            "height": model.height,
+            "activityTime": model.activityType,
+            "goalType": model.exerciseType,
+            "dietGoal": model.preferenceType,
+            "medicalConditions": model.medicalCondition,
+            "gender": model.gender,
+            "id": accountNo,
           });
     });
   }

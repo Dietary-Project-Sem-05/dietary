@@ -1,8 +1,14 @@
+import 'package:dietary_project/screens/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:dietary_project/Model/general_user_model.dart';
 import 'package:intl/intl.dart';
+import 'package:dietary_project/DatabaseHandler/AccountDBHandler.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class GeneralInfoPage extends StatefulWidget {
-  const GeneralInfoPage({Key? key}) : super(key: key);
+  final int account_no;
+
+  const GeneralInfoPage({Key? key, required this.account_no}) : super(key: key);
 
   @override
   State<GeneralInfoPage> createState() => _GeneralInfoPageState();
@@ -10,6 +16,8 @@ class GeneralInfoPage extends StatefulWidget {
 
 class _GeneralInfoPageState extends State<GeneralInfoPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  var dbHandler;
 
   TextEditingController dateinput = TextEditingController();
 
@@ -23,6 +31,33 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
   var _medicalCondition;
   var _notificationDay;
   var _startingDay;
+
+  saveData() async {
+    GeneralUserModel gModel = GeneralUserModel(
+        _dob,
+        _gender,
+        int.parse(_weight),
+        int.parse(_height),
+        _activityType,
+        _exerciseType,
+        _preferenceType,
+        _medicalCondition,
+        _notificationDay,
+        _startingDay);
+
+    await dbHandler.saveGeneralInfoData(gModel, widget.account_no).then((userData) {
+      Navigator.push(context, MaterialPageRoute(builder: (_) => LogInPage()));
+
+      return Fluttertoast.showToast(
+          msg: "Successfully Added!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.black87,
+          fontSize: 16.0);
+    });
+  }
 
   List<DropdownMenuItem<String>> menuItemsActivity = [
     const DropdownMenuItem(
@@ -105,6 +140,9 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
   void initState() {
     dateinput.text = ""; //set the initial value of text field
     super.initState();
+
+    dbHandler = AccountDBHandler();
+    dbHandler.initDatabaseConnection();
   }
 
   Widget _buildDobField(BuildContext context) {
@@ -273,7 +311,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
         return HelpValidator.validateExerciseType(_exerciseType);
       },
       onSaved: (text) {
-        _activityType = text;
+        _exerciseType = text;
       },
     );
   }
@@ -299,7 +337,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
         return HelpValidator.validateMealPreference(_preferenceType);
       },
       onSaved: (text) {
-        _activityType = text;
+        _preferenceType = text;
       },
     );
   }
@@ -448,6 +486,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
                         // print(_medicalCondition);
                         // print(_notificationDay);
                         // print(_startingDay);
+                        saveData();
                       } else {
                         print("Not Saved");
                       }
