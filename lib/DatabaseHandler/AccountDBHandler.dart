@@ -2,27 +2,16 @@ import 'package:dietary_project/Model/account_model.dart';
 import 'package:dietary_project/Model/general_user_model.dart';
 import 'dart:io' as io;
 import 'package:postgres/postgres.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:dietary_project/DatabaseHandler/DbConnector.dart';
 
 class AccountDBHandler {
-  var connection = PostgreSQLConnection(
-    "dietary.postgres.database.azure.com",
-    5432,
-    "dietary",
-    username: "chamod",
-    password: "computer!9",
-    timeoutInSeconds: 3600,
-    queryTimeoutInSeconds: 3600,
-    useSSL: true,
-    allowClearTextPassword: true,
-  );
+  late DbConnector dbConn;
+  late PostgreSQLConnection connection;
 
-  initDatabaseConnection() async {
-    await connection.open().then((value) {
-      Fluttertoast.showToast(
-        msg: "Server Connected!!",
-      );
-    });
+  initDatabaseConnection(){
+    dbConn = DbConnector();
+    connection = dbConn.getConnection;
+    dbConn.initConnection();
   }
 
   Future<String?> checkUserName(String username) async {
