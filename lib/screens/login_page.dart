@@ -14,8 +14,9 @@ class LogInPage extends StatefulWidget {
 }
 
 class _LogInPageState extends State<LogInPage> {
-  Future<SharedPreferences> _pref = SharedPreferences.getInstance();
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  Future<SharedPreferences> _pref = SharedPreferences.getInstance();
 
   var _username;
   var _password;
