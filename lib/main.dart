@@ -1,13 +1,10 @@
-import 'package:dietary_project/screens/dashboard.dart';
-import 'package:dietary_project/screens/food_prefferences.dart';
-import 'package:dietary_project/screens/general_info_page.dart';
-import 'package:dietary_project/screens/home_page.dart';
 import 'package:dietary_project/screens/login_page.dart';
 import 'package:flutter/material.dart';
-import 'screens/general_info_page.dart';
 import 'screens/registration.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() {
+void main() async{
+  await GetStorage.init();
   runApp(const MyApp());
 }
 

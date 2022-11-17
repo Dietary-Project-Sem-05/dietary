@@ -79,9 +79,9 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
   List<DropdownMenuItem<String>> menuItemsGender = [
     const DropdownMenuItem(
         value: "None", enabled: false, child: Text("Gender")),
-    const DropdownMenuItem(value: "Male", child: Text("Male")),
-    const DropdownMenuItem(value: "Female", child: Text("Female")),
-    const DropdownMenuItem(value: "Other", child: Text("Other")),
+    const DropdownMenuItem(value: "MALE", child: Text("Male")),
+    const DropdownMenuItem(value: "FEMALE", child: Text("Female")),
+    const DropdownMenuItem(value: "OTHER", child: Text("Other")),
   ];
 
   List<DropdownMenuItem<String>> menuItemsExercise = [
