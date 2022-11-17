@@ -5,6 +5,7 @@ import 'package:dietary_project/screens/home_page.dart';
 import 'package:dietary_project/screens/meal_plan_page.dart';
 import 'package:dietary_project/screens/set_goals.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 
 class DashBoardPage extends StatefulWidget {
   const DashBoardPage({Key? key}) : super(key: key);
@@ -15,6 +16,9 @@ class DashBoardPage extends StatefulWidget {
 
 class _DashBoardPageState extends State<DashBoardPage> {
   int _currentIndex = 0;
+
+  final box = GetStorage();
+
   PageController _pageController = PageController();
   List<Widget> _screens = [
     HomePage(),
@@ -26,6 +30,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
 
   void _onPageChanged(int index) {
     setState(() {
+      // print(box.read("user_id"));
       _currentIndex = index;
     });
   }
