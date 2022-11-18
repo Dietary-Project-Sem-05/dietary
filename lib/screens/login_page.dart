@@ -178,8 +178,8 @@ class _LogInPageState extends State<LogInPage> {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             _formKey.currentState!.save();
-                            print(_username);
-                            print(_password);
+                            // print(_username);
+                            // print(_password);
                             logIn();
                           } else {
                             print("Not Saved");
