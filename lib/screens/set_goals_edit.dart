@@ -40,7 +40,7 @@ class _SetGoalsEditPageState extends State<SetGoalsEditPage> {
   }
 
   saveData() async {
-    
+
     dbHandler = await GoalDBHandler();
     await dbHandler.initDatabaseConnection();
     UserGoalModel ugModel = await UserGoalModel.withoutGoalId(
