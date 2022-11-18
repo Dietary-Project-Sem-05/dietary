@@ -106,7 +106,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
               color: _currentIndex == 4 ? Colors.blue : Colors.grey,
             ),
             title: Text(
-              "Set Gaols",
+              "Set Goal",
               style: TextStyle(
                 color: _currentIndex == 4 ? Colors.blue : Colors.grey,
               ),

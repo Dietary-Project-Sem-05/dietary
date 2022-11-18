@@ -1,6 +1,10 @@
+import 'package:dietary_project/DatabaseHandler/GoalDBHandler.dart';
+import 'package:dietary_project/Model/user_goal_model.dart';
+import 'package:dietary_project/screens/set_goals_edit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
+import 'package:get_storage/get_storage.dart';
 
 class SetGoalsPage extends StatefulWidget {
   const SetGoalsPage({Key? key}) : super(key: key);
@@ -11,312 +15,226 @@ class SetGoalsPage extends StatefulWidget {
 
 class _SetGoalsPageState extends State<SetGoalsPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final box = GetStorage();
 
-  TextEditingController startingDateInput = TextEditingController();
-  TextEditingController expectedDateInput = TextEditingController();
+  late GoalDBHandler dbHandler;
 
+  var _accountNo;
   var _currentWeight;
   var _expectedWeight;
   var _startingDate;
   var _expectedDate;
 
-  Widget _buildCurrentWeightField() {
-    return TextFormField(
-      key: Key("currentWeight"),
-      maxLength: 5,
-      keyboardType: TextInputType.number,
-      decoration: const InputDecoration(
-          counterText: "",
-          labelText: "Current Weight(kg)",
-          labelStyle: TextStyle(
-            color: Colors.white,
-          )),
-      style: const TextStyle(
-        color: Colors.white,
-        fontSize: 12.5,
-      ),
-      validator: (text) {
-        return HelpValidator.validateStartingWeight(text);
-      },
-      onSaved: (text) {
-        _currentWeight = text!;
-      },
-    );
+  @override
+  void initState() {
+    super.initState();
+    getData();
   }
 
-  Widget _buildExpectedWeightField() {
-    return TextFormField(
-      key: Key("expectedWeight"),
-      maxLength: 5,
-      keyboardType: TextInputType.number,
-      decoration: const InputDecoration(
-          counterText: "",
-          labelText: "Expected Weight(kg)",
-          labelStyle: TextStyle(
-            color: Colors.white,
-          )),
-      style: const TextStyle(
-        color: Colors.white,
-        fontSize: 12.5,
-      ),
-      validator: (text) {
-        return HelpValidator.validateExpectedWeight(text);
-      },
-      onSaved: (text) {
-        _expectedWeight = text!;
-      },
-    );
+  getData() {
+    _accountNo = box.read("user_no");
   }
 
-  Widget _buildCurrentDateField(BuildContext context) {
-    return TextFormField(
-      key: Key("currentDate"),
-      controller: startingDateInput,
-      //editing controller of this TextField
-      decoration: const InputDecoration(
-        labelText: "Starting Date",
-        labelStyle: TextStyle(
-          color: Colors.white,
-        ),
-      ),
-      readOnly: true,
-      style: const TextStyle(
-        color: Colors.white,
-        fontSize: 12.5,
-      ),
-      onTap: () async {
-        DateTime? pickedDate = await showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime.now(),
-            lastDate: DateTime(2035));
-
-        if (pickedDate != null) {
-          //pickedDate output format => 2021-03-10 00:00:00.000
-          String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-          //formatted date output using intl package =>  2021-03-16
-
-          setState(() {
-            startingDateInput.text =
-                formattedDate; //set output date to TextField value.
-            _startingDate = formattedDate;
-          });
-        } else {
-          print("Date is not selected");
-        }
-      },
-      validator: (date) {
-        return HelpValidator.validateStartingDate(date);
-      },
-    );
-  }
-
-  Widget _buildExpectedDateField(BuildContext context) {
-    return TextFormField(
-      key: Key("expectedDate"),
-      controller: expectedDateInput,
-      //editing controller of this TextField
-      decoration: const InputDecoration(
-        labelText: "Expected Date",
-        labelStyle: TextStyle(
-          color: Colors.white,
-        ),
-      ),
-      readOnly: true,
-      style: const TextStyle(
-        color: Colors.white,
-        fontSize: 12.5,
-      ),
-      onTap: () async {
-        DateTime? pickedDate = await showDatePicker(
-          context: context,
-          initialDate: DateTime.now(),
-          firstDate: DateTime.now(),
-          lastDate: DateTime(2035),
-        );
-
-        if (pickedDate != null) {
-          //pickedDate output format => 2021-03-10 00:00:00.000
-          String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-          //formatted date output using intl package =>  2021-03-16
-
-          setState(() {
-            expectedDateInput.text =
-                formattedDate; //set output date to TextField value.
-            _expectedDate = formattedDate;
-          });
-        } else {
-          print("Date is not selected");
-        }
-      },
-      validator: (date) {
-        return HelpValidator.validateExpectedDate(date, _startingDate);
-      },
-    );
+  editGoal(){
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (_) => SetGoalsEditPage()
+        ));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Set Goal'),
-        backgroundColor: Colors.black38,
-      ),
-      body: Container(
-        constraints: const BoxConstraints.expand(),
-        decoration: const BoxDecoration(
-          image: const DecorationImage(
-            image: AssetImage("lib/assets/images/back.jpg"),
-            fit: BoxFit.fill,
-          ),
-        ),
-
-        child: Column(
-          children: [
-            Expanded(
-                child:Container(
-                  height: 400.0,
-                  width: 350.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  margin: const EdgeInsets.symmetric(horizontal: 45.0, vertical: 145.0),
-                  padding: const EdgeInsets.all(20.0),
-                  child: Form(
-                    key: _formKey,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: _buildCurrentWeightField(),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: _buildExpectedWeightField(),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: _buildCurrentDateField(context),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: _buildExpectedDateField(context),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 50.0,
-                          ),
-                          Container(
-                            child: ElevatedButton(
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  _formKey.currentState!.save();
-                                  // print(_startingDate);
-                                  // print(_expectedDate);
-                                  // print(_expectedWeight);
-                                  // print(_currentWeight);
-                                }
-                              },
-                              child: FittedBox(
-                                fit: BoxFit.fill,
-                                child: Row(
-                                  children: const [
-                                    Text(
-                                        "Set Goal",
-                                      style: TextStyle(
-                                        letterSpacing: 3
-                                      ),
-                                    ),
-                                    Icon(Icons.flag),
-                                  ],
-                                ),
-                              )
-
-                              
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+    return FutureBuilder(
+        future: downloadData(),
+        builder: (
+          BuildContext context,
+          AsyncSnapshot<String> snapshot,
+        ) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Material(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const <Widget>[
+                  SizedBox(height: 20),
+                  CircularProgressIndicator()
+                ],
+              ),
+            );
+          } else {
+            if (snapshot.hasError) {
+              print(snapshot.error);
+              return Center(
+                child: Text(
+                  'Error: ${snapshot.error}',
                 ),
-            )
+              );
+            } else {
+              return Scaffold(
+                  appBar: AppBar(
+                    title: Text('Set Goal'),
+                    backgroundColor: Colors.black38,
+                  ),
+                  body: Container(
+                      constraints: const BoxConstraints.expand(),
+                      decoration: const BoxDecoration(
+                        image: const DecorationImage(
+                          image: AssetImage("lib/assets/images/back.jpg"),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: 400.0,
+                              width: 350.0,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 45.0, vertical: 145.0),
+                              padding: const EdgeInsets.all(20.0),
+                              child: Form(
+                                key: _formKey,
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const Text("Current Weight"),
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                          Expanded(
+                                            child: TextFormField(
+                                              initialValue:
+                                                  _currentWeight.toString(),
+                                              autofocus: false,
+                                              enabled: false,
+                                              style:
+                                                  const TextStyle(fontSize: 14),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text("Starting Date  "),
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                          Expanded(
+                                            child: TextFormField(
+                                              initialValue:
+                                                  _startingDate.toString(),
+                                              autofocus: false,
+                                              enabled: false,
+                                              style:
+                                                  const TextStyle(fontSize: 14),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text("Expected Weight"),
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                          Expanded(
+                                            child: TextFormField(
+                                              initialValue:
+                                                  _expectedWeight.toString(),
+                                              autofocus: false,
+                                              enabled: false,
+                                              style:
+                                                  const TextStyle(fontSize: 14),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text("Expected Date  "),
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                          Expanded(
+                                            child: TextFormField(
+                                              initialValue:
+                                                  _expectedDate.toString(),
+                                              autofocus: false,
+                                              enabled: false,
+                                              style:
+                                                  const TextStyle(fontSize: 14),
+                                            ),
+                                          )
+                                        ],
+                                      ),
 
-          ],
-        )
+                                      const SizedBox(
+                                        height: 50,
+                                      ),
 
-
-      )
-
-    );
+                                      Container(
+                                        child: ElevatedButton(
+                                            onPressed: () {
+                                              editGoal();
+                                            },
+                                            child: FittedBox(
+                                              fit: BoxFit.fill,
+                                              child: Row(
+                                                children: const [
+                                                  Text(
+                                                    "Set Goal",
+                                                    style: TextStyle(
+                                                        letterSpacing: 3),
+                                                  ),
+                                                  Icon(Icons.flag),
+                                                ],
+                                              ),
+                                            )),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      )));
+            }
+          }
+        });
   }
-}
 
-class HelpValidator {
-  static String? validateStartingWeight(value) {
-    if (value.isEmpty) {
-      return "Weight cannot be empty";
-    }
-    if (int.parse(value) <= 0) {
-      return "Weight must be positive";
-    }
-    if (int.parse(value) > 600) {
-      return "Weight is not in range";
-    }
-    return null;
-  }
+  Future<String> downloadData() async {
+    dbHandler = await GoalDBHandler();
+    await dbHandler.initDatabaseConnection();
+    UserGoalModel? userGl = await dbHandler.getUserGoal(_accountNo);
 
-  static String? validateExpectedWeight(value) {
-    if (value.isEmpty) {
-      return "Weight cannot be empty";
+    if(userGl == null){
+      _startingDate = "NULL";
+      _currentWeight = "NULL";
+      _expectedDate = "NULL";
+      _expectedWeight = "NULL";
+      return "NULL";
+    }else{
+      _startingDate = await userGl.startDate;
+      _currentWeight = await userGl.startWeight;
+      _expectedDate = await userGl.endDate;
+      _expectedWeight = await userGl.endWeight;
     }
-    if (int.parse(value) <= 0) {
-      return "Weight must be positive";
-    }
-    if (int.parse(value) > 600) {
-      return "Weight is not in range";
-    }
-    return null;
-  }
 
-  static String? validateStartingDate(value) {
-    if (value.isEmpty) {
-      return "Date cannot be empty";
-    }
-    return null;
-  }
+    var formattedDateStart =
+        await DateFormat('yyyy-MM-dd').format(_startingDate);
+    var formattedDateEnd = await DateFormat('yyyy-MM-dd').format(_expectedDate);
 
-  static String? validateExpectedDate(
-      expDate, _startingDate) {
-
-    if (expDate.isEmpty) {
-      return "Expected date cannot be empty";
-    }
-    else if(_startingDate.isEmpty){
-      return "Starting date cannot be empty";
-    }
-    else{
-      print(_startingDate);
-      final startingDate = DateTime.parse(_startingDate);
-      final expirationDate = DateTime.parse(expDate);
-      final bool isExpired = expirationDate.isAfter(startingDate);
-
-      if ((_startingDate != null) && !isExpired) {
-        return "Invalid Date";
-      }
-      if(expirationDate.difference(startingDate).inDays > 30){
-        return "More than 30 days diff";
-      }
-      return null;
-    }
+    _startingDate = await formattedDateStart;
+    _expectedDate = await formattedDateEnd;
+    return "Data downloaded successfully!!";
   }
 }
