@@ -1,3 +1,5 @@
+import 'package:dietary_project/screens/real_intake_page.dart';
+import 'package:dietary_project/screens/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:dietary_project/utilities/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -69,7 +71,23 @@ class DailyMealPlan extends StatelessWidget {
                     primary: Colors.blue.withOpacity(0.9),
                     onSurface: Colors.red,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+
+                    if(this.buttonLabel.toString() == "Real Intake"){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => RealIntakePage(),)
+                      );
+                    }
+                    else if(this.buttonLabel.toString() == "Select Plan"){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SettingsPage(),)
+                      );
+                    }
+
+
+                  },
                   child: Text(
                     buttonLabel.toString(),
                     style: GoogleFonts.roboto(

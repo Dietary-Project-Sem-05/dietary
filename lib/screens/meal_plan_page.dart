@@ -35,8 +35,8 @@ class _MealPlanPageState extends State<MealPlanPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Container(
-                margin: EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
-                padding: EdgeInsets.all(10.0),
+                margin: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
+                padding: const EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
                   color: Colors.black.withOpacity(0.8),
                   borderRadius: BorderRadius.circular(10.0),
