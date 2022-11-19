@@ -78,7 +78,7 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
                   body: Container(
                       constraints: const BoxConstraints.expand(),
                       decoration: const BoxDecoration(
-                        image: const DecorationImage(
+                        image: DecorationImage(
                           image: AssetImage("lib/assets/images/back.jpg"),
                           fit: BoxFit.fill,
                         ),
