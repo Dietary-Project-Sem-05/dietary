@@ -1,5 +1,4 @@
-import 'dart:collection';
-
+import 'package:dietary_project/screens/add_food_item.dart';
 import 'package:flutter/material.dart';
 
 class FoodPage extends StatefulWidget {
@@ -9,8 +8,7 @@ class FoodPage extends StatefulWidget {
   State<FoodPage> createState() => _FoodPageState();
 }
 
-class FoodItem{
-
+class FoodItem {
   String name;
   double per_amount;
   String path;
@@ -18,20 +16,15 @@ class FoodItem{
   double carbs;
   double fats;
 
-
-  FoodItem(
-    this.name,
-    this.per_amount,
-    this.path,
-    this.calories,
-    this.carbs,
-    this.fats
-  );
-
+  FoodItem(this.name, this.per_amount, this.path, this.calories, this.carbs,
+      this.fats);
 }
 
-
 class _FoodPageState extends State<FoodPage> {
+
+  routePage() {
+    Navigator.push(context, MaterialPageRoute(builder: (_) => AddFoodItem()));
+  }
 
   // Need to get the food details for this array
   List<FoodItem> food_details = [
@@ -43,39 +36,36 @@ class _FoodPageState extends State<FoodPage> {
     FoodItem("Burger", 400, "burger.jpeg", 1000, 200, 100),
   ];
 
-
-  Widget _foodItem(String food_name, double per_amount, String food_img_path, double calorie, double carbs, double fats){
+  Widget _foodItem(String food_name, double per_amount, String food_img_path,
+      double calorie, double carbs, double fats) {
     return Container(
-      margin: const EdgeInsets.symmetric(
+        margin: const EdgeInsets.symmetric(
           horizontal: 10,
           vertical: 12,
-      ),
-      padding: const EdgeInsets.all(10.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.black.withOpacity(0.85),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Title(
-                  color: Colors.black,
-                  child: Text(
-                    "$food_name ($per_amount g)",
-                    style: const TextStyle(color: Colors.blue),
-                  ),
+        ),
+        padding: const EdgeInsets.all(10.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.black.withOpacity(0.85),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Title(
+                color: Colors.black,
+                child: Text(
+                  "$food_name ($per_amount g)",
+                  style: const TextStyle(color: Colors.blue),
                 ),
-                const SizedBox(height: 10),
-                Text("\u2022 Calories : $calorie"),
-                Text("\u2022 Carbs : $carbs"),
-                Text("\u2022 Fats : $fats"),
-              ]
-          ),
-          const Spacer(),
-          Expanded(
+              ),
+              const SizedBox(height: 10),
+              Text("\u2022 Calories : $calorie"),
+              Text("\u2022 Carbs : $carbs"),
+              Text("\u2022 Fats : $fats"),
+            ]),
+            const Spacer(),
+            Expanded(
               flex: 0,
               child: SizedBox(
                 height: 74,
@@ -87,17 +77,12 @@ class _FoodPageState extends State<FoodPage> {
                   ),
                 ),
               ),
-          ),
-
-
-
-        ],
-      )
-
-    );
+            ),
+          ],
+        ));
   }
 
-  Widget _addNewFood(){
+  Widget _addNewFood() {
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.symmetric(
@@ -107,82 +92,83 @@ class _FoodPageState extends State<FoodPage> {
       padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Colors.black.withOpacity(0.9),
+        color: Colors.black.withOpacity(0),
       ),
-      child: const Text(
-        "+ Request new Food",
-        style: TextStyle(
-          letterSpacing: 6,
-          wordSpacing: 5,
-          color: Colors.blue,
+      child: ElevatedButton(
+        onPressed: () {
+          routePage();
+        },
+        style: ElevatedButton.styleFrom(
+          primary: Colors.black.withOpacity(0.9),
+        ),
+        child: const Text(
+          "+ Request New Food",
+          style: TextStyle(
+            letterSpacing: 6,
+            wordSpacing: 5,
+            color: Colors.blue,
+          ),
         ),
       ),
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     String search_string = "";
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Food Detail'),
-        backgroundColor: Colors.black38,
-      ),
-
-      body: Container(
-        constraints: const BoxConstraints.expand(),
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("lib/assets/images/food_colored.jpg"),
-            repeat: ImageRepeat.repeat,
-          )
+        appBar: AppBar(
+          title: const Text('Food Details'),
+          backgroundColor: Colors.black38,
         ),
-
-        child:Stack(
-          children: [
-            Column(
+        body: Container(
+            constraints: const BoxConstraints.expand(),
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+              image: AssetImage("lib/assets/images/food_colored.jpg"),
+              repeat: ImageRepeat.repeat,
+            )),
+            child: Stack(
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10),
-                  child: TextField(
-                    onChanged: (value) {
-                      setState(() {
-                        search_string = value.toLowerCase();
-                      });
-                    },
-                    decoration: const InputDecoration(
-                      labelText: 'Search',
-                      suffixIcon: Icon(Icons.search),
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10.0, vertical: 10),
+                      child: TextField(
+                        onChanged: (value) {
+                          setState(() {
+                            search_string = value.toLowerCase();
+                          });
+                        },
+                        decoration: const InputDecoration(
+                          labelText: 'Search',
+                          suffixIcon: Icon(Icons.search),
+                        ),
+                      ),
                     ),
-                  ),
+                    Expanded(
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: food_details.length,
+                          // TODO: number of items in the db need to be added to here
+                          itemBuilder: (context, index) {
+                            return _foodItem(
+                              food_details[index].name,
+                              food_details[index].per_amount,
+                              food_details[index].path,
+                              food_details[index].calories,
+                              food_details[index].carbs,
+                              food_details[index].fats,
+                            );
+                          }),
+                    ),
+                    _addNewFood(),
+                    // TODO: add a floating button to add new food
+                  ],
                 ),
-                Expanded(
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: food_details.length, // TODO: number of items in the db need to be added to here
-                      itemBuilder: (context, index){
-                        return _foodItem(
-                          food_details[index].name,
-                          food_details[index].per_amount,
-                          food_details[index].path,
-                          food_details[index].calories,
-                          food_details[index].carbs,
-                          food_details[index].fats,
-                        );
-                      }
-                  ),
-                ),
-                _addNewFood(), // TODO: add a floating button to add new food
               ],
-            ),
-          ],
-        )
-      )
-
-
-    );
+            )));
   }
 }
