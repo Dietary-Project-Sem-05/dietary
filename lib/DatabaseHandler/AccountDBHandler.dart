@@ -3,15 +3,16 @@ import 'package:dietary_project/Model/general_user_model.dart';
 import 'dart:io' as io;
 import 'package:postgres/postgres.dart';
 import 'package:dietary_project/DatabaseHandler/DbConnector.dart';
+import 'package:age_calculator/age_calculator.dart';
 
 class AccountDBHandler {
   late DbConnector dbConn;
   late PostgreSQLConnection connection;
 
-  initDatabaseConnection(){
-    dbConn = DbConnector();
-    connection = dbConn.getConnection;
-    dbConn.initConnection();
+  initDatabaseConnection() async {
+    dbConn = await DbConnector();
+    connection = await dbConn.getConnection;
+    await dbConn.initConnection();
   }
 
   Future<String?> checkUserName(String username) async {
@@ -24,7 +25,7 @@ class AccountDBHandler {
         });
 
     if (results.length > 0) {
-      return "Error";
+      return "Success";
     }
 
     return null;
@@ -39,7 +40,7 @@ class AccountDBHandler {
       gUserResults = await ctx.query(
           'INSERT INTO "GeneralUser"(gender) VALUES (@gender) RETURNING id',
           substitutionValues: {
-            "gender": 'Temp',
+            "gender": "MALE",
           });
 
       accountNo = await gUserResults![0][0];
@@ -113,5 +114,26 @@ class AccountDBHandler {
     } else {
       return null;
     }
+  }
+
+  Future<List<dynamic>?> getProfilePageInfo(int userNo) async {
+    var conn = await connection;
+
+    List<List<dynamic>>? profileData;
+
+    await conn.transaction((ctx) async {
+      profileData = await ctx.query(
+          'SELECT "dateOfBirth", weight, height FROM "GeneralUser" WHERE id=@user_no',
+          substitutionValues: {
+            'user_no': userNo,
+          });
+    });
+    // print(profileData?.first);
+    var data =  profileData?.first;
+    var age = AgeCalculator.age(DateTime(1998));
+
+    List<dynamic> lst = [age, data![1], data[2]];
+
+    return lst;
   }
 }

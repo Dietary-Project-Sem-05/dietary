@@ -64,7 +64,7 @@ class _RegisterPageState extends State<RegisterPage> {
         }).catchError((error) {
           print(error);
           return Fluttertoast.showToast(
-              msg: "Not Saved " + error,
+              msg: "Not Saved $error",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.TOP,
               timeInSecForIosWeb: 1,

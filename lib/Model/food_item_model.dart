@@ -1,18 +1,26 @@
 class FoodItemModel {
-  // int food_id;
+  int? food_id;
   String name;
   int state;
   int calory_count;
-  int carbs_count;
-  int fat_count;
-  int protein_count;
+  String category;
 
   FoodItemModel(
+    this.food_id,
     this.name,
     this.state,
     this.calory_count,
-    this.carbs_count,
-    this.fat_count,
-    this.protein_count,
+    this.category,
   );
+
+  FoodItemModel.withoutFoodId(
+    this.name,
+    this.state,
+    this.calory_count,
+    this.category,
+  );
+
+  set setFoodId(int food_id) {
+    this.food_id = food_id;
+  }
 }
