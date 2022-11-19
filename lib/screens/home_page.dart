@@ -50,8 +50,8 @@ class NavDrawer extends StatelessWidget {
                   //   },
                   // ),
                   ListTile(
-                    leading: Icon(Icons.verified_user),
-                    title: Text('Profile'),
+                    leading: const Icon(Icons.verified_user),
+                    title: const Text('Profile'),
                     onTap: () => {
                       Navigator.push(
                           context,
@@ -60,8 +60,8 @@ class NavDrawer extends StatelessWidget {
                     },
                   ),
                   ListTile(
-                    leading: Icon(Icons.settings),
-                    title: Text('Settings'),
+                    leading: const Icon(Icons.settings),
+                    title: const Text('Settings'),
                     onTap: () => {
                       Navigator.push(
                           context,
