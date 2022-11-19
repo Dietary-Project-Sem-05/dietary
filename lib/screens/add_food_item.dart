@@ -1,7 +1,11 @@
+import 'package:dietary_project/Model/food_item_model.dart';
+import 'package:dietary_project/screens/food.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
+import '../DatabaseHandler/FoodItemDbHandler.dart';
 
 class AddFoodItem extends StatefulWidget {
   const AddFoodItem({Key? key}) : super(key: key);
@@ -15,47 +19,53 @@ class _AddFoodItemState extends State<AddFoodItem> {
 
   final box = GetStorage();
 
-  var _accountNo;
+  late FoodItemDbHandler dbHandler;
+  late FoodItemModel ftModel;
+
   var _name;
   var _type;
   var _calory;
-  var _state;
 
   @override
   void initState() {
     super.initState();
-    getData();
-  }
-
-  getData() {
-    _accountNo = box.read("user_no");
   }
 
   saveData() async {
-    // dbHandler = await GoalDBHandler();
-    // await dbHandler.initDatabaseConnection();
-    //
-    //
-    // // await dbHandler.saveGoalDetails(ugModel);
-    // return Fluttertoast.showToast(
-    //   msg: "Successfully Added!",
-    //   toastLength: Toast.LENGTH_SHORT,
-    //   gravity: ToastGravity.TOP,
-    //   timeInSecForIosWeb: 1,
-    //   backgroundColor: Colors.green,
-    //   textColor: Colors.black87,
-    //   fontSize: 16.0,
-    // );
-    // print(goalId);
+    dbHandler = await FoodItemDbHandler();
+    await dbHandler.initDatabaseConnection();
+
+    ftModel = FoodItemModel.withoutFoodId(_name, 0, _calory, _type);
+
+    await dbHandler.sendFoodRequest(ftModel).then((value) {
+      return Fluttertoast.showToast(
+          msg: "Request Sent!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.black87,
+          fontSize: 16.0);
+    });
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => FoodPage(),
+      ),
+    );
   }
 
-  List<DropdownMenuItem<String>> menuItemsGender = [
+  List<DropdownMenuItem<String>> menuItemsType = [
     const DropdownMenuItem(
         value: "None", enabled: false, child: Text("Food Type")),
-    const DropdownMenuItem(value: "MALE", child: Text("Main")),
-    const DropdownMenuItem(value: "FEMALE", child: Text("Meat")),
-    const DropdownMenuItem(value: "OTHER", child: Text("Dessert")),
+    const DropdownMenuItem(value: "MAIN", child: Text("Main")),
+    const DropdownMenuItem(value: "MEAT", child: Text("Meat")),
+    const DropdownMenuItem(value: "SIDE", child: Text("Side")),
+    const DropdownMenuItem(value: "DESSERT", child: Text("Dessert")),
   ];
+
+  String selectedValueType = "None";
 
   Widget _buildNameField() {
     return TextFormField(
@@ -81,6 +91,32 @@ class _AddFoodItemState extends State<AddFoodItem> {
     );
   }
 
+  Widget _buildType() {
+    return DropdownButtonFormField(
+      key: Key("type"),
+      value: selectedValueType,
+      onChanged: (String? newValue) {
+        setState(() {
+          selectedValueType = newValue!;
+          _type = newValue;
+        });
+      },
+      items: menuItemsType,
+      isExpanded: true,
+      dropdownColor: Colors.black38,
+      style: const TextStyle(
+        fontSize: 12.5,
+        color: Colors.white,
+      ),
+      validator: (text) {
+        return HelpValidator.validateType(_type);
+      },
+      onSaved: (text) {
+        _type = text;
+      },
+    );
+  }
+
   Widget _buildCalorie() {
     return TextFormField(
       key: Key("calorie"),
@@ -88,7 +124,7 @@ class _AddFoodItemState extends State<AddFoodItem> {
       keyboardType: TextInputType.number,
       decoration: const InputDecoration(
           counterText: "",
-          labelText: "Calorie (mg)",
+          labelText: "Calorie",
           labelStyle: TextStyle(
             color: Colors.white,
           )),
@@ -100,7 +136,7 @@ class _AddFoodItemState extends State<AddFoodItem> {
         return HelpValidator.validateWeight(text);
       },
       onSaved: (text) {
-        _calory = text!;
+        _calory = int.parse(text!);
       },
     );
   }
@@ -113,6 +149,8 @@ class _AddFoodItemState extends State<AddFoodItem> {
           backgroundColor: Colors.black38,
         ),
         body: Container(
+            height: 250.0,
+            width: 350.0,
             constraints: const BoxConstraints.expand(),
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -124,14 +162,16 @@ class _AddFoodItemState extends State<AddFoodItem> {
               children: [
                 Expanded(
                   child: Container(
-                    height: 300.0,
+                    height: 250.0,
                     width: 350.0,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.black87.withOpacity(0.7),
                     ),
                     margin: const EdgeInsets.symmetric(
-                        horizontal: 45.0, vertical: 145.0),
+                      horizontal: 45.0,
+                      vertical: 145.0,
+                    ),
                     padding: const EdgeInsets.all(20.0),
                     child: Form(
                       key: _formKey,
@@ -145,14 +185,18 @@ class _AddFoodItemState extends State<AddFoodItem> {
                                 child: _buildNameField(),
                               ),
                             ]),
-                            Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: _buildCalorie(),
-                                ),
-                              ]
-                            ),
+                            Row(children: [
+                              Expanded(
+                                flex: 1,
+                                child: _buildCalorie(),
+                              ),
+                            ]),
+                            Row(children: [
+                              Expanded(
+                                flex: 1,
+                                child: _buildType(),
+                              ),
+                            ]),
                             const SizedBox(
                               height: 50.0,
                             ),
@@ -169,7 +213,7 @@ class _AddFoodItemState extends State<AddFoodItem> {
                                     child: Row(
                                       children: const [
                                         Text(
-                                          "Update",
+                                          "Add Request",
                                           style: TextStyle(letterSpacing: 3),
                                         ),
                                         Icon(Icons.flag),
@@ -206,8 +250,8 @@ class HelpValidator {
     return null;
   }
 
-  static String? validateStartingDate(value) {
-    if (value.isEmpty) {
+  static String? validateType(value) {
+    if (value == null) {
       return "Date cannot be empty";
     }
     return null;
