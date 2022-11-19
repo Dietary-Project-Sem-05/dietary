@@ -2,66 +2,80 @@ import 'package:flutter/material.dart';
 import 'package:dietary_project/utilities/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class MealPlanCard extends StatelessWidget {
-  const MealPlanCard({this.onPress, this.image, this.label});
+import '../Model/meal_plan_modal.dart';
 
-  final VoidCallback? onPress;
-  final String? image;
-  final String? label;
+class MealPlanCard extends StatelessWidget {
+  const MealPlanCard({super.key, required this.mealPlan});
+
+  final MealPlanModal mealPlan;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onPress,
+
       child: Container(
+        height: 100,
+        width: 350,
+        padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           color: kMealBgColor.withOpacity(0.9),
         ),
-        margin: EdgeInsets.symmetric(horizontal: 5.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.all(0.0),
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(10),
-                  topLeft: Radius.circular(10)
-                ),
-              ),
+        margin: const EdgeInsets.symmetric(horizontal: 5.0),
 
-              child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10)
-                ),
-                child: Image.asset(
-                  image.toString(),
-                ),
+
+
+           child: Container(
+              height: 100,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  Center(
+                    child: Expanded(
+                      child: Text(
+                        mealPlan.plan_name.toString(),
+                        style: GoogleFonts.roboto(textStyle: kMealHeadingTextStyle, color: Colors.white),
+                      ),
+                    ),
+                  ),
+
+                  Expanded(
+                      child: Text(
+                        "Breakfast : ${mealPlan.breakfastTitle}",
+                        style: GoogleFonts.roboto(textStyle: kMealHeadingTextStyle, color: Colors.white),
+                      )
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Expanded(
+                      child: Text(
+                        "Lunch : ${mealPlan.lunchTitle}",
+                        style: GoogleFonts.roboto(textStyle: kMealHeadingTextStyle, color: Colors.white),
+                      )
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Expanded(
+                      child: Text(
+                        "Dinner : ${mealPlan.dinnerTitle}",
+                        style: GoogleFonts.roboto(textStyle: kMealHeadingTextStyle, color: Colors.white),
+                      )
+                  ),
+
+                ],
               ),
-            ),
-            const Divider(
-              height: 1,
-              thickness: 1,
-              endIndent: 0,
-              color: kListTextColor,
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Center(
-              child: Text(
-                label.toString(),
-                style: GoogleFonts.roboto(textStyle: kMealHeadingTextStyle, color: Colors.white),
-              ),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-          ],
-        ),
-      ),
+            )
+
+
+        )
+
+
+
     );
   }
 }

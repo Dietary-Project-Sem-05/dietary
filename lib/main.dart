@@ -1,5 +1,5 @@
 import 'package:dietary_project/screens/dashboard.dart';
-import 'package:dietary_project/screens/food_prefferences.dart';
+import 'package:dietary_project/screens/add_meal_plan.dart';
 import 'package:dietary_project/screens/general_info_page.dart';
 import 'package:dietary_project/screens/home_page.dart';
 import 'package:dietary_project/screens/login_page.dart';
