@@ -1,13 +1,10 @@
-import 'package:dietary_project/screens/dashboard.dart';
-import 'package:dietary_project/screens/add_meal_plan.dart';
-import 'package:dietary_project/screens/general_info_page.dart';
-import 'package:dietary_project/screens/home_page.dart';
 import 'package:dietary_project/screens/login_page.dart';
 import 'package:flutter/material.dart';
-import 'screens/general_info_page.dart';
 import 'screens/registration.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() {
+void main() async{
+  await GetStorage.init();
   runApp(const MyApp());
 }
 
@@ -29,7 +26,6 @@ class MyApp extends StatelessWidget {
 
       routes: <String, WidgetBuilder>{
         "/register": (context)=>RegisterPage(),
-        "/general_info": (context)=>GeneralInfoPage(),
       },
     );
   }
