@@ -25,6 +25,8 @@ class _AddFoodItemState extends State<AddFoodItem> {
   var _name;
   var _type;
   var _calory;
+  var _accountNo;
+  var _state;
 
   @override
   void initState() {
@@ -162,7 +164,7 @@ class _AddFoodItemState extends State<AddFoodItem> {
               children: [
                 Expanded(
                   child: Container(
-                    height: 250.0,
+                    height: 300.0,
                     width: 350.0,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),

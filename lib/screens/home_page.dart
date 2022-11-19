@@ -77,30 +77,20 @@ class NavDrawer extends StatelessWidget {
                           MaterialPageRoute(builder: (context) => FaqPage())),
                     },
                   ),
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.exit_to_app),
-                title: Text('Logout'),
-                onTap: () async => {
+                  ListTile(
+                    leading: Icon(Icons.exit_to_app),
+                    title: Text('Logout'),
+                    onTap: () async => {
+                      // SharedPreferences preferences = await SharedPreferences.getInstance();
+                      // await preferences.clear();
 
-                  // SharedPreferences preferences = await SharedPreferences.getInstance();
-                  // await preferences.clear();
-
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => LogInPage()
-                      )
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => LogInPage())),
+                    },
                   ),
-                },
+                ],
               ),
-            ],
-          ),
-        )
-
-      )
-
-    );
+            )));
   }
 }
 
