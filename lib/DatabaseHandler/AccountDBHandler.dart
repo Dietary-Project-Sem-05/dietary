@@ -123,16 +123,16 @@ class AccountDBHandler {
 
     await conn.transaction((ctx) async {
       profileData = await ctx.query(
-          'SELECT "dateOfBirth", weight, height FROM "GeneralUser" WHERE id=@user_no',
+          'SELECT "dateOfBirth", weight, height, gender, "activityTime" FROM "GeneralUser" WHERE id=@user_no',
           substitutionValues: {
             'user_no': userNo,
           });
     });
     // print(profileData?.first);
     var data =  profileData?.first;
-    var age = AgeCalculator.age(DateTime(1998));
+    var age = AgeCalculator.age(data![0]);
 
-    List<dynamic> lst = [age, data![1], data[2]];
+    List<dynamic> lst = [age, data[1], data[2], data[3], data[4]];
 
     return lst;
   }
