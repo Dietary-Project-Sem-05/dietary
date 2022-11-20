@@ -298,38 +298,18 @@ class _MealPlanPageState extends State<MealPlanPage> {
                           Expanded(
                             child: MealPlanCard(
 
-                              mealPlan: MealPlanModal("My Plan",
+                              mealPlan: MealPlanModal(
+                                12,
+                                "My Plan",
                                   {"Rice": 100, "Chicken":100, "carrot":200, "leaks": 200, "cake":20},
                                 {"Bread": 100, "Fish":100, "carrot":200, "leaks": 200, "cake":20},
                                 {"Pasta": 100, "Almond":100, "carrot":200, "leaks": 200, "cake":20},
+                                DateTime.now()
                               ),
 
                             ),
                           ),
 
-                          Expanded(
-                            child: MealPlanCard(
-
-                              mealPlan: MealPlanModal("My Plan",
-                                {"Rice": 100, "Chicken":100, "carrot":200, "leaks": 200, "cake":20},
-                                {"Bread": 100, "Fish":100, "carrot":200, "leaks": 200, "cake":20},
-                                {"Pasta": 100, "Almond":100, "carrot":200, "leaks": 200, "cake":20},
-                              ),
-
-                            ),
-                          ),
-
-                          Expanded(
-                            child: MealPlanCard(
-
-                              mealPlan: MealPlanModal("My Plan",
-                                {"Rice": 100, "Chicken":100, "carrot":200, "leaks": 200, "cake":20},
-                                {"Bread": 100, "Fish":100, "carrot":200, "leaks": 200, "cake":20},
-                                {"Pasta": 100, "Almond":100, "carrot":200, "leaks": 200, "cake":20},
-                              ),
-
-                            ),
-                          ),
 
                         ],
                       ),

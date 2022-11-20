@@ -25,4 +25,58 @@ class FoodItemDbHandler {
       });
     });
   }
+
+  Future<List?> getFoodDetails() async{
+    var conn = await connection;
+
+    List<List<dynamic>>? foodResults;
+    String foodType;
+    List result;
+
+    await conn.transaction((connection) async{
+      foodResults = await connection.query(
+        'SELECT name, calory, "foodCategory" FROM "FoodItem" WHERE "state" = 1 ORDER BY "name" DESC LIMIT 1'
+      );
+    });
+
+    Map<String, double> mainFoodItems = {"Rice": 10.0};
+    Map<String, double> sidesMeatsFoods = {"Chicken": 100.0};
+    Map<String, double> sidesFoods = {"Elawalu": 10.0};
+    Map<String, double> deserts = {"Kehel": 10.0};
+
+    if ((foodResults?.length)! > 0){
+      for(int i = 0; i < foodResults!.length; i++){
+
+        result = foodResults![i];
+
+        foodType = result[2];
+
+        switch(foodType){
+          case "MAIN":
+            mainFoodItems[result[0]] = double.parse(result[1].toString());
+            continue;
+          case "MEAT":
+            sidesMeatsFoods[result[0]] = double.parse(result[1].toString());
+            continue;
+          case "SIDE":
+            sidesFoods[result[0]] = double.parse(result[1].toString());
+            continue;
+          case "DESERT":
+            deserts[result[0]] = double.parse(result[1].toString());
+            continue;
+        }
+
+
+      }
+
+      return [mainFoodItems, sidesMeatsFoods, sidesFoods, deserts];
+
+    } else{
+
+      return null;
+    }
+
+
+
+  }
 }
