@@ -40,7 +40,6 @@ class _SetGoalsEditPageState extends State<SetGoalsEditPage> {
   }
 
   saveData() async {
-
     dbHandler = await GoalDBHandler();
     await dbHandler.initDatabaseConnection();
     UserGoalModel ugModel = await UserGoalModel.withoutGoalId(
@@ -211,83 +210,80 @@ class _SetGoalsEditPageState extends State<SetGoalsEditPage> {
             constraints: const BoxConstraints.expand(),
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("lib/assets/images/back.jpg"),
-                fit: BoxFit.fill,
+                image: AssetImage("lib/assets/images/food_bg.jpg"),
+                repeat: ImageRepeat.repeat,
               ),
             ),
-            child: Column(
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 400.0,
-                    width: 350.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 45.0, vertical: 145.0),
-                    padding: const EdgeInsets.all(20.0),
-                    child: Form(
-                      key: _formKey,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: _buildCurrentWeightField(),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: _buildExpectedWeightField(),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: _buildCurrentDateField(context),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: _buildExpectedDateField(context),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 50.0,
-                            ),
-                            Container(
-                              child: ElevatedButton(
-                                  onPressed: () {
-                                    if (_formKey.currentState!.validate()) {
-                                      _formKey.currentState!.save();
-                                      saveData();
-                                    }
-                                  },
-                                  child: FittedBox(
-                                    fit: BoxFit.fill,
-                                    child: Row(
-                                      children: const [
-                                        Text(
-                                          "Update",
-                                          style: TextStyle(letterSpacing: 3),
-                                        ),
-                                        Icon(Icons.flag),
-                                      ],
-                                    ),
-                                  )),
-                            ),
-                          ],
-                        ),
+            child: SingleChildScrollView(
+              child: Container(
+                height: 400.0,
+                width: 350.0,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.black.withOpacity(0.7),
+                ),
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 45.0,
+                  vertical: 145.0,
+                ),
+                padding: const EdgeInsets.all(20.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: _buildCurrentWeightField(),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: _buildExpectedWeightField(),
+                          ),
+                        ],
                       ),
-                    ),
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: _buildCurrentDateField(context),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: _buildExpectedDateField(context),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 50.0,
+                      ),
+                      Container(
+                        child: ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                _formKey.currentState!.save();
+                                saveData();
+                              }
+                            },
+                            child: FittedBox(
+                              fit: BoxFit.fill,
+                              child: Row(
+                                children: const [
+                                  Text(
+                                    "Update",
+                                    style: TextStyle(letterSpacing: 3),
+                                  ),
+                                  Icon(Icons.flag),
+                                ],
+                              ),
+                            )),
+                      ),
+                    ],
                   ),
-                )
-              ],
+                ),
+              ),
             )));
   }
 }

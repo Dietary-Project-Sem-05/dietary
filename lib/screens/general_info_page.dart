@@ -45,7 +45,9 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
         _notificationDay,
         _startingDay);
 
-    await dbHandler.saveGeneralInfoData(gModel, widget.account_no).then((userData) {
+    await dbHandler
+        .saveGeneralInfoData(gModel, widget.account_no)
+        .then((userData) {
       Navigator.push(context, MaterialPageRoute(builder: (_) => LogInPage()));
 
       return Fluttertoast.showToast(
@@ -429,72 +431,82 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
         backgroundColor: Colors.black87,
       ),
       body: Container(
-        height: 600.0,
-        width: 350.0,
+        constraints: const BoxConstraints.expand(),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           image: const DecorationImage(
-            image: AssetImage("lib/assets/images/back.jpg"),
-            fit: BoxFit.cover,
+            image: AssetImage("lib/assets/images/food_bg.jpg"),
+            repeat: ImageRepeat.repeat,
           ),
         ),
-        margin: const EdgeInsets.symmetric(horizontal: 45.0, vertical: 45.0),
-        padding: const EdgeInsets.all(20.0),
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Row(
-                  children: [
-                    Expanded(flex: 1, child: _buildHeightField()),
-                    Expanded(flex: 1, child: _buildWeightField()),
-                  ],
-                ),
-                _buildDobField(context),
-                _buildActivityType(),
-                Row(
-                  children: [
-                    Expanded(flex: 1, child: _buildGenderType()),
-                    Expanded(flex: 1, child: _buildExerciseType()),
-                  ],
-                ),
-                _buildMealPreferenceType(),
-                _buildMedicalField(),
-                Row(
-                  children: [
-                    Expanded(flex: 1, child: _buildNotificationDayType()),
-                    Expanded(flex: 1, child: _buildStartingDayType()),
-                  ],
-                ),
-                const SizedBox(
-                  height: 50.0,
-                ),
-                Container(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState!.save();
-                        // print(_dob);
-                        // print(_height);
-                        // print(_weight);
-                        // print(_gender);
-                        // print(_activityType);
-                        // print(_exerciseType);
-                        // print(_preferenceType);
-                        // print(_medicalCondition);
-                        // print(_notificationDay);
-                        // print(_startingDay);
-                        saveData();
-                      } else {
-                        print("Not Saved");
-                      }
-                    },
-                    child: const Text("Save"),
+            child: Container(
+              height: 600.0,
+              width: 300.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.black87,
+              ),
+              margin: const EdgeInsets.symmetric(
+                horizontal: 45.0,
+                vertical: 40.0,
+              ),
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(flex: 1, child: _buildHeightField()),
+                      Expanded(flex: 1, child: _buildWeightField()),
+                    ],
                   ),
-                ),
-              ],
+                  _buildDobField(context),
+                  _buildActivityType(),
+                  Row(
+                    children: [
+                      Expanded(flex: 1, child: _buildGenderType()),
+                      Expanded(flex: 1, child: _buildExerciseType()),
+                    ],
+                  ),
+                  _buildMealPreferenceType(),
+                  _buildMedicalField(),
+                  Row(
+                    children: [
+                      Expanded(flex: 1, child: _buildNotificationDayType()),
+                      Expanded(flex: 1, child: _buildStartingDayType()),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 50.0,
+                  ),
+                  Container(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState!.save();
+                          // print(_dob);
+                          // print(_height);
+                          // print(_weight);
+                          // print(_gender);
+                          // print(_activityType);
+                          // print(_exerciseType);
+                          // print(_preferenceType);
+                          // print(_medicalCondition);
+                          // print(_notificationDay);
+                          // print(_startingDay);
+                          saveData();
+                        } else {
+                          print("Not Saved");
+                        }
+                      },
+                      child: const Text("Save"),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

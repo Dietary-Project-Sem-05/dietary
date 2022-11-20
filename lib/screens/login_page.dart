@@ -65,7 +65,7 @@ class _LogInPageState extends State<LogInPage> {
     }).catchError((error) {
       print(error);
       Fluttertoast.showToast(
-          msg: "Error: " + error,
+          msg: "Error: $error",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.TOP,
           timeInSecForIosWeb: 1,

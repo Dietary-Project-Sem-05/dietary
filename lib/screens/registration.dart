@@ -231,67 +231,74 @@ class _RegisterPageState extends State<RegisterPage> {
               Navigator.pop(context, LogInPage());
             },
           )),
-      body: SingleChildScrollView(
-        child: Container(
-          height: 600.0,
-          width: 300.0,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            image: const DecorationImage(
-              image: AssetImage("lib/assets/images/back.jpg"),
-              fit: BoxFit.cover,
-            ),
+      body: Container(
+        constraints: const BoxConstraints.expand(),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          image: const DecorationImage(
+            image: AssetImage("lib/assets/images/food_bg.jpg"),
+            repeat: ImageRepeat.repeat,
           ),
-          margin: const EdgeInsets.symmetric(horizontal: 45.0, vertical: 40.0),
-          padding: const EdgeInsets.all(10.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: _buildFirstNameField(),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: _buildLastNameField(),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: _buildEmailField(),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: _buildUserNameField(),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: _buildPasswordField(),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: _buildAgainPasswordField(),
-                ),
-                const SizedBox(
-                  height: 30.0,
-                ),
-                Container(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState!.save();
-                        signUp();
-                      } else {
-                        print("Not Saved");
-                      }
-                    },
-                    child: const Text(
-                      "Sign Up",
-                      style: TextStyle(letterSpacing: 2),
+        ),
+        child: SingleChildScrollView(
+          child: Container(
+            height: 600.0,
+            width: 300.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.black87,
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 45.0, vertical: 40.0),
+            padding: const EdgeInsets.all(10.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(5.0),
+                    child: _buildFirstNameField(),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(5.0),
+                    child: _buildLastNameField(),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(5.0),
+                    child: _buildEmailField(),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(5.0),
+                    child: _buildUserNameField(),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(5.0),
+                    child: _buildPasswordField(),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(5.0),
+                    child: _buildAgainPasswordField(),
+                  ),
+                  const SizedBox(
+                    height: 30.0,
+                  ),
+                  Container(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState!.save();
+                          signUp();
+                        } else {
+                          print("Not Saved");
+                        }
+                      },
+                      child: const Text(
+                        "Sign Up",
+                        style: TextStyle(letterSpacing: 2),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
