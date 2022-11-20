@@ -35,12 +35,9 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
     _accountNo = box.read("user_no");
   }
 
-  editGoal(){
+  editGoal() {
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (_) => SetGoalsEditPage()
-        ));
+        context, MaterialPageRoute(builder: (_) => SetGoalsEditPage()));
   }
 
   @override
@@ -79,132 +76,119 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
                       constraints: const BoxConstraints.expand(),
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage("lib/assets/images/back.jpg"),
-                          fit: BoxFit.fill,
+                          image: AssetImage("lib/assets/images/food_bg.jpg"),
+                          repeat: ImageRepeat.repeat,
                         ),
                       ),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              height: 400.0,
-                              width: 350.0,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 45.0, vertical: 145.0),
-                              padding: const EdgeInsets.all(20.0),
-                              child: Form(
-                                key: _formKey,
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          const Text("Current Weight"),
-                                          const SizedBox(
-                                            width: 20,
-                                          ),
-                                          Expanded(
-                                            child: TextFormField(
-                                              initialValue:
-                                                  _currentWeight.toString(),
-                                              autofocus: false,
-                                              enabled: false,
-                                              style:
-                                                  const TextStyle(fontSize: 14),
-                                            ),
-                                          )
-                                        ],
+                      child: SingleChildScrollView(
+                        child: Container(
+                          height: 400.0,
+                          width: 350.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.black87,
+                          ),
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: 45.0,
+                            vertical: 145.0,
+                          ),
+                          padding: const EdgeInsets.all(20.0),
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Row(
+                                  children: [
+                                    const Text("Current Weight"),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    Expanded(
+                                      child: TextFormField(
+                                        initialValue: _currentWeight.toString(),
+                                        autofocus: false,
+                                        enabled: false,
+                                        style: const TextStyle(fontSize: 14),
                                       ),
-                                      Row(
-                                        children: [
-                                          const Text("Starting Date  "),
-                                          const SizedBox(
-                                            width: 20,
-                                          ),
-                                          Expanded(
-                                            child: TextFormField(
-                                              initialValue:
-                                                  _startingDate.toString(),
-                                              autofocus: false,
-                                              enabled: false,
-                                              style:
-                                                  const TextStyle(fontSize: 14),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          const Text("Expected Weight"),
-                                          const SizedBox(
-                                            width: 20,
-                                          ),
-                                          Expanded(
-                                            child: TextFormField(
-                                              initialValue:
-                                                  _expectedWeight.toString(),
-                                              autofocus: false,
-                                              enabled: false,
-                                              style:
-                                                  const TextStyle(fontSize: 14),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          const Text("Expected Date  "),
-                                          const SizedBox(
-                                            width: 20,
-                                          ),
-                                          Expanded(
-                                            child: TextFormField(
-                                              initialValue:
-                                                  _expectedDate.toString(),
-                                              autofocus: false,
-                                              enabled: false,
-                                              style:
-                                                  const TextStyle(fontSize: 14),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-
-                                      const SizedBox(
-                                        height: 50,
-                                      ),
-
-                                      Container(
-                                        child: ElevatedButton(
-                                            onPressed: () {
-                                              editGoal();
-                                            },
-                                            child: FittedBox(
-                                              fit: BoxFit.fill,
-                                              child: Row(
-                                                children: const [
-                                                  Text(
-                                                    "Set Goal",
-                                                    style: TextStyle(
-                                                        letterSpacing: 3),
-                                                  ),
-                                                  Icon(Icons.flag),
-                                                ],
-                                              ),
-                                            )),
-                                      ),
-                                    ],
-                                  ),
+                                    )
+                                  ],
                                 ),
-                              ),
+                                Row(
+                                  children: [
+                                    const Text("Starting Date  "),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    Expanded(
+                                      child: TextFormField(
+                                        initialValue: _startingDate.toString(),
+                                        autofocus: false,
+                                        enabled: false,
+                                        style: const TextStyle(fontSize: 14),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    const Text("Expected Weight"),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    Expanded(
+                                      child: TextFormField(
+                                        initialValue:
+                                            _expectedWeight.toString(),
+                                        autofocus: false,
+                                        enabled: false,
+                                        style: const TextStyle(fontSize: 14),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    const Text("Expected Date  "),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    Expanded(
+                                      child: TextFormField(
+                                        initialValue: _expectedDate.toString(),
+                                        autofocus: false,
+                                        enabled: false,
+                                        style: const TextStyle(fontSize: 14),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 50,
+                                ),
+                                Container(
+                                  child: ElevatedButton(
+                                      onPressed: () {
+                                        editGoal();
+                                      },
+                                      child: FittedBox(
+                                        fit: BoxFit.fill,
+                                        child: Row(
+                                          children: const [
+                                            Text(
+                                              "Set Goal",
+                                              style:
+                                                  TextStyle(letterSpacing: 3),
+                                            ),
+                                            Icon(Icons.flag),
+                                          ],
+                                        ),
+                                      )),
+                                ),
+                              ],
                             ),
-                          )
-                        ],
+                          ),
+                        ),
                       )));
             }
           }
@@ -216,13 +200,13 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
     await dbHandler.initDatabaseConnection();
     UserGoalModel? userGl = await dbHandler.getUserGoal(_accountNo);
 
-    if(userGl == null){
+    if (userGl == null) {
       _startingDate = "NULL";
       _currentWeight = "NULL";
       _expectedDate = "NULL";
       _expectedWeight = "NULL";
       return "NULL";
-    }else{
+    } else {
       _startingDate = await userGl.startDate;
       _currentWeight = await userGl.startWeight;
       _expectedDate = await userGl.endDate;

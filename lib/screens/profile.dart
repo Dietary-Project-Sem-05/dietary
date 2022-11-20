@@ -212,6 +212,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       Expanded(
                                           child: TextFormField(
                                         initialValue: _weight.toString(),
+                                        enabled: false,
                                         autofocus: false,
                                         style: const TextStyle(fontSize: 20),
                                       )),
@@ -240,6 +241,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       Expanded(
                                           child: TextFormField(
                                         initialValue: _height.toString(),
+                                        enabled: false,
                                         autofocus: false,
                                         style: const TextStyle(fontSize: 20),
                                       )),
