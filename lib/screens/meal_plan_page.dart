@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'dart:math';
 
 import 'package:dietary_project/DatabaseHandler/AccountDBHandler.dart';
+import 'package:dietary_project/DatabaseHandler/FoodItemDbHandler.dart';
 import 'package:dietary_project/DatabaseHandler/GoalDBHandler.dart';
 import 'package:dietary_project/DatabaseHandler/mealplan_database.dart';
 import 'package:dietary_project/Model/user_goal_model.dart';
@@ -150,20 +151,30 @@ class _MealPlanPageState extends State<MealPlanPage> {
     String desert = deserts.keys.toList()[random.nextInt(deserts.length)];
     calAmount -= deserts[desert];
 
+
+
+
     String main = mains.keys.toList()[random.nextInt(deserts.length)];
     int mainIntake = (calAmount * 50 / 100)~/mains[main];
     mains.remove(main);
+
+
 
     String side1 = sidesMeat.keys.toList()[random.nextInt(sidesMeat.length)];
     int side1Intake = (calAmount * 30 / 100)~/ sidesMeat[side1];
     sidesMeat.remove(side1);
 
+
+
     String side2 = sides.keys.toList()[random.nextInt(sides.length)];
     int side2Intake = (calAmount * 10 / 100)~/ sides[side2];
     sides.remove(side2);
 
+
+
     String side3 = sides.keys.toList()[random.nextInt(sides.length)];
-    int side3Intake = (calAmount * 10 / 100)~/ sidesMeat[side3];
+
+    int side3Intake = (calAmount * 10 / 100)~/ sides[side3];
     sides.remove(side3);
 
     Map mealPlan = {
@@ -173,6 +184,7 @@ class _MealPlanPageState extends State<MealPlanPage> {
       side3: side3Intake,
       desert: deserts[desert]
     };
+
 
     return mealPlan;
   }
@@ -188,11 +200,16 @@ class _MealPlanPageState extends State<MealPlanPage> {
     double lunchCalAmount = dci * 45/100;
     double dinnerCalAmount = dci * 25/100;
 
+
+
+
     Map breakfastPlan = getMealForCalAmount(breakfastCalAmount, mains, sides, sidesMeat, deserts);
     Map lunchPlan = getMealForCalAmount(lunchCalAmount, mains, sides, sidesMeat, deserts);
     Map dinnerPlan = getMealForCalAmount(dinnerCalAmount, mains, sides, sidesMeat, deserts);
 
     Map output = {"bp": breakfastPlan, "lp": lunchPlan, "dp": dinnerPlan};
+
+
 
     return output;
 
@@ -218,6 +235,8 @@ class _MealPlanPageState extends State<MealPlanPage> {
   late MealPlanDatabase db;
   late GoalDBHandler goalDBHandler;
   late AccountDBHandler accountDBHandler;
+  late FoodItemDbHandler foodItemDbHandler;
+  late Map mealPlans;
 
   final storage = GetStorage();
 
@@ -306,26 +325,33 @@ class _MealPlanPageState extends State<MealPlanPage> {
                             ],
                           ),
                         ),
-                        const DailyMealPlan(
+                        DailyMealPlan(
                           dayPlan: 'Today Plan',
                           buttonLabel: 'Real Intake',
                           breakfastImage: 'lib/assets/images/breakfast-today.jpg',
-                          breakfastMealHeading: 'Bread with Fish Salads',
-                          breakfastMealItems: '\u2022 Bread slice x 2\n'
-                              '\u2022 Fish salads - 250g\n'
-                              '\u2022 Glass of milk\n'
-                              '\u2022 Yoghurt\n',
+                          breakfastMealHeading: '${mealPlans["bp"].keys.toList()[0]} with ${mealPlans["bp"].keys.toList()[1]}',
+                          breakfastMealItems: '\u2022 ${mealPlans["bp"].keys.toList()[0]} - ${mealPlans["bp"][mealPlans["bp"].keys.toList()[0]]}g\n'
+                              '\u2022 ${mealPlans["bp"].keys.toList()[1]} - ${mealPlans["bp"][mealPlans["bp"].keys.toList()[1]]}g\n'
+                              '\u2022 ${mealPlans["bp"].keys.toList()[2]} - ${mealPlans["bp"][mealPlans["bp"].keys.toList()[2]]}g\n'
+                              '\u2022 ${mealPlans["bp"].keys.toList()[3]} - ${mealPlans["bp"][mealPlans["bp"].keys.toList()[3]]}g\n'
+                              '\u2022 ${mealPlans["bp"].keys.toList()[4]} - ${mealPlans["bp"][mealPlans["bp"].keys.toList()[4]]} cal\n'
+                          ,
                           lunchImage: 'lib/assets/images/lunch-today.jpg',
-                          lunchMealHeading: 'Rice and Curry',
-                          lunchMealItems: '\u2022 Rice - 200g\n'
-                              '\u2022 Dhal -50g\n'
-                              '\u2022 Fish slice - 100g\n'
-                              '\u2022 Carrot - 50g\n',
+                          lunchMealHeading: '${mealPlans["lp"].keys.toList()[0]} with ${mealPlans["lp"].keys.toList()[1]}',
+                          lunchMealItems: '\u2022 ${mealPlans["lp"].keys.toList()[0]} - ${mealPlans["lp"][mealPlans["lp"].keys.toList()[0]]}g\n'
+                              '\u2022 ${mealPlans["lp"].keys.toList()[1]} - ${mealPlans["lp"][mealPlans["lp"].keys.toList()[1]]}g\n'
+                              '\u2022 ${mealPlans["lp"].keys.toList()[2]} - ${mealPlans["lp"][mealPlans["lp"].keys.toList()[2]]}g\n'
+                              '\u2022 ${mealPlans["lp"].keys.toList()[3]} - ${mealPlans["lp"][mealPlans["lp"].keys.toList()[3]]}g\n'
+                              '\u2022 ${mealPlans["lp"].keys.toList()[4]} - ${mealPlans["lp"][mealPlans["lp"].keys.toList()[4]]} cal\n'
+                          ,
                           dinnerImage: 'lib/assets/images/lunch-today.jpg',
-                          dinnerMealHeading: 'Pasta and Cheese',
-                          dinnerMealItems: '\u2022 Glass of wine\n'
-                              '\u2022 Pasta and Cheese - 500g\n'
-                              '\u2022 Fruit plate\n',
+                          dinnerMealHeading: '${mealPlans["bp"].keys.toList()[0]} with ${mealPlans["dp"].keys.toList()[1]}',
+                          dinnerMealItems: '\u2022 ${mealPlans["dp"].keys.toList()[0]} - ${mealPlans["dp"][mealPlans["dp"].keys.toList()[0]]}g\n'
+                              '\u2022 ${mealPlans["dp"].keys.toList()[1]} - ${mealPlans["dp"][mealPlans["dp"].keys.toList()[1]]}g\n'
+                              '\u2022 ${mealPlans["dp"].keys.toList()[2]} - ${mealPlans["dp"][mealPlans["dp"].keys.toList()[2]]}g\n'
+                              '\u2022 ${mealPlans["dp"].keys.toList()[3]} - ${mealPlans["dp"][mealPlans["dp"].keys.toList()[3]]}g\n'
+                              '\u2022 ${mealPlans["dp"].keys.toList()[4]} - ${mealPlans["dp"][mealPlans["dp"].keys.toList()[4]]} cal\n'
+                          ,
                         ),
                         const DailyMealPlan(
                           dayPlan: 'Tomorrow Plan',
@@ -403,6 +429,10 @@ class _MealPlanPageState extends State<MealPlanPage> {
     await accountDBHandler.initDatabaseConnection();
     List? userInfo = await accountDBHandler.getProfilePageInfo(_accountNo);
 
+    foodItemDbHandler = await FoodItemDbHandler();
+    await foodItemDbHandler.initDatabaseConnection();
+    List? foods = await foodItemDbHandler.getFoodDetails();
+
     // This is the conditions for goal
 
     int userGoal;
@@ -451,11 +481,26 @@ class _MealPlanPageState extends State<MealPlanPage> {
 
     double dci = calculateDailyCalIntake(age, userGender, activityStatusInt, userHeight, userWeight, userGoal);
 
+      Map<String, double> mains = foods![0];
+      Map<String, double> sides = foods[2];
+
+      Map<String, double> sides_meat = foods[1];
+      Map<String, double> deserts = foods[3];
+
+
+      mains.addAll({"Rice": 1.3, "noodles": 1.38, "pasta": 1.31, "bread": 2.65, "roti": 2.97});
+      sides.addAll({"carrot": .41, "cabbage": .25, "brinjal": .25, "kankun": .19, "brocali": .34, "potato": .77, "tomato": .18, "cheese": 4.02});
 
 
 
+      sides_meat.addAll({"tuna fish": 1.3, "chicken": 2.39, "pork": 2.42, "egg": 1.55,});
+      deserts.addAll({"cake (100g)": 257, "yoghurt-cup": 59, "bannana 100g": 89, "watermelon 100g": 30});
 
+      print([dci, mains, sides, sides_meat, deserts]);
 
+      mealPlans = getMealPlan(dci, mains, sides, sides_meat, deserts);
+
+    print("dg");
 
     // Generating the meal plans
 
