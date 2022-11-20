@@ -2,10 +2,7 @@ import 'package:dietary_project/screens/login_page.dart';
 import 'package:dietary_project/screens/profile.dart';
 import 'package:dietary_project/screens/settings.dart';
 import 'package:flutter/material.dart';
-
-// import 'package:shared_preferences/shared_preferences.dart';
-// import 'dart:async';
-import 'faq.dart';
+import 'dart:math';
 
 class NavDrawer extends StatelessWidget {
   @override
@@ -38,17 +35,6 @@ class NavDrawer extends StatelessWidget {
                       ),
                     ),
                   ),
-                  // ListTile(
-                  //   leading: Icon(Icons.input,),
-                  //   title: Text('Welcome'),
-                  //   onTap: () => {
-                  //     Navigator.push(
-                  //         context,
-                  //         MaterialPageRoute(builder: (context) => LogInPage()
-                  //         )
-                  //     ),
-                  //   },
-                  // ),
                   ListTile(
                     leading: const Icon(Icons.verified_user),
                     title: const Text('Profile'),
@@ -67,14 +53,6 @@ class NavDrawer extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => SettingsPage())),
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.border_color),
-                    title: Text('FAQ'),
-                    onTap: () => {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => FaqPage())),
                     },
                   ),
                   ListTile(
@@ -102,6 +80,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<String> tips = [
+    "You are what you eat, so don’t be fast, cheap, easy, or fake.",
+    "If you keep good food in your fridge, you will eat good food.",
+    "By choosing healthy over skinny you are choosing self-love over self-judgement.",
+    "Eat breakfast like a king, lunch like a prince, and dinner like a pauper.",
+    "Let food be thy medicine, thy medicine shall be thy food.",
+  ];
+
+  final _random = new Random();
+  int element = 0;
+  String text = "You are what you eat, so don’t be fast, cheap, easy, or fake.";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -169,10 +159,8 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         // TODO: This is the place where you should upload the daily tip
-                        const Text(
-                          "\t\"Stay active for at least once a hour "
-                          "during work time.Specialy you are working "
-                          "from a computer\"",
+                        Text(
+                          text,
                           textAlign: TextAlign.justify,
                           style: TextStyle(letterSpacing: 2),
                         ),
@@ -183,14 +171,18 @@ class _HomePageState extends State<HomePage> {
                     const Spacer(),
                     Container(
                       decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.5),
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(10))),
+                        color: Colors.black.withOpacity(0.5),
+                        borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(10),
+                        ),
+                      ),
                       child: IconButton(
                         icon: const Icon(
                           Icons.arrow_back_ios_rounded,
                         ),
                         onPressed: () {
+                          element = _random.nextInt(tips.length);
+                          text = tips[element];
                           // TODO: THis is where previous tip should added
                           print("Clicked previous tip");
                         },

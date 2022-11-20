@@ -143,7 +143,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       const Text(
                                         "First Name ",
                                         style: TextStyle(
-                                          fontSize: 20,
+                                          fontSize: 12,
                                         ),
                                       ),
                                       const SizedBox(
@@ -154,7 +154,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                         initialValue: _firstName,
                                         autofocus: false,
                                         enabled: false,
-                                        style: const TextStyle(fontSize: 20),
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                        ),
                                       ))
                                     ],
                                   ),
@@ -163,7 +165,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       const Text(
                                         "Last Name",
                                         style: TextStyle(
-                                          fontSize: 20,
+                                          fontSize: 12,
                                         ),
                                       ),
                                       const SizedBox(
@@ -174,7 +176,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                         initialValue: _lastName,
                                         enabled: false,
                                         autofocus: false,
-                                        style: const TextStyle(fontSize: 20),
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                        ),
                                       ))
                                     ],
                                   ),
@@ -183,7 +187,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       const Text(
                                         "Age",
                                         style: TextStyle(
-                                          fontSize: 20,
+                                          fontSize: 12,
                                         ),
                                       ),
                                       const SizedBox(
@@ -194,7 +198,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                         initialValue: "$_age",
                                         enabled: false,
                                         autofocus: false,
-                                        style: const TextStyle(fontSize: 20),
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                        ),
                                       ))
                                     ],
                                   ),
@@ -203,7 +209,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       const Text(
                                         "Weight",
                                         style: TextStyle(
-                                          fontSize: 20,
+                                          fontSize: 12,
                                         ),
                                       ),
                                       const SizedBox(
@@ -214,14 +220,16 @@ class _ProfilePageState extends State<ProfilePage> {
                                         initialValue: _weight.toString(),
                                         enabled: false,
                                         autofocus: false,
-                                        style: const TextStyle(fontSize: 20),
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                        ),
                                       )),
                                       const SizedBox(
                                         width: 25,
                                         child: Text(
                                           "kg",
                                           style: TextStyle(
-                                            fontSize: 17,
+                                            fontSize: 13,
                                           ),
                                         ),
                                       )
@@ -232,7 +240,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       const Text(
                                         "Height",
                                         style: TextStyle(
-                                          fontSize: 20,
+                                          fontSize: 12,
                                         ),
                                       ),
                                       const SizedBox(
@@ -243,14 +251,16 @@ class _ProfilePageState extends State<ProfilePage> {
                                         initialValue: _height.toString(),
                                         enabled: false,
                                         autofocus: false,
-                                        style: const TextStyle(fontSize: 20),
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                        ),
                                       )),
                                       const SizedBox(
                                         width: 25,
                                         child: Text(
                                           "cm",
                                           style: TextStyle(
-                                            fontSize: 17,
+                                            fontSize: 13,
                                           ),
                                         ),
                                       )
