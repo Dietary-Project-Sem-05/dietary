@@ -187,9 +187,8 @@ class _AddMealPlanState extends State<AddMealPlan>{
                           ),
                         ),
 
-                        Form(
-                            key: _formKey,
-                            child: Column(
+                        Form(child: Column(
+                          key: _formKey,
                           children: [
                             const SizedBox(
                               height: 10,

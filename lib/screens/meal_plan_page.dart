@@ -409,10 +409,97 @@ class _MealPlanPageState extends State<MealPlanPage> {
                     ),
                   ),
                 ),
-              );
-            }
-          }
-        });
+              ),
+              const DailyMealPlan(
+                dayPlan: 'Today Plan',
+                buttonLabel: 'Real Intake',
+                breakfastImage: 'lib/assets/images/breakfast-today.jpg',
+                breakfastMealHeading: 'Bread with Fish Salads',
+                breakfastMealItems: '\u2022 Bread slice x 2\n'
+                    '\u2022 Fish salads - 250g\n'
+                    '\u2022 Glass of milk\n'
+                    '\u2022 Yoghurt\n',
+                lunchImage: 'lib/assets/images/lunch-today.jpg',
+                lunchMealHeading: 'Rice and Curry',
+                lunchMealItems: '\u2022 Rice - 200g\n'
+                    '\u2022 Dhal -50g\n'
+                    '\u2022 Fish slice - 100g\n'
+                    '\u2022 Carrot - 50g\n',
+                dinnerImage: 'lib/assets/images/lunch-today.jpg',
+                dinnerMealHeading: 'Pasta and Cheese',
+                dinnerMealItems: '\u2022 Glass of wine\n'
+                    '\u2022 Pasta and Cheese - 500g\n'
+                    '\u2022 Fruit plate\n',
+              ),
+              const DailyMealPlan(
+                dayPlan: 'Tomorrow Plan',
+                buttonLabel: 'Select Plan',
+                breakfastImage: 'lib/assets/images/breakfast-today.jpg',
+                breakfastMealHeading: 'Pan Cake with Honey',
+                breakfastMealItems: '\u2022 Pan cakes x 2\n'
+                    '\u2022 Honey - 200ml\n'
+                    '\u2022 Glass of milk\n'
+                    '\u2022 Yoghurt\n',
+                lunchImage: 'lib/assets/images/lunch-today.jpg',
+                lunchMealHeading: 'Rice and Curry',
+                lunchMealItems: '\u2022 Rice - 200g\n'
+                    '\u2022 Dhal -50g\n'
+                    '\u2022 Chicken - 150g\n'
+                    '\u2022 Carrot - 50g\n',
+                dinnerImage: 'lib/assets/images/dinner-today.jpg',
+                dinnerMealHeading: 'Bread and Cheese',
+                dinnerMealItems: '\u2022 Glass of wine\n'
+                    '\u2022 Bread slice x 2\n'
+                    '\u2022 Banana - 250g\n',
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Text(
+                      'All Plans',
+                      style: GoogleFonts.roboto(
+                        textStyle: kMealDayTextStyle,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Container(
+                      height: 150,
+                      width: double.infinity,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: <Widget>[
+                          Expanded(
+                            child: MealPlanCard(
+
+                              mealPlan: MealPlanModal(
+                                12,
+                                "My Plan",
+                                  {"Rice": 100, "Chicken":100, "carrot":200, "leaks": 200, "cake":20},
+                                {"Bread": 100, "Fish":100, "carrot":200, "leaks": 200, "cake":20},
+                                {"Pasta": 100, "Almond":100, "carrot":200, "leaks": 200, "cake":20},
+                                DateTime.now()
+                              ),
+
+                            ),
+                          ),
+
+
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Future<String> downloadData() async{
