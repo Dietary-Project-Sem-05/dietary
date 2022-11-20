@@ -2,11 +2,15 @@ import 'dart:collection';
 import 'dart:ffi';
 import 'dart:math';
 
+import 'package:dietary_project/DatabaseHandler/AccountDBHandler.dart';
+import 'package:dietary_project/DatabaseHandler/GoalDBHandler.dart';
 import 'package:dietary_project/DatabaseHandler/mealplan_database.dart';
+import 'package:dietary_project/Model/user_goal_model.dart';
 import 'package:dietary_project/screens/add_meal_plan.dart';
 import 'package:dietary_project/screens/real_intake_page.dart';
 import 'package:dietary_project/screens/set_goals.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dietary_project/utilities/constants.dart';
 import 'package:dietary_project/components/meal_plan_card.dart';
@@ -54,6 +58,31 @@ class _MealPlanPageState extends State<MealPlanPage> {
       default:
         return -1;
     }
+  }
+
+  int calculateGoalType(UserGoalModel usergl){
+    int userGoal = 0;
+
+    int? days = usergl.endDate!.difference(usergl.startDate!).inDays;
+    int? weightGain = usergl.endWeight!.toInt() - usergl.startWeight!.toInt();
+
+    if(weightGain < 0){
+      userGoal = -1;
+    } else{
+      userGoal = 1;
+    }
+
+    if(weightGain.abs() / days < 0.0175){
+      userGoal *= 1;
+    } else if (weightGain.abs() / days < 0.035){
+      userGoal *= 2;
+    } else if (weightGain.abs() / days < 0.07){
+      userGoal *= 3;
+    }
+
+
+    return userGoal;
+
   }
 
   double calculateDailyCalIntake(int age, String gender, int activityStatus, int height, int weight, int goal){
@@ -187,6 +216,24 @@ class _MealPlanPageState extends State<MealPlanPage> {
 
   late List<MealPlanModal> myMealPlans;
   late MealPlanDatabase db;
+  late GoalDBHandler goalDBHandler;
+  late AccountDBHandler accountDBHandler;
+
+  final storage = GetStorage();
+
+  var _accountNo;
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
+
+  getData() {
+    _accountNo = storage.read("user_no");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -346,6 +393,72 @@ class _MealPlanPageState extends State<MealPlanPage> {
     db = MealPlanDatabase.instance;
 
     myMealPlans = await db.readMealPlans();
+
+    // Get user goal info from the db
+    goalDBHandler = await GoalDBHandler();
+    await goalDBHandler.initDatabaseConnection();
+    UserGoalModel? usergl = await goalDBHandler.getUserGoal(_accountNo);
+
+    accountDBHandler = await AccountDBHandler();
+    await accountDBHandler.initDatabaseConnection();
+    List? userInfo = await accountDBHandler.getProfilePageInfo(_accountNo);
+
+    // This is the conditions for goal
+
+    int userGoal;
+
+    if(usergl == null){
+      userGoal = 0;
+    } else{
+     userGoal = calculateGoalType(usergl!);
+    }
+
+    int age = userInfo?[0].years;
+    int userWeight = userInfo?[1];
+    int userHeight = userInfo?[2];
+    String userGender = userInfo?[3];
+    String activityStatus = userInfo?[4];
+
+    int activityStatusInt;
+
+    //
+    // 0 - sedentry - little or no exercise
+    // 1 - light - light exercise (1, 3 times a week)
+    // 2 - moderate - moderate (3, 5 times a week)
+    // 3 - active - daily exercise or intense exersie (3, 4 times a week)
+    // 4 - very active - intense workout (6, 7 times a week)
+
+    switch(activityStatus){
+      case "Sedentary":
+        activityStatusInt = 0;
+        break;
+      case "Light":
+        activityStatusInt = 1;
+        break;
+      case "Moderate":
+        activityStatusInt = 2;
+        break;
+      case "Active":
+        activityStatusInt = 3;
+        break;
+      case "Extra Active":
+        activityStatusInt = 4;
+        break;
+      default:
+        activityStatusInt = 0;
+        break;
+    }
+
+    double dci = calculateDailyCalIntake(age, userGender, activityStatusInt, userHeight, userWeight, userGoal);
+
+
+
+
+
+
+
+    // Generating the meal plans
+
 
     return "download successful";
   }
