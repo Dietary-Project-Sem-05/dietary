@@ -1,5 +1,8 @@
 
 import 'package:dietary_project/DatabaseHandler/FoodItemDbHandler.dart';
+import 'package:dietary_project/DatabaseHandler/mealplan_database.dart';
+import 'package:dietary_project/Model/meal_plan_modal.dart';
+import 'package:dietary_project/screens/add_food_item.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import "package:flutter/material.dart";
 
@@ -18,7 +21,8 @@ class _AddMealPlanState extends State<AddMealPlan>{
 
   double? total_calories = 2500;
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
+  late MealPlanDatabase db;
 
   // main states
   var _planName;
@@ -183,8 +187,9 @@ class _AddMealPlanState extends State<AddMealPlan>{
                           ),
                         ),
 
-                        Form(child: Column(
-                          key: _formKey,
+                        Form(
+                            key: _formKey,
+                            child: Column(
                           children: [
                             const SizedBox(
                               height: 10,
@@ -207,7 +212,13 @@ class _AddMealPlanState extends State<AddMealPlan>{
                                 ),
                                 onSaved: (text) {
                                   _planName = text!;
-                                  print(_planName);
+                                },
+                                validator: (text){
+                                  if(text!.isEmpty){
+                                    return "Plan name can not be empty";
+                                  } else{
+                                    return null;
+                                  }
                                 },
                               ),
                             ),
@@ -249,8 +260,11 @@ class _AddMealPlanState extends State<AddMealPlan>{
                                               searchFieldProps: const TextFieldProps(
                                                 cursorColor: Colors.green,
                                               ),
-                                              onChanged: (text){
+                                              onSaved: (text){
                                                 _bmmName = text;
+                                              },
+                                              validator: (text){
+                                                return _ValidatorHelper.dropdownMain(text);
                                               },
                                             )
                                         ),
@@ -270,12 +284,12 @@ class _AddMealPlanState extends State<AddMealPlan>{
                                                 color: Colors.white,
                                               ),
 
-                                              onChanged: (text){
-                                                _bmmAmount = int.parse(text);
-                                              }
-                                            // onSaved: (text) {
-                                            //   _bmm_intake = text!;
-                                            // },
+                                              onSaved: (text){
+                                                _bmmAmount = int.parse(text!);
+                                              },
+                                            validator: (text){
+                                              return _ValidatorHelper.amountFiledMain(text);
+                                            },
                                           ),
                                         ),
 
@@ -300,7 +314,7 @@ class _AddMealPlanState extends State<AddMealPlan>{
                                               searchFieldProps: const TextFieldProps(
                                                 cursorColor: Colors.green,
                                               ),
-                                              onChanged: (text) {
+                                              onSaved: (text) {
                                                 _bs1Name = text;
                                               },
                                             )
@@ -320,8 +334,11 @@ class _AddMealPlanState extends State<AddMealPlan>{
                                             style: const TextStyle(
                                               color: Colors.white,
                                             ),
-                                            onChanged: (text) {
-                                              _bs1Amount = int.parse(text);
+                                            onSaved: (text) {
+                                              if(text!.isNotEmpty){
+                                                _bs1Amount = int.parse(text);
+                                              }
+
                                             },
                                           ),
                                         ),
@@ -354,7 +371,7 @@ class _AddMealPlanState extends State<AddMealPlan>{
                                               searchFieldProps: const TextFieldProps(
                                                 cursorColor: Colors.green,
                                               ),
-                                              onChanged: (text){
+                                              onSaved: (text){
                                                 _bs2Name = text;
                                               },
                                             )
@@ -375,7 +392,9 @@ class _AddMealPlanState extends State<AddMealPlan>{
                                               color: Colors.white,
                                             ),
                                             onSaved: (text) {
-                                              _bs2Amount = int.parse(text!);
+                                              if(text!.isNotEmpty){
+                                                _bs2Amount = int.parse(text);
+                                              }
                                             },
                                           ),
                                         ),
@@ -428,7 +447,9 @@ class _AddMealPlanState extends State<AddMealPlan>{
                                               color: Colors.white,
                                             ),
                                             onSaved: (text) {
-                                              _bs3Amount = int.parse(text!);
+                                              if(text!.isNotEmpty){
+                                                _bs3Amount = int.parse(text);
+                                              }
                                             },
                                           ),
                                         ),
@@ -460,7 +481,7 @@ class _AddMealPlanState extends State<AddMealPlan>{
                                               searchFieldProps: const TextFieldProps(
                                                 cursorColor: Colors.green,
                                               ),
-                                              onChanged: (text){
+                                              onSaved: (text){
                                                 _bdName = text;
                                               },
                                             )
@@ -511,8 +532,11 @@ class _AddMealPlanState extends State<AddMealPlan>{
                                               searchFieldProps: const TextFieldProps(
                                                 cursorColor: Colors.green,
                                               ),
-                                              onChanged: (text){
+                                              onSaved: (text){
                                                 _lmmName = text;
+                                              },
+                                              validator: (text){
+                                                return _ValidatorHelper.dropdownMain(text);
                                               },
                                             )
                                         ),
@@ -533,6 +557,9 @@ class _AddMealPlanState extends State<AddMealPlan>{
                                             ),
                                             onSaved: (text) {
                                               _lmmAmount = int.parse(text!);
+                                            },
+                                            validator: (text){
+                                              return _ValidatorHelper.amountFiledMain(text);
                                             },
                                           ),
                                         ),
@@ -558,7 +585,7 @@ class _AddMealPlanState extends State<AddMealPlan>{
                                               searchFieldProps: const TextFieldProps(
                                                 cursorColor: Colors.green,
                                               ),
-                                              onChanged: (text){
+                                              onSaved: (text){
                                                 _ls1Name = text;
                                               },
                                             )
@@ -579,7 +606,9 @@ class _AddMealPlanState extends State<AddMealPlan>{
                                               color: Colors.white,
                                             ),
                                             onSaved: (text) {
-                                              _ls1Amount = int.parse(text!);
+                                              if(text!.isNotEmpty){
+                                                _ls1Amount = int.parse(text);
+                                              }
                                             },
                                           ),
                                         ),
@@ -612,7 +641,7 @@ class _AddMealPlanState extends State<AddMealPlan>{
                                               searchFieldProps: const TextFieldProps(
                                                 cursorColor: Colors.green,
                                               ),
-                                              onChanged: (text){
+                                              onSaved: (text){
                                                 _ls2Name = text;
                                               },
                                             )
@@ -633,7 +662,9 @@ class _AddMealPlanState extends State<AddMealPlan>{
                                               color: Colors.white,
                                             ),
                                             onSaved: (text) {
-                                              _ls2Amount = int.parse(text!);
+                                              if(text!.isNotEmpty){
+                                                _ls2Amount = int.parse(text);
+                                              }
                                             },
                                           ),
                                         ),
@@ -665,7 +696,7 @@ class _AddMealPlanState extends State<AddMealPlan>{
                                               searchFieldProps: const TextFieldProps(
                                                 cursorColor: Colors.green,
                                               ),
-                                              onChanged: (text){
+                                              onSaved: (text){
                                                 _ls3Name = text;
                                               },
                                             )
@@ -686,7 +717,9 @@ class _AddMealPlanState extends State<AddMealPlan>{
                                               color: Colors.white,
                                             ),
                                             onSaved: (text) {
-                                              _ls3Amount = int.parse(text!);
+                                              if(text!.isNotEmpty){
+                                                _ls3Amount = int.parse(text);
+                                              }
                                             },
                                           ),
                                         ),
@@ -718,7 +751,7 @@ class _AddMealPlanState extends State<AddMealPlan>{
                                               searchFieldProps: const TextFieldProps(
                                                 cursorColor: Colors.green,
                                               ),
-                                              onChanged: (text){
+                                              onSaved: (text){
                                                 _ldName = text;
                                               },
                                             )
@@ -777,8 +810,11 @@ class _AddMealPlanState extends State<AddMealPlan>{
                                               //     return null;
                                               //   }
                                               // },
-                                              onChanged: (text){
+                                              onSaved: (text){
                                                 _dmmName = text;
+                                              },
+                                              validator: (text){
+                                                return _ValidatorHelper.dropdownMain(text);
                                               },
                                             )
                                         ),
@@ -799,6 +835,9 @@ class _AddMealPlanState extends State<AddMealPlan>{
                                             ),
                                             onSaved: (text) {
                                               _dmmAmount = int.parse(text!);
+                                            },
+                                            validator: (text){
+                                              return _ValidatorHelper.amountFiledMain(text);
                                             },
                                           ),
                                         ),
@@ -845,7 +884,9 @@ class _AddMealPlanState extends State<AddMealPlan>{
                                               color: Colors.white,
                                             ),
                                             onSaved: (text) {
-                                              _ds1Amount = int.parse(text!);
+                                              if(text!.isNotEmpty){
+                                                _ds1Amount = int.parse(text);
+                                              }
                                             },
                                           ),
                                         ),
@@ -899,7 +940,9 @@ class _AddMealPlanState extends State<AddMealPlan>{
                                               color: Colors.white,
                                             ),
                                             onSaved: (text) {
-                                              _ds2Amount = int.parse(text!);
+                                              if(text!.isNotEmpty){
+                                                _ds2Amount = int.parse(text);
+                                              }
                                             },
                                           ),
                                         ),
@@ -952,7 +995,9 @@ class _AddMealPlanState extends State<AddMealPlan>{
                                               color: Colors.white,
                                             ),
                                             onSaved: (text) {
-                                              _ds3Amount = int.parse(text!);
+                                              if(text!.isNotEmpty){
+                                                _ds3Amount = int.parse(text);
+                                              }
                                             },
                                           ),
                                         ),
@@ -1001,38 +1046,43 @@ class _AddMealPlanState extends State<AddMealPlan>{
 
                             ElevatedButton(
                                 onPressed: () {
-                                  // if (_formKey.currentState!.validate()) {
-                                  //   _formKey.currentState!.save();
-                                  //
-                                  //   print(_bmmName);
-                                  //   print(_bmmAmount);
-                                  //   print(_planName);
-                                  // }
+                                  if (_formKey.currentState!.validate()) {
+                                    _formKey.currentState!.save();
 
-                                  Map breakfastMeal = {
-                                    _bmmName: _bmmAmount,
-                                    _bs1Name: _bs1Amount,
-                                    _bs2Name: _bs2Amount,
-                                    _bs3Name: _bs3Amount,
-                                    _bdName: deserts[_bdName]
-                                  };
+                                    Map breakfastMeal = {
+                                      _bmmName: _bmmAmount,
+                                      _bs1Name: _bs1Amount,
+                                      _bs2Name: _bs2Amount,
+                                      _bs3Name: _bs3Amount,
+                                      _bdName: deserts[_bdName]
+                                    };
 
-                                  print(breakfastMeal);
+                                    Map lunchMeal = {
+                                      _lmmName: _lmmAmount,
+                                      _ls1Name: _ls1Amount,
+                                      _ls2Name: _ls2Amount,
+                                      _ls3Name: _ls3Amount,
+                                      _ldName: deserts[_ldName]
+                                    };
 
-                                  _bmmName = null;
-                                  _bmmAmount = null;
+                                    Map dinnerMeal = {
+                                      _dmmName: _dmmAmount,
+                                      _ds1Name: _ds1Amount,
+                                      _ds2Name: _ds2Amount,
+                                      _ds3Name: _ds3Amount,
+                                      _ddName: deserts[_ddName]
+                                    };
 
-                                  _bs1Name = null;
-                                  _bs1Amount = null;
+                                    print([breakfastMeal, lunchMeal, dinnerMeal]);
 
-                                  _bs2Name = null;
-                                  _bs2Amount = null;
+                                    MealPlanModal createdMealPlan = MealPlanModal(-1, _planName, breakfastMeal, lunchMeal, dinnerMeal, DateTime.now());
 
-                                  _bs3Name = null;
-                                  _bs3Amount = null;
+                                    db = MealPlanDatabase.instance;
 
-                                  _bdName = null;
-                                  _bdAmount = null;
+                                    db.create(createdMealPlan);
+
+
+                                  }
 
                                 },
                                 child: FittedBox(
@@ -1089,6 +1139,27 @@ class _AddMealPlanState extends State<AddMealPlan>{
 
     return "Data download successful";
 
+
+  }
+}
+
+class _ValidatorHelper{
+  static String? dropdownMain(value){
+    if(value == null){
+      return "Main meal can't be empty";
+    } else{
+      return null;
+    }
+  }
+
+  static String? amountFiledMain(value){
+
+    if(value.isEmpty){
+      return "Enter amount";
+    }
+    else{
+      return null;
+    }
 
   }
 }

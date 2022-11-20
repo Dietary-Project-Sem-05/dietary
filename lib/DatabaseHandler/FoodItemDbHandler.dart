@@ -39,10 +39,10 @@ class FoodItemDbHandler {
       );
     });
 
-    Map<String, double> mainFoodItems = {"Rice": 10.0};
-    Map<String, double> sidesMeatsFoods = {"Chicken": 100.0};
-    Map<String, double> sidesFoods = {"Elawalu": 10.0};
-    Map<String, double> deserts = {"Kehel": 10.0};
+    Map<String, double> mainFoodItems = {"Rice": 10.0, "Pasta": 11.0};
+    Map<String, double> sidesMeatsFoods = {"Chicken": 100.0, "Beef": 200, "Pork": 150};
+    Map<String, double> sidesFoods = {"Brocali": 10.0, "Brinjal": 12};
+    Map<String, double> deserts = {"Banana": 10.0};
 
     if ((foodResults?.length)! > 0){
       for(int i = 0; i < foodResults!.length; i++){

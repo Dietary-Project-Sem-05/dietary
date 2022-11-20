@@ -34,7 +34,7 @@ class MealPlanDatabase{
       breakfast TEXT NOT NULL,
       lunch TEXT NOT NULL,
       dinner TEXT NOT NULL,
-      created_time TEXT NOT NULL,
+      created_time TEXT NOT NULL
       )
       '''
     );
@@ -46,9 +46,9 @@ class MealPlanDatabase{
     final id = await db.insert("meal_plan",
         {
           "name": mealPlan.plan_name,
-          "breakfast" : json.encode(mealPlan.breakfast),
-          "lunch" : json.encode(mealPlan.lunch),
-          "dinner": json.encode(mealPlan.dinner),
+          "breakfast" : MealPlanModal.fromJson(mealPlan.breakfast),
+          "lunch" : MealPlanModal.fromJson(mealPlan.lunch),
+          "dinner": MealPlanModal.fromJson(mealPlan.dinner),
           "created_time": mealPlan.createdTime.toIso8601String(),
         });
 
@@ -64,14 +64,20 @@ class MealPlanDatabase{
     Map result;
     MealPlanModal tempMealModal;
 
+    print(maps.length);
+
     for(int i = 0; i < maps.length; i++){
+
+
       result = maps[i];
+      // db.delete("meal_plan",where: "ID = ${result['id']}");
+
       tempMealModal = MealPlanModal(
           result["id"],
           result["name"],
-          json.decode(result["breakfast"]),
-          json.decode(result["lunch"]),
-          json.decode(result["dinner"]),
+          MealPlanModal.toJson(result["breakfast"]),
+          MealPlanModal.toJson(result["lunch"]),
+          MealPlanModal.toJson(result["dinner"]),
           DateTime.parse(result["created_time"])
       );
 
