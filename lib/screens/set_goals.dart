@@ -69,7 +69,7 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
             } else {
               return Scaffold(
                   appBar: AppBar(
-                    title: Text('Set Goal'),
+                    title: Text('View Goal'),
                     backgroundColor: Colors.black38,
                   ),
                   body: Container(
