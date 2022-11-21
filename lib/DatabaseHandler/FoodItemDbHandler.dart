@@ -12,6 +12,25 @@ class FoodItemDbHandler {
     await dbConn.initConnection();
   }
 
+  Future<bool> checkDuplicateFoodItem(FoodItemModel ftModel) async {
+    var conn = await connection;
+
+    List<List<dynamic>>? num;
+
+    await conn.transaction((ctx) async {
+      num = await ctx.query('SELECT * FROM "FoodItem" WHERE name = @name',
+          substitutionValues: {
+            'name': ftModel.name,
+          });
+    });
+    print(num);
+    if((num?.length)!>0){
+      return false;
+    }else{
+      return true;
+    }
+  }
+
   Future<void> sendFoodRequest(FoodItemModel ftModel) async {
     var conn = await connection;
 
