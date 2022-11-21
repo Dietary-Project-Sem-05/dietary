@@ -17,6 +17,7 @@ import 'package:dietary_project/utilities/constants.dart';
 import 'package:dietary_project/components/meal_plan_card.dart';
 import 'package:dietary_project/components/daily_meal_plan.dart';
 import 'package:dietary_project/components/expand_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Model/meal_plan_modal.dart';
 
@@ -237,6 +238,7 @@ class _MealPlanPageState extends State<MealPlanPage> {
   late AccountDBHandler accountDBHandler;
   late FoodItemDbHandler foodItemDbHandler;
   late Map mealPlans;
+  late Map tomorrowMealPlans;
 
   final storage = GetStorage();
 
@@ -344,8 +346,8 @@ class _MealPlanPageState extends State<MealPlanPage> {
                               '\u2022 ${mealPlans["lp"].keys.toList()[3]} - ${mealPlans["lp"][mealPlans["lp"].keys.toList()[3]]}g\n'
                               '\u2022 ${mealPlans["lp"].keys.toList()[4]} - ${mealPlans["lp"][mealPlans["lp"].keys.toList()[4]]} cal\n'
                           ,
-                          dinnerImage: 'lib/assets/images/lunch-today.jpg',
-                          dinnerMealHeading: '${mealPlans["bp"].keys.toList()[0]} with ${mealPlans["dp"].keys.toList()[1]}',
+                          dinnerImage: 'lib/assets/images/dinner-today.jpg',
+                          dinnerMealHeading: '${mealPlans["dp"].keys.toList()[0]} with ${mealPlans["dp"].keys.toList()[1]}',
                           dinnerMealItems: '\u2022 ${mealPlans["dp"].keys.toList()[0]} - ${mealPlans["dp"][mealPlans["dp"].keys.toList()[0]]}g\n'
                               '\u2022 ${mealPlans["dp"].keys.toList()[1]} - ${mealPlans["dp"][mealPlans["dp"].keys.toList()[1]]}g\n'
                               '\u2022 ${mealPlans["dp"].keys.toList()[2]} - ${mealPlans["dp"][mealPlans["dp"].keys.toList()[2]]}g\n'
@@ -353,26 +355,33 @@ class _MealPlanPageState extends State<MealPlanPage> {
                               '\u2022 ${mealPlans["dp"].keys.toList()[4]} - ${mealPlans["dp"][mealPlans["dp"].keys.toList()[4]]} cal\n'
                           ,
                         ),
-                        const DailyMealPlan(
+                        DailyMealPlan(
                           dayPlan: 'Tomorrow Plan',
                           buttonLabel: 'Select Plan',
                           breakfastImage: 'lib/assets/images/breakfast-today.jpg',
-                          breakfastMealHeading: 'Pan Cake with Honey',
-                          breakfastMealItems: '\u2022 Pan cakes x 2\n'
-                              '\u2022 Honey - 200ml\n'
-                              '\u2022 Glass of milk\n'
-                              '\u2022 Yoghurt\n',
+                          breakfastMealHeading: '${tomorrowMealPlans["bp"].keys.toList()[0]} with ${tomorrowMealPlans["bp"].keys.toList()[1]}',
+                          breakfastMealItems: '\u2022 ${tomorrowMealPlans["bp"].keys.toList()[0]} - ${tomorrowMealPlans["bp"][tomorrowMealPlans["bp"].keys.toList()[0]]}g\n'
+                              '\u2022 ${tomorrowMealPlans["bp"].keys.toList()[1]} - ${tomorrowMealPlans["bp"][tomorrowMealPlans["bp"].keys.toList()[1]]}g\n'
+                              '\u2022 ${tomorrowMealPlans["bp"].keys.toList()[2]} - ${tomorrowMealPlans["bp"][tomorrowMealPlans["bp"].keys.toList()[2]]}g\n'
+                              '\u2022 ${tomorrowMealPlans["bp"].keys.toList()[3]} - ${tomorrowMealPlans["bp"][tomorrowMealPlans["bp"].keys.toList()[3]]}g\n'
+                              '\u2022 ${tomorrowMealPlans["bp"].keys.toList()[4]} - ${tomorrowMealPlans["bp"][tomorrowMealPlans["bp"].keys.toList()[4]]} cal\n'
+                          ,
                           lunchImage: 'lib/assets/images/lunch-today.jpg',
-                          lunchMealHeading: 'Rice and Curry',
-                          lunchMealItems: '\u2022 Rice - 200g\n'
-                              '\u2022 Dhal -50g\n'
-                              '\u2022 Chicken - 150g\n'
-                              '\u2022 Carrot - 50g\n',
+                          lunchMealHeading: '${tomorrowMealPlans["lp"].keys.toList()[0]} with ${tomorrowMealPlans["lp"].keys.toList()[1]}',
+                          lunchMealItems: '\u2022 ${tomorrowMealPlans["lp"].keys.toList()[0]} - ${tomorrowMealPlans["lp"][tomorrowMealPlans["lp"].keys.toList()[0]]}g\n'
+                              '\u2022 ${tomorrowMealPlans["lp"].keys.toList()[1]} - ${tomorrowMealPlans["lp"][tomorrowMealPlans["lp"].keys.toList()[1]]}g\n'
+                              '\u2022 ${tomorrowMealPlans["lp"].keys.toList()[2]} - ${tomorrowMealPlans["lp"][tomorrowMealPlans["lp"].keys.toList()[2]]}g\n'
+                              '\u2022 ${tomorrowMealPlans["lp"].keys.toList()[3]} - ${tomorrowMealPlans["lp"][tomorrowMealPlans["lp"].keys.toList()[3]]}g\n'
+                              '\u2022 ${tomorrowMealPlans["lp"].keys.toList()[4]} - ${tomorrowMealPlans["lp"][tomorrowMealPlans["lp"].keys.toList()[4]]} cal\n'
+                          ,
                           dinnerImage: 'lib/assets/images/dinner-today.jpg',
-                          dinnerMealHeading: 'Bread and Cheese',
-                          dinnerMealItems: '\u2022 Glass of wine\n'
-                              '\u2022 Bread slice x 2\n'
-                              '\u2022 Banana - 250g\n',
+                          dinnerMealHeading: '${tomorrowMealPlans["dp"].keys.toList()[0]} with ${tomorrowMealPlans["dp"].keys.toList()[1]}',
+                          dinnerMealItems: '\u2022 ${tomorrowMealPlans["dp"].keys.toList()[0]} - ${tomorrowMealPlans["dp"][tomorrowMealPlans["dp"].keys.toList()[0]]}g\n'
+                              '\u2022 ${tomorrowMealPlans["dp"].keys.toList()[1]} - ${tomorrowMealPlans["dp"][tomorrowMealPlans["dp"].keys.toList()[1]]}g\n'
+                              '\u2022 ${tomorrowMealPlans["dp"].keys.toList()[2]} - ${tomorrowMealPlans["dp"][tomorrowMealPlans["dp"].keys.toList()[2]]}g\n'
+                              '\u2022 ${tomorrowMealPlans["dp"].keys.toList()[3]} - ${tomorrowMealPlans["dp"][tomorrowMealPlans["dp"].keys.toList()[3]]}g\n'
+                              '\u2022 ${tomorrowMealPlans["dp"].keys.toList()[4]} - ${tomorrowMealPlans["dp"][tomorrowMealPlans["dp"].keys.toList()[4]]} cal\n'
+                          ,
                         ),
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 15.0),
@@ -417,75 +426,94 @@ class _MealPlanPageState extends State<MealPlanPage> {
 
   Future<String> downloadData() async{
     db = MealPlanDatabase.instance;
-
     myMealPlans = await db.readMealPlans();
 
-    // Get user goal info from the db
-    goalDBHandler = await GoalDBHandler();
-    await goalDBHandler.initDatabaseConnection();
-    UserGoalModel? usergl = await goalDBHandler.getUserGoal(_accountNo);
+    final prefs = await SharedPreferences.getInstance();
 
-    accountDBHandler = await AccountDBHandler();
-    await accountDBHandler.initDatabaseConnection();
-    List? userInfo = await accountDBHandler.getProfilePageInfo(_accountNo);
+    // await prefs.remove('today_plan_bp');
+    // await prefs.remove('today_plan_lp');
+    // await prefs.remove('today_plan_dp');
+    // await prefs.remove('tomorrow_plan_bp');
+    // await prefs.remove('tomorrow_plan_lp');
+    // await prefs.remove('tomorrow_plan_dp');
+    //
+    // await prefs.remove('mp_created_time');
 
     foodItemDbHandler = await FoodItemDbHandler();
     await foodItemDbHandler.initDatabaseConnection();
     List? foods = await foodItemDbHandler.getFoodDetails();
 
-    // This is the conditions for goal
+    Map<String, double> mains = foods![0];
+    Map<String, double> sides = foods[2];
 
-    int userGoal;
+    Map<String, double> sides_meat = foods[1];
+    Map<String, double> deserts = foods[3];
 
-    if(usergl == null){
-      userGoal = 0;
-    } else{
-     userGoal = calculateGoalType(usergl!);
-    }
+    if (
+        prefs.getString("today_plan_bp") == null ||
+        prefs.getString("today_plan_lp") == null ||
+        prefs.getString("today_plan_dp") == null ||
+        prefs.getString("tomorrow_plan_bp") == null ||
+        prefs.getString("tomorrow_plan_lp") == null ||
+        prefs.getString("tomorrow_plan_dp") == null
+    ){
+      // Get user goal info from the db
+      goalDBHandler = await GoalDBHandler();
+      await goalDBHandler.initDatabaseConnection();
+      UserGoalModel? usergl = await goalDBHandler.getUserGoal(_accountNo);
 
-    int age = userInfo?[0].years;
-    int userWeight = userInfo?[1];
-    int userHeight = userInfo?[2];
-    String userGender = userInfo?[3];
-    String activityStatus = userInfo?[4];
+      accountDBHandler = await AccountDBHandler();
+      await accountDBHandler.initDatabaseConnection();
+      List? userInfo = await accountDBHandler.getProfilePageInfo(_accountNo);
 
-    int activityStatusInt;
 
-    //
-    // 0 - sedentry - little or no exercise
-    // 1 - light - light exercise (1, 3 times a week)
-    // 2 - moderate - moderate (3, 5 times a week)
-    // 3 - active - daily exercise or intense exersie (3, 4 times a week)
-    // 4 - very active - intense workout (6, 7 times a week)
+      // This is the conditions for goal
 
-    switch(activityStatus){
-      case "Sedentary":
-        activityStatusInt = 0;
-        break;
-      case "Light":
-        activityStatusInt = 1;
-        break;
-      case "Moderate":
-        activityStatusInt = 2;
-        break;
-      case "Active":
-        activityStatusInt = 3;
-        break;
-      case "Extra Active":
-        activityStatusInt = 4;
-        break;
-      default:
-        activityStatusInt = 0;
-        break;
-    }
+      int userGoal;
 
-    double dci = calculateDailyCalIntake(age, userGender, activityStatusInt, userHeight, userWeight, userGoal);
+      if(usergl == null){
+        userGoal = 0;
+      } else{
+        userGoal = calculateGoalType(usergl!);
+      }
 
-      Map<String, double> mains = foods![0];
-      Map<String, double> sides = foods[2];
+      int age = userInfo?[0].years;
+      int userWeight = userInfo?[1];
+      int userHeight = userInfo?[2];
+      String userGender = userInfo?[3];
+      String activityStatus = userInfo?[4];
 
-      Map<String, double> sides_meat = foods[1];
-      Map<String, double> deserts = foods[3];
+      int activityStatusInt;
+
+      //
+      // 0 - sedentry - little or no exercise
+      // 1 - light - light exercise (1, 3 times a week)
+      // 2 - moderate - moderate (3, 5 times a week)
+      // 3 - active - daily exercise or intense exersie (3, 4 times a week)
+      // 4 - very active - intense workout (6, 7 times a week)
+
+      switch(activityStatus){
+        case "Sedentary":
+          activityStatusInt = 0;
+          break;
+        case "Light":
+          activityStatusInt = 1;
+          break;
+        case "Moderate":
+          activityStatusInt = 2;
+          break;
+        case "Active":
+          activityStatusInt = 3;
+          break;
+        case "Extra Active":
+          activityStatusInt = 4;
+          break;
+        default:
+          activityStatusInt = 0;
+          break;
+      }
+
+      double dci = calculateDailyCalIntake(age, userGender, activityStatusInt, userHeight, userWeight, userGoal);
 
 
       // mains.addAll({"Rice": 1.3, "noodles": 1.38, "pasta": 1.31, "bread": 2.65, "roti": 2.97});
@@ -500,7 +528,83 @@ class _MealPlanPageState extends State<MealPlanPage> {
 
       mealPlans = getMealPlan(dci, mains, sides, sides_meat, deserts);
 
-    print("dg");
+      await prefs.setDouble("dci", dci);
+
+      DateTime now = DateTime.now();
+
+      // code to store the meal plan
+      await prefs.setString("today_plan_bp", MealPlanModal.fromJson(mealPlans["bp"]));
+      await prefs.setString("today_plan_lp", MealPlanModal.fromJson(mealPlans["lp"]));
+      await prefs.setString("today_plan_dp", MealPlanModal.fromJson(mealPlans["dp"]));
+      await prefs.setString("mp_created_time", DateTime(
+        now.year,
+        now.month,
+        now.day,
+      ).toIso8601String());
+
+      tomorrowMealPlans = getMealPlan(dci, mains, sides, sides_meat, deserts);
+
+      await prefs.setString("tomorrow_plan_bp", MealPlanModal.fromJson(tomorrowMealPlans["bp"]));
+      await prefs.setString("tomorrow_plan_lp", MealPlanModal.fromJson(tomorrowMealPlans["lp"]));
+      await prefs.setString("tomorrow_plan_dp", MealPlanModal.fromJson(tomorrowMealPlans["dp"]));
+
+      print("dg");
+
+    } else{
+
+      mealPlans = {
+        "bp": MealPlanModal.toJson(prefs.getString("today_plan_bp")!),
+        "lp": MealPlanModal.toJson(prefs.getString("today_plan_lp")!),
+        "dp": MealPlanModal.toJson(prefs.getString("today_plan_dp")!),
+      };
+
+      tomorrowMealPlans = {
+        "bp": MealPlanModal.toJson(prefs.getString("tomorrow_plan_bp")!),
+        "lp": MealPlanModal.toJson(prefs.getString("tomorrow_plan_lp")!),
+        "dp": MealPlanModal.toJson(prefs.getString("tomorrow_plan_dp")!),
+      };
+
+      if(DateTime.now().difference(DateTime.parse(prefs.getString("mp_created_time")!)).inDays > 1){
+
+        mealPlans = tomorrowMealPlans;
+        double? dci = prefs.getDouble("dci");
+
+        await prefs.remove('today_plan_bp');
+        await prefs.remove('today_plan_lp');
+        await prefs.remove('today_plan_dp');
+        await prefs.remove('tomorrow_plan_bp');
+        await prefs.remove('tomorrow_plan_lp');
+        await prefs.remove('tomorrow_plan_dp');
+
+        await prefs.remove('mp_created_time');
+
+
+        DateTime now = DateTime.now();
+
+        // code to store the meal plan
+        await prefs.setString("today_plan_bp", MealPlanModal.fromJson(mealPlans["bp"]));
+        await prefs.setString("today_plan_lp", MealPlanModal.fromJson(mealPlans["lp"]));
+        await prefs.setString("today_plan_dp", MealPlanModal.fromJson(mealPlans["dp"]));
+        await prefs.setString("mp_created_time", DateTime(
+          now.year,
+          now.month,
+          now.day,
+        ).toIso8601String());
+
+        tomorrowMealPlans = getMealPlan(dci!, mains, sides, sides_meat, deserts);
+
+        await prefs.setString("tomorrow_plan_bp", MealPlanModal.fromJson(tomorrowMealPlans["bp"]));
+        await prefs.setString("tomorrow_plan_lp", MealPlanModal.fromJson(tomorrowMealPlans["lp"]));
+        await prefs.setString("tomorrow_plan_dp", MealPlanModal.fromJson(tomorrowMealPlans["dp"]));
+
+      }
+
+
+
+    }
+
+
+
 
     // Generating the meal plans
 
