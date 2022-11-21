@@ -3,6 +3,7 @@ import 'package:dietary_project/DatabaseHandler/FoodItemDbHandler.dart';
 import 'package:dietary_project/DatabaseHandler/mealplan_database.dart';
 import 'package:dietary_project/Model/meal_plan_modal.dart';
 import 'package:dietary_project/screens/add_food_item.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import "package:flutter/material.dart";
 
@@ -1080,6 +1081,15 @@ class _AddMealPlanState extends State<AddMealPlan>{
                                     db = MealPlanDatabase.instance;
 
                                     db.create(createdMealPlan);
+
+                                    Fluttertoast.showToast(
+                                        msg: "Success",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.TOP,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.red,
+                                        textColor: Colors.black87,
+                                        fontSize: 16.0);
 
 
                                   }
