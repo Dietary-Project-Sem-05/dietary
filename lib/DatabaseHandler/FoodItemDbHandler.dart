@@ -80,7 +80,7 @@ class FoodItemDbHandler {
           case "SIDE":
             sidesFoods[result[0]] = double.parse(result[1].toString());
             continue;
-          case "DESERT":
+          case "DESSERT":
             deserts[result[0]] = double.parse(result[1].toString());
             continue;
         }
