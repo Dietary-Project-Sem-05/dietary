@@ -167,16 +167,36 @@ class _HomePageState extends State<HomePage> {
                   return HelpValidator.validateHeight(value!);
                 },
               ),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _weight = int.parse(weightCtrl.text);
-                    _height = int.parse(heightCtrl.text);
+              const SizedBox(
+                height: 50.0,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      fixedSize: const Size(100, 20),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Exit'),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      fixedSize: const Size(100, 20),
+                    ),
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        _weight = int.parse(weightCtrl.text);
+                        _height = int.parse(heightCtrl.text);
 
-                    updateProfile();
-                  }
-                },
-                child: const Text('Update'),
+                        updateProfile();
+                      }
+                    },
+                    child: const Text('Update'),
+                  ),
+                ],
               ),
             ],
           ),
@@ -201,7 +221,7 @@ class _HomePageState extends State<HomePage> {
             repeat: ImageRepeat.repeat,
           )),
           child: Container(
-            color: Colors.black.withOpacity(0.7),
+            color: Colors.black87.withOpacity(0.7),
             child: Column(
               children: [
                 const SizedBox(

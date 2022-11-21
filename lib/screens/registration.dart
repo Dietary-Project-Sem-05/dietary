@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:dietary_project/Model/account_model.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:dietary_project/DatabaseHandler/AccountDBHandler.dart';
+import 'package:crypt/crypt.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -31,8 +32,10 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   signUp() async {
+    String hashedPassword = await Crypt.sha256(_password).toString();
+
     AccountModel userMd =
-        AccountModel(_firstName, _lastName, _username, _email, _password);
+       await  AccountModel(_firstName, _lastName, _username, _email, hashedPassword);
 
     await dbHandler.checkUserName(_username).then((userData) {
       if (userData == "Error") {

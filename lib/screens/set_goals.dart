@@ -24,6 +24,7 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
   var _expectedWeight;
   var _startingDate;
   var _expectedDate;
+  late String _text;
 
   @override
   void initState() {
@@ -38,6 +39,47 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
   editGoal() {
     Navigator.push(
         context, MaterialPageRoute(builder: (_) => SetGoalsEditPage()));
+  }
+
+  Future<String> downloadData() async {
+    dbHandler = await GoalDBHandler();
+    await dbHandler.initDatabaseConnection();
+    UserGoalModel? userGl = await dbHandler.getUserGoal(_accountNo);
+    int? weight = await dbHandler.getWeight(_accountNo);
+
+    box.write("cWeight", weight);
+
+    if (userGl == null) {
+      _text = "Set Your Goals and be the best among the best in life 😁";
+
+      _startingDate = "NULL";
+      _currentWeight = "NULL";
+      _expectedDate = "NULL";
+      _expectedWeight = "NULL";
+      return "NULL";
+    } else {
+      _startingDate = await userGl.startDate;
+      _currentWeight = await userGl.startWeight;
+      _expectedDate = await userGl.endDate;
+      _expectedWeight = await userGl.endWeight;
+
+      if(_expectedWeight>weight){
+        int behind = _expectedWeight - weight;
+        _text = "You are $behind behind kilograms before the target date";
+      }
+      else{
+        num front = weight! - _expectedWeight;
+        _text = "Congratulations You have achieved your target!!!";
+      }
+    }
+
+    var formattedDateStart =
+        await DateFormat('yyyy-MM-dd').format(_startingDate);
+    var formattedDateEnd = await DateFormat('yyyy-MM-dd').format(_expectedDate);
+
+    _startingDate = await formattedDateStart;
+    _expectedDate = await formattedDateEnd;
+    return "Data downloaded successfully!!";
   }
 
   @override
@@ -69,156 +111,175 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
             } else {
               return Scaffold(
                   appBar: AppBar(
-                    title: Text('View Goal'),
+                    title: const Text('View Goal'),
                     backgroundColor: Colors.black38,
                   ),
                   body: Container(
                       constraints: const BoxConstraints.expand(),
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage("lib/assets/images/food_bg.jpg"),
+                          image:
+                              AssetImage("lib/assets/images/food_colored.jpg"),
                           repeat: ImageRepeat.repeat,
                         ),
                       ),
                       child: SingleChildScrollView(
-                        child: Container(
-                          height: 400.0,
-                          width: 350.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.black87,
-                          ),
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: 45.0,
-                            vertical: 145.0,
-                          ),
-                          padding: const EdgeInsets.all(20.0),
-                          child: Form(
-                            key: _formKey,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Row(
-                                  children: [
-                                    const Text("Current Weight"),
-                                    const SizedBox(
-                                      width: 20,
+                        scrollDirection: Axis.vertical,
+                        child: Column(
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              margin: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  color: Colors.black87.withOpacity(0.7),
+                                  borderRadius: BorderRadius.circular(10)),
+                              padding: const EdgeInsets.all(10),
+                              child: Column(
+                                children: [
+                                  const Text(
+                                    "Note",
+                                    style: TextStyle(
+                                      color: Colors.green,
+                                      fontSize: 20,
                                     ),
-                                    Expanded(
-                                      child: TextFormField(
-                                        initialValue: _currentWeight.toString(),
-                                        autofocus: false,
-                                        enabled: false,
-                                        style: const TextStyle(fontSize: 14),
+                                    textAlign: TextAlign.right,
+                                  ),
+                                  Title(
+                                    color: Colors.blue,
+                                    child: Text(
+                                      _text,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 17,
+                                        letterSpacing: 2,
                                       ),
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    const Text("Starting Date  "),
-                                    const SizedBox(
-                                      width: 20,
+                                      textAlign: TextAlign.left,
                                     ),
-                                    Expanded(
-                                      child: TextFormField(
-                                        initialValue: _startingDate.toString(),
-                                        autofocus: false,
-                                        enabled: false,
-                                        style: const TextStyle(fontSize: 14),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    const Text("Expected Weight"),
-                                    const SizedBox(
-                                      width: 20,
-                                    ),
-                                    Expanded(
-                                      child: TextFormField(
-                                        initialValue:
-                                            _expectedWeight.toString(),
-                                        autofocus: false,
-                                        enabled: false,
-                                        style: const TextStyle(fontSize: 14),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    const Text("Expected Date  "),
-                                    const SizedBox(
-                                      width: 20,
-                                    ),
-                                    Expanded(
-                                      child: TextFormField(
-                                        initialValue: _expectedDate.toString(),
-                                        autofocus: false,
-                                        enabled: false,
-                                        style: const TextStyle(fontSize: 14),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 50,
-                                ),
-                                Container(
-                                  child: ElevatedButton(
-                                      onPressed: () {
-                                        editGoal();
-                                      },
-                                      child: FittedBox(
-                                        fit: BoxFit.fill,
-                                        child: Row(
-                                          children: const [
-                                            Text(
-                                              "Set Goal",
-                                              style:
-                                                  TextStyle(letterSpacing: 3),
-                                            ),
-                                            Icon(Icons.flag),
-                                          ],
-                                        ),
-                                      )),
-                                ),
-                              ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
+                            Container(
+                              height: 400.0,
+                              width: 350.0,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.black87.withOpacity(0.7),
+                              ),
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 45.0,
+                                vertical: 45.0,
+                              ),
+                              padding: const EdgeInsets.all(20.0),
+                              child: Form(
+                                key: _formKey,
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const Text("Current Weight"),
+                                        const SizedBox(
+                                          width: 20,
+                                        ),
+                                        Expanded(
+                                          child: TextFormField(
+                                            initialValue:
+                                                _currentWeight.toString(),
+                                            autofocus: false,
+                                            enabled: false,
+                                            style:
+                                                const TextStyle(fontSize: 14),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Text("Starting Date  "),
+                                        const SizedBox(
+                                          width: 20,
+                                        ),
+                                        Expanded(
+                                          child: TextFormField(
+                                            initialValue:
+                                                _startingDate.toString(),
+                                            autofocus: false,
+                                            enabled: false,
+                                            style:
+                                                const TextStyle(fontSize: 14),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Text("Expected Weight"),
+                                        const SizedBox(
+                                          width: 20,
+                                        ),
+                                        Expanded(
+                                          child: TextFormField(
+                                            initialValue:
+                                                _expectedWeight.toString(),
+                                            autofocus: false,
+                                            enabled: false,
+                                            style:
+                                                const TextStyle(fontSize: 14),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Text("Expected Date  "),
+                                        const SizedBox(
+                                          width: 20,
+                                        ),
+                                        Expanded(
+                                          child: TextFormField(
+                                            initialValue:
+                                                _expectedDate.toString(),
+                                            autofocus: false,
+                                            enabled: false,
+                                            style:
+                                                const TextStyle(fontSize: 14),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 50,
+                                    ),
+                                    Container(
+                                      child: ElevatedButton(
+                                          onPressed: () {
+                                            editGoal();
+                                          },
+                                          child: FittedBox(
+                                            fit: BoxFit.fill,
+                                            child: Row(
+                                              children: const [
+                                                Text(
+                                                  "Set Goal",
+                                                  style: TextStyle(
+                                                      letterSpacing: 3),
+                                                ),
+                                                Icon(Icons.flag),
+                                              ],
+                                            ),
+                                          )),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       )));
             }
           }
         });
-  }
-
-  Future<String> downloadData() async {
-    dbHandler = await GoalDBHandler();
-    await dbHandler.initDatabaseConnection();
-    UserGoalModel? userGl = await dbHandler.getUserGoal(_accountNo);
-
-    if (userGl == null) {
-      _startingDate = "NULL";
-      _currentWeight = "NULL";
-      _expectedDate = "NULL";
-      _expectedWeight = "NULL";
-      return "NULL";
-    } else {
-      _startingDate = await userGl.startDate;
-      _currentWeight = await userGl.startWeight;
-      _expectedDate = await userGl.endDate;
-      _expectedWeight = await userGl.endWeight;
-    }
-
-    var formattedDateStart =
-        await DateFormat('yyyy-MM-dd').format(_startingDate);
-    var formattedDateEnd = await DateFormat('yyyy-MM-dd').format(_expectedDate);
-
-    _startingDate = await formattedDateStart;
-    _expectedDate = await formattedDateEnd;
-    return "Data downloaded successfully!!";
   }
 }

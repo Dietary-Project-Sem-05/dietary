@@ -1,6 +1,6 @@
 import 'package:dietary_project/Model/account_model.dart';
 import 'package:dietary_project/Model/general_user_model.dart';
-import 'dart:io' as io;
+import 'package:crypt/crypt.dart';
 import 'package:postgres/postgres.dart';
 import 'package:dietary_project/DatabaseHandler/DbConnector.dart';
 import 'package:age_calculator/age_calculator.dart';
@@ -89,28 +89,31 @@ class AccountDBHandler {
 
     await conn.transaction((ctx) async {
       loginResults = await ctx.query(
-          'SELECT * FROM "Account" WHERE username = @usernameValue AND password = @passwordValue',
+          'SELECT * FROM "Account" WHERE username = @usernameValue',
           substitutionValues: {
             "usernameValue": userName,
-            "passwordValue": password,
           });
     });
 
     if ((loginResults?.length)! > 0) {
       List? firstItem = loginResults?.first;
 
-      AccountModel accMdl = AccountModel(
-        firstItem![3],
-        firstItem[4],
-        firstItem[5],
-        firstItem[6],
-        firstItem[7],
-      );
+      if (Crypt(firstItem![7]).match(password)) {
+        AccountModel accMdl = AccountModel(
+          firstItem[3],
+          firstItem[4],
+          firstItem[5],
+          firstItem[6],
+          firstItem[7],
+        );
 
-      accMdl.setUserId = firstItem[0];
-      accMdl.setUserNo = firstItem[1];
+        accMdl.setUserId = firstItem[0];
+        accMdl.setUserNo = firstItem[1];
 
-      return accMdl;
+        return accMdl;
+      } else {
+        return null;
+      }
     } else {
       return null;
     }
@@ -129,7 +132,7 @@ class AccountDBHandler {
           });
     });
     // print(profileData?.first);
-    var data =  profileData?.first;
+    var data = profileData?.first;
     var age = AgeCalculator.age(data![0]);
 
     List<dynamic> lst = [age, data[1], data[2], data[3], data[4]];
@@ -145,8 +148,8 @@ class AccountDBHandler {
           'UPDATE "GeneralUser" SET weight=@weight, height=@height WHERE id=@user_no',
           substitutionValues: {
             'user_no': accountNo,
-            'height' : height,
-            'weight' : weight,
+            'height': height,
+            'weight': weight,
           });
     });
   }

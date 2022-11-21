@@ -39,9 +39,9 @@ class _AddFoodItemState extends State<AddFoodItem> {
 
     await dbHandler.checkDuplicateFoodItem(ftModel).then((check) async {
       print(check);
-      if(check){
+      if (check) {
         await dbHandler.sendFoodRequest(ftModel).then((value) {
-          return Fluttertoast.showToast(
+          Fluttertoast.showToast(
               msg: "Request Sent!",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.TOP,
@@ -50,8 +50,8 @@ class _AddFoodItemState extends State<AddFoodItem> {
               textColor: Colors.black87,
               fontSize: 16.0);
         });
-      }else{
-        return Fluttertoast.showToast(
+      } else {
+        Fluttertoast.showToast(
             msg: "Duplicate Found!",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.TOP,
@@ -60,9 +60,8 @@ class _AddFoodItemState extends State<AddFoodItem> {
             textColor: Colors.black87,
             fontSize: 16.0);
       }
-
+      Navigator.pop(context);
     });
-
   }
 
   List<DropdownMenuItem<String>> menuItemsType = [
@@ -153,91 +152,148 @@ class _AddFoodItemState extends State<AddFoodItem> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Add New Food Item'),
-          backgroundColor: Colors.black38,
+      appBar: AppBar(
+        title: const Text('Add New Food Item'),
+        backgroundColor: Colors.black38,
+      ),
+      body: Container(
+        height: 250.0,
+        width: 350.0,
+        constraints: const BoxConstraints.expand(),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("lib/assets/images/food_colored.jpg"),
+            repeat: ImageRepeat.repeat,
+          ),
         ),
-        body: Container(
-            height: 250.0,
-            width: 350.0,
-            constraints: const BoxConstraints.expand(),
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("lib/assets/images/food_colored.jpg"),
-                repeat: ImageRepeat.repeat,
-              ),
-            ),
-            child: Column(
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 250.0,
-                    width: 350.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.black87.withOpacity(0.7),
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              margin: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                  color: Colors.black87.withOpacity(0.7),
+                  borderRadius: BorderRadius.circular(10)),
+              padding: const EdgeInsets.all(25),
+              child: Column(
+                children: [
+                  const Text(
+                    "Note",
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontSize: 20,
                     ),
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 45.0,
-                      vertical: 145.0,
-                    ),
-                    padding: const EdgeInsets.all(20.0),
-                    child: Form(
-                      key: _formKey,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Row(children: [
-                              Expanded(
-                                flex: 1,
-                                child: _buildNameField(),
-                              ),
-                            ]),
-                            Row(children: [
-                              Expanded(
-                                flex: 1,
-                                child: _buildCalorie(),
-                              ),
-                            ]),
-                            Row(children: [
-                              Expanded(
-                                flex: 1,
-                                child: _buildType(),
-                              ),
-                            ]),
-                            const SizedBox(
-                              height: 50.0,
-                            ),
-                            Container(
-                              child: ElevatedButton(
-                                  onPressed: () {
-                                    if (_formKey.currentState!.validate()) {
-                                      _formKey.currentState!.save();
-                                      saveData();
-                                    }
-                                  },
-                                  child: FittedBox(
-                                    fit: BoxFit.fill,
-                                    child: Row(
-                                      children: const [
-                                        Text(
-                                          "Add Request",
-                                          style: TextStyle(letterSpacing: 3),
-                                        ),
-                                        Icon(Icons.flag),
-                                      ],
-                                    ),
-                                  )),
-                            ),
-                          ],
-                        ),
+                    textAlign: TextAlign.right,
+                  ),
+                  Title(
+                    color: Colors.blue,
+                    child: const Text(
+                      "Send your food requests to us. We'll review and get back to you 😁",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 17,
+                        letterSpacing: 2,
                       ),
+                      textAlign: TextAlign.left,
                     ),
                   ),
-                )
-              ],
-            )));
+                ],
+              ),
+            ),
+            Container(
+              child: Container(
+                height: 420.0,
+                width: 350.0,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.black87.withOpacity(0.7),
+                ),
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 45.0,
+                  vertical: 45.0,
+                ),
+                padding: const EdgeInsets.all(20.0),
+                child: Form(
+                  key: _formKey,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Row(children: [
+                          Expanded(
+                            flex: 1,
+                            child: _buildNameField(),
+                          ),
+                        ]),
+                        Row(children: [
+                          Expanded(
+                            flex: 1,
+                            child: _buildCalorie(),
+                          ),
+                        ]),
+                        Row(children: [
+                          Expanded(
+                            flex: 1,
+                            child: _buildType(),
+                          ),
+                        ]),
+                        const SizedBox(
+                          height: 50.0,
+                        ),
+                        Container(
+                          child: ElevatedButton(
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  _formKey.currentState!.save();
+                                  saveData();
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                fixedSize: const Size(200, 20),
+                              ),
+                              child: FittedBox(
+                                fit: BoxFit.fill,
+                                child: Row(
+                                  children: const [
+                                    Text(
+                                      "Add Request",
+                                      style: TextStyle(letterSpacing: 3),
+                                    ),
+                                    Icon(Icons.flag),
+                                  ],
+                                ),
+                              )),
+                        ),
+                        Container(
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              fixedSize: const Size(200, 20),
+                            ),
+                            child: FittedBox(
+                              fit: BoxFit.fill,
+                              child: Row(
+                                children: const [
+                                  Text("Back",
+                                      style: TextStyle(letterSpacing: 3)),
+                                  Icon(Icons.exit_to_app),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
 
