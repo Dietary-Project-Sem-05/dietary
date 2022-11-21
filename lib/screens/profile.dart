@@ -1,6 +1,6 @@
+import 'package:dietary_project/screens/profile_edit.dart';
 import "package:flutter/material.dart";
 import 'package:get_storage/get_storage.dart';
-import 'package:postgres/postgres.dart';
 import '../DatabaseHandler/AccountDBHandler.dart';
 import 'package:age_calculator/age_calculator.dart';
 
@@ -36,20 +36,16 @@ class _ProfilePageState extends State<ProfilePage> {
     _accountNo = box.read("user_no");
   }
 
-  void toggleSwitch(bool value) {
-    if (isSwitched == false) {
-      setState(() {
-        isSwitched = true;
-      });
-    } else {
-      setState(() {
-        isSwitched = false;
-      });
-    }
+  editProfile(){
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => ProfileEditPage() ));
   }
+
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
     return FutureBuilder<String>(
       future: downloadData(), // function where you call your api
       builder: (
@@ -135,138 +131,162 @@ class _ProfilePageState extends State<ProfilePage> {
                               width: double.infinity,
                               margin: const EdgeInsets.only(
                                   top: 100, bottom: 100, left: 10, right: 10),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        "First Name ",
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 20,
-                                      ),
-                                      Expanded(
-                                          child: TextFormField(
-                                        initialValue: _firstName,
-                                        autofocus: false,
-                                        enabled: false,
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                        ),
-                                      ))
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        "Last Name",
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 20,
-                                      ),
-                                      Expanded(
-                                          child: TextFormField(
-                                        initialValue: _lastName,
-                                        enabled: false,
-                                        autofocus: false,
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                        ),
-                                      ))
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        "Age",
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 45,
-                                      ),
-                                      Expanded(
-                                          child: TextFormField(
-                                        initialValue: "$_age",
-                                        enabled: false,
-                                        autofocus: false,
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                        ),
-                                      ))
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        "Weight",
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 20,
-                                      ),
-                                      Expanded(
-                                          child: TextFormField(
-                                        initialValue: _weight.toString(),
-                                        enabled: false,
-                                        autofocus: false,
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                        ),
-                                      )),
-                                      const SizedBox(
-                                        width: 25,
-                                        child: Text(
-                                          "kg",
+                              child: Form(
+                                key: _formKey,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const Text(
+                                          "First Name ",
                                           style: TextStyle(
-                                            fontSize: 13,
+                                            fontSize: 12,
                                           ),
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        "Height",
-                                        style: TextStyle(
-                                          fontSize: 12,
+                                        const SizedBox(
+                                          width: 20,
                                         ),
-                                      ),
-                                      const SizedBox(
-                                        width: 25,
-                                      ),
-                                      Expanded(
-                                          child: TextFormField(
-                                        initialValue: _height.toString(),
-                                        enabled: false,
-                                        autofocus: false,
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                        ),
-                                      )),
-                                      const SizedBox(
-                                        width: 25,
-                                        child: Text(
-                                          "cm",
+                                        Expanded(
+                                            child: TextFormField(
+                                          initialValue: _firstName,
+                                          autofocus: false,
+                                          enabled: false,
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                          ),
+                                        ))
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Text(
+                                          "Last Name",
                                           style: TextStyle(
-                                            fontSize: 13,
+                                            fontSize: 12,
                                           ),
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                ],
+                                        const SizedBox(
+                                          width: 20,
+                                        ),
+                                        Expanded(
+                                            child: TextFormField(
+                                          initialValue: _lastName,
+                                          enabled: false,
+                                          autofocus: false,
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                          ),
+                                        ))
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Text(
+                                          "Age",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 45,
+                                        ),
+                                        Expanded(
+                                            child: TextFormField(
+                                          initialValue: "$_age",
+                                          enabled: false,
+                                          autofocus: false,
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                          ),
+                                        ))
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Text(
+                                          "Weight",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 20,
+                                        ),
+                                        Expanded(
+                                            child: TextFormField(
+                                          initialValue: _weight.toString(),
+                                          enabled: false,
+                                          autofocus: false,
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                          ),
+                                        )),
+                                        const SizedBox(
+                                          width: 25,
+                                          child: Text(
+                                            "kg",
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Text(
+                                          "Height",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 25,
+                                        ),
+                                        Expanded(
+                                            child: TextFormField(
+                                          initialValue: _height.toString(),
+                                          enabled: false,
+                                          autofocus: false,
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                          ),
+                                        )),
+                                        const SizedBox(
+                                          width: 25,
+                                          child: Text(
+                                            "cm",
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    Container(
+                                      child: ElevatedButton(
+                                          onPressed: () {
+                                            editProfile();
+                                          },
+                                          child: FittedBox(
+                                            fit: BoxFit.fill,
+                                            child: Row(
+                                              children: const [
+                                                Text(
+                                                  "Update Profile Info",
+                                                  style: TextStyle(letterSpacing: 3),
+                                                ),
+                                                Icon(Icons.update),
+                                              ],
+                                            ),
+                                          )),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ],
