@@ -221,7 +221,7 @@ class _HomePageState extends State<HomePage> {
             repeat: ImageRepeat.repeat,
           )),
           child: Container(
-            color: Colors.black.withOpacity(0.7),
+            color: Colors.black87.withOpacity(0.7),
             child: Column(
               children: [
                 const SizedBox(

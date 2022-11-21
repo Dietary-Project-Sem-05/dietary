@@ -100,7 +100,7 @@ class AccountDBHandler {
 
       if (Crypt(firstItem![7]).match(password)) {
         AccountModel accMdl = AccountModel(
-          firstItem![3],
+          firstItem[3],
           firstItem[4],
           firstItem[5],
           firstItem[6],

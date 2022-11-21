@@ -37,6 +37,8 @@ class _SetGoalsEditPageState extends State<SetGoalsEditPage> {
 
   getData() {
     _accountNo = box.read("user_no");
+    _currentWeight = box.read("cWeight");
+    _startingDate = DateTime.now();
   }
 
   saveData() async {
@@ -45,7 +47,7 @@ class _SetGoalsEditPageState extends State<SetGoalsEditPage> {
     UserGoalModel ugModel = await UserGoalModel.withoutGoalId(
         _accountNo,
         _startingDate,
-        int.parse(_currentWeight),
+        _currentWeight,
         _expectedDate,
         int.parse(_expectedWeight),
         0);
@@ -62,30 +64,6 @@ class _SetGoalsEditPageState extends State<SetGoalsEditPage> {
     );
     Navigator.pop(context);
     // print(goalId);
-  }
-
-  Widget _buildCurrentWeightField() {
-    return TextFormField(
-      key: Key("currentWeight"),
-      maxLength: 5,
-      keyboardType: TextInputType.number,
-      decoration: const InputDecoration(
-          counterText: "",
-          labelText: "Current Weight(kg)",
-          labelStyle: TextStyle(
-            color: Colors.white,
-          )),
-      style: const TextStyle(
-        color: Colors.white,
-        fontSize: 12.5,
-      ),
-      validator: (text) {
-        return HelpValidator.validateStartingWeight(text);
-      },
-      onSaved: (text) {
-        _currentWeight = text!;
-      },
-    );
   }
 
   Widget _buildExpectedWeightField() {
@@ -112,49 +90,7 @@ class _SetGoalsEditPageState extends State<SetGoalsEditPage> {
     );
   }
 
-  Widget _buildCurrentDateField(BuildContext context) {
-    return TextFormField(
-      key: Key("currentDate"),
-      controller: startingDateInput,
-      //editing controller of this TextField
-      decoration: const InputDecoration(
-        labelText: "Starting Date",
-        labelStyle: TextStyle(
-          color: Colors.white,
-        ),
-      ),
-      readOnly: true,
-      style: const TextStyle(
-        color: Colors.white,
-        fontSize: 12.5,
-      ),
-      onTap: () async {
-        DateTime? pickedDate = await showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime.now(),
-            lastDate: DateTime(2035));
 
-        if (pickedDate != null) {
-          //pickedDate output format => 2021-03-10 00:00:00.000
-          String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-          //formatted date output using intl package =>  2021-03-16
-
-          setState(() {
-            startingDateInput.text =
-                formattedDate; //set output date to TextField value.
-            _startingDate = pickedDate;
-            // print(_startingDate);
-          });
-        } else {
-          print("Date is not selected");
-        }
-      },
-      validator: (date) {
-        return HelpValidator.validateStartingDate(date);
-      },
-    );
-  }
 
   Widget _buildExpectedDateField(BuildContext context) {
     return TextFormField(
@@ -195,7 +131,7 @@ class _SetGoalsEditPageState extends State<SetGoalsEditPage> {
         }
       },
       validator: (date) {
-        return HelpValidator.validateExpectedDate(date, _startingDate);
+        return HelpValidator.validateExpectedDate(date);
       },
     );
   }
@@ -211,104 +147,133 @@ class _SetGoalsEditPageState extends State<SetGoalsEditPage> {
             constraints: const BoxConstraints.expand(),
             decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("lib/assets/images/home_bg.jpg"),
-                  repeat: ImageRepeat.repeat,
-                )),
+              image: AssetImage("lib/assets/images/food_colored.jpg"),
+              repeat: ImageRepeat.repeat,
+            )),
             child: SingleChildScrollView(
-              child: Container(
-                height: 400.0,
-                width: 350.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.black.withOpacity(0.8),
-                ),
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 45.0,
-                  vertical: 145.0,
-                ),
-                padding: const EdgeInsets.all(20.0),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: _buildCurrentWeightField(),
+              child: Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    margin: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        color: Colors.black87.withOpacity(0.7),
+                        borderRadius: BorderRadius.circular(10)),
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        const Text(
+                          "Note",
+                          style: TextStyle(
+                            color: Colors.green,
+                            fontSize: 20,
                           ),
-                          Expanded(
-                            flex: 1,
-                            child: _buildExpectedWeightField(),
+                          textAlign: TextAlign.right,
+                        ),
+                        Title(
+                          color: Colors.blue,
+                          child: const Text(
+                            "Set Your Goals and be the best among the best in life 😁",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 17,
+                              letterSpacing: 2,
+                            ),
+                            textAlign: TextAlign.left,
                           ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: _buildCurrentDateField(context),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: _buildExpectedDateField(context),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 50.0,
-                      ),
-                      Row(
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 400.0,
+                    width: 350.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.black87.withOpacity(0.7),
+                    ),
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 45.0,
+                      vertical: 50.0,
+                    ),
+                    padding: const EdgeInsets.all(20.0),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                fixedSize: const Size(100, 20),
-                              ),
-                              child: FittedBox(
-                                fit: BoxFit.fill,
-                                child: Row(
-                                  children: const [
-                                    Text(
-                                      "Back",
-                                      style: TextStyle(letterSpacing: 3),
-                                    ),
-                                    Icon(Icons.exit_to_app),
-                                  ],
-                                ),
-                              )),
-                          ElevatedButton(
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  _formKey.currentState!.save();
-                                  saveData();
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                fixedSize: const Size(100, 20),
-                              ),
-                              child: FittedBox(
-                                fit: BoxFit.fill,
-                                child: Row(
-                                  children: const [
-                                    Text(
-                                      "Update",
-                                      style: TextStyle(letterSpacing: 3),
-                                    ),
-                                    Icon(Icons.flag),
-                                  ],
-                                ),
-                              )),
+                          Row(
+                            children: [
 
+                              Expanded(
+                                flex: 1,
+                                child: _buildExpectedWeightField(),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+
+                              Expanded(
+                                flex: 1,
+                                child: _buildExpectedDateField(context),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10.0,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    fixedSize: const Size(100, 20),
+                                  ),
+                                  child: FittedBox(
+                                    fit: BoxFit.fill,
+                                    child: Row(
+                                      children: const [
+                                        Text(
+                                          "Back",
+                                          style: TextStyle(letterSpacing: 3),
+                                        ),
+                                        Icon(Icons.exit_to_app),
+                                      ],
+                                    ),
+                                  )),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    if (_formKey.currentState!.validate()) {
+                                      _formKey.currentState!.save();
+                                      saveData();
+                                    }
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    fixedSize: const Size(100, 20),
+                                  ),
+                                  child: FittedBox(
+                                    fit: BoxFit.fill,
+                                    child: Row(
+                                      children: const [
+                                        Text(
+                                          "Update",
+                                          style: TextStyle(letterSpacing: 3),
+                                        ),
+                                        Icon(Icons.flag),
+                                      ],
+                                    ),
+                                  )),
+                            ],
+                          ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
             )));
   }
@@ -348,18 +313,16 @@ class HelpValidator {
     return null;
   }
 
-  static String? validateExpectedDate(expDate, _startingDate) {
+  static String? validateExpectedDate(expDate) {
     if (expDate.isEmpty) {
       return "Expected date cannot be empty";
-    } else if (_startingDate == null) {
-      return "Starting date cannot be empty";
     } else {
       // print(_startingDate);
-      final startingDate = _startingDate;
+      final startingDate = DateTime.now();
       final expirationDate = DateTime.parse(expDate);
       final bool isExpired = expirationDate.isAfter(startingDate);
 
-      if ((_startingDate != null) && !isExpired) {
+      if (!isExpired) {
         return "Invalid Date";
       }
       if (expirationDate.difference(startingDate).inDays > 30) {
