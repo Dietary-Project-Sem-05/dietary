@@ -3,6 +3,8 @@ import 'package:dietary_project/screens/profile.dart';
 import 'package:dietary_project/screens/settings.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:get_storage/get_storage.dart';
+import '../DatabaseHandler/AccountDBHandler.dart';
 
 class NavDrawer extends StatelessWidget {
   @override
@@ -92,6 +94,97 @@ class _HomePageState extends State<HomePage> {
   int element = 0;
   String text = "You are what you eat, so don’t be fast, cheap, easy, or fake.";
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  late int _accountNo;
+  late int _weight;
+  late int _height;
+
+  late AccountDBHandler dbHandler;
+
+  final box = GetStorage();
+
+  @override
+  void initState() {
+    super.initState();
+    showPopup();
+  }
+
+  getData() {
+    _accountNo = box.read("user_no");
+  }
+
+  updateProfile() async{
+    await getData();
+
+    dbHandler = await AccountDBHandler();
+    await dbHandler.initDatabaseConnection();
+
+    await dbHandler.updateProfileInfo(_weight, _height, _accountNo);
+
+    Navigator.pop(context);
+  }
+
+  showPopup() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      var weightCtrl = TextEditingController();
+      var heightCtrl = TextEditingController();
+
+      showDialog(
+        context: context,
+        builder: (context) => Form(
+          key: _formKey,
+          child: AlertDialog(
+            content: const Text('Update Your Details'),
+            actions: [
+              TextFormField(
+                keyboardType: TextInputType.number,
+                controller: weightCtrl,
+                decoration: const InputDecoration(
+                  icon: Icon(Icons.numbers),
+                  hintText: 'Enter your current weight',
+                  labelText: 'Weight (kg)*',
+                ),
+                onSaved: (value) {
+                  print(_weight);
+                  _weight = int.parse(value!);
+                },
+                validator: (value) {
+                  return HelpValidator.validateWeight(value!);
+                },
+              ),
+              TextFormField(
+                keyboardType: TextInputType.number,
+                controller: heightCtrl,
+                decoration: const InputDecoration(
+                  icon: Icon(Icons.numbers),
+                  hintText: 'Enter your current weight',
+                  labelText: 'Height (cm)*',
+                ),
+                onSaved: (value) {
+                  _height = int.parse(value!);
+                },
+                validator: (value) {
+                  return HelpValidator.validateHeight(value!);
+                },
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    _weight = int.parse(weightCtrl.text);
+                    _height = int.parse(heightCtrl.text);
+
+                    updateProfile();
+                  }
+                },
+                child: const Text('Update'),
+              ),
+            ],
+          ),
+        ),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,7 +231,7 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.only(
                         left: 10, right: 10, top: 20, bottom: 20),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(10),
                         bottomLeft: Radius.circular(10),
                       ),
@@ -214,5 +307,38 @@ class _HomePageState extends State<HomePage> {
             ),
           )),
     );
+  }
+}
+
+class HelpValidator {
+  static String? validateHeight(String heightString) {
+    int height = int.parse(heightString);
+    if (heightString.isEmpty) {
+      return "Height cannot be empty";
+    } else if (height > 200) {
+      return "Height is out of range";
+    } else if (height < 0) {
+      return "Height cannot be negative";
+    } else if (height == 0) {
+      return "Height cannot be 0";
+    } else {
+      return null;
+    }
+  }
+
+  static String? validateWeight(String weightString) {
+    int weight = int.parse(weightString);
+
+    if (weightString.isEmpty) {
+      return "Weight cannot be empty";
+    } else if (weight > 300) {
+      return "Weight is out of range";
+    } else if (weight < 0) {
+      return "Weight cannot be negative";
+    } else if (weight == 0) {
+      return "Weight cannot be 0";
+    } else {
+      return null;
+    }
   }
 }
