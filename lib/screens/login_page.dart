@@ -47,6 +47,7 @@ class _LogInPageState extends State<LogInPage> {
         box.write("user_name", userData.user_name);
         box.write("email", userData.email);
         box.write("password", userData.password);
+        box.write('isLoggedIn', 0);
 
         Navigator.pushAndRemoveUntil(
             context,
