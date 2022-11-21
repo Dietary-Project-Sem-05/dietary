@@ -1,5 +1,9 @@
+import 'package:dietary_project/DatabaseHandler/FoodItemDbHandler.dart';
+import 'package:dietary_project/Model/food_item_model.dart';
 import 'package:dietary_project/screens/add_food_item.dart';
 import 'package:flutter/material.dart';
+
+import '../Model/meal_plan_modal.dart';
 
 class FoodPage extends StatefulWidget {
   const FoodPage({Key? key}) : super(key: key);
@@ -8,36 +12,19 @@ class FoodPage extends StatefulWidget {
   State<FoodPage> createState() => _FoodPageState();
 }
 
-class FoodItem {
-  String name;
-  double per_amount;
-  String path;
-  double calories;
-  double carbs;
-  double fats;
-
-  FoodItem(this.name, this.per_amount, this.path, this.calories, this.carbs,
-      this.fats);
-}
 
 class _FoodPageState extends State<FoodPage> {
+
+  late FoodItemDbHandler dbHandler;
+  late List<FoodItemModel> allFoods = [];
 
   routePage() {
     Navigator.push(context, MaterialPageRoute(builder: (_) => AddFoodItem()));
   }
 
   // Need to get the food details for this array
-  List<FoodItem> food_details = [
-    FoodItem("Rice", 100, "rice.jpeg", 12.5, 20.5, 3.4),
-    FoodItem("Hoppers", 100, "hoppers.jpeg", 12.5, 20.5, 3.4),
-    FoodItem("Pasta", 100, "pasta.jpeg", 12.5, 20.5, 3.4),
-    FoodItem("Noodles", 100, "noodles.jpeg", 12.5, 20.5, 3.4),
-    FoodItem("Bread", 100, "bread.jpeg", 12.6, 22.2, 11.2),
-    FoodItem("Burger", 400, "burger.jpeg", 1000, 200, 100),
-  ];
 
-  Widget _foodItem(String food_name, double per_amount, String food_img_path,
-      double calorie, double carbs, double fats) {
+  Widget _foodItem(String food_name, String food_catogary, int calorie) {
     return Container(
         margin: const EdgeInsets.symmetric(
           horizontal: 10,
@@ -55,29 +42,14 @@ class _FoodPageState extends State<FoodPage> {
               Title(
                 color: Colors.black,
                 child: Text(
-                  "$food_name ($per_amount g)",
+                  "$food_name ($food_catogary)",
                   style: const TextStyle(color: Colors.blue),
                 ),
               ),
               const SizedBox(height: 10),
               Text("\u2022 Calories : $calorie"),
-              Text("\u2022 Carbs : $carbs"),
-              Text("\u2022 Fats : $fats"),
             ]),
             const Spacer(),
-            Expanded(
-              flex: 0,
-              child: SizedBox(
-                height: 74,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5),
-                  child: Image.asset(
-                    'lib/assets/images/foods/$food_img_path',
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-            ),
           ],
         ));
   }
@@ -117,58 +89,129 @@ class _FoodPageState extends State<FoodPage> {
   Widget build(BuildContext context) {
     String search_string = "";
 
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Food Details'),
-          backgroundColor: Colors.black38,
-        ),
-        body: Container(
-            constraints: const BoxConstraints.expand(),
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-              image: AssetImage("lib/assets/images/food_colored.jpg"),
-              repeat: ImageRepeat.repeat,
-            )),
-            child: Stack(
-              children: [
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10.0, vertical: 10),
-                      child: TextField(
-                        onChanged: (value) {
-                          setState(() {
-                            search_string = value.toLowerCase();
-                          });
-                        },
-                        decoration: const InputDecoration(
-                          labelText: 'Search',
-                          suffixIcon: Icon(Icons.search),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: food_details.length,
-                          // TODO: number of items in the db need to be added to here
-                          itemBuilder: (context, index) {
-                            return _foodItem(
-                              food_details[index].name,
-                              food_details[index].per_amount,
-                              food_details[index].path,
-                              food_details[index].calories,
-                              food_details[index].carbs,
-                              food_details[index].fats,
-                            );
-                          }),
-                    ),
-                    _addNewFood(),
-                    // TODO: add a floating button to add new food
-                  ],
-                ),
+    return FutureBuilder(
+      future: downloadData(),
+      builder: (
+        BuildContext context,
+        AsyncSnapshot<String> snapshot,
+      ){
+        if (snapshot.connectionState == ConnectionState.waiting){
+          return Material(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                SizedBox(height: 20,),
+                CircularProgressIndicator(),
               ],
-            )));
+            ),
+          );
+        } else{
+          if (snapshot.hasError){
+            print(snapshot.error);
+            return Center(
+              child: Text(
+                'Error: ${snapshot.error}'
+              ),
+            );
+          } else{
+            return Scaffold(
+                appBar: AppBar(
+                  title: const Text('Food Details'),
+                  backgroundColor: Colors.black38,
+                ),
+                body: Container(
+                    constraints: const BoxConstraints.expand(),
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage("lib/assets/images/food_colored.jpg"),
+                          repeat: ImageRepeat.repeat,
+                        )),
+                    child: Stack(
+                      children: [
+                        Column(
+                          children: [
+                            // Padding(
+                            //   padding: const EdgeInsets.symmetric(
+                            //       horizontal: 10.0, vertical: 10),
+                            //   child: TextField(
+                            //     onChanged: (value) {
+                            //       search_string = value.toLowerCase();
+                            //     },
+                            //     onSubmitted: (value){
+                            //       for(int i = 0; i < allFoods.length; i++){
+                            //         if(allFoods[i].name == value){
+                            //           allFoods = [allFoods[i]];
+                            //           print(MealPlanModal.toJson("{'Rice':12.0, 'Milk': 13.9}"));
+                            //           break;
+                            //         }
+                            //       }
+                            //     },
+                            //     decoration: const InputDecoration(
+                            //       labelText: 'Search',
+                            //       suffixIcon: Icon(Icons.search),
+                            //     ),
+                            //   ),
+                            // ),
+                            Expanded(
+                              child: ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: allFoods.length,
+                                  // TODO: number of items in the db need to be added to here
+                                  itemBuilder: (context, index) {
+                                    return _foodItem(
+                                        allFoods[index].name,
+                                        allFoods[index].category,
+                                        allFoods[index].calory_count
+                                    );
+                                  }),
+                            ),
+                            _addNewFood(),
+                            // TODO: add a floating button to add new food
+                          ],
+                        ),
+                      ],
+                    )));
+          }
+        }
+      },);
+  }
+
+  Future<String> downloadData() async{
+    dbHandler = await FoodItemDbHandler();
+    await dbHandler.initDatabaseConnection();
+
+    List? foodItems = await dbHandler.getFoodDetails();
+    String current;
+
+    Map mainFoods = foodItems![0];
+    Map sidesMeatsFoods = foodItems[1];
+    Map sidesFoods = foodItems[2];
+    Map deserts = foodItems[3];
+
+
+    allFoods = [];
+
+    for(int i = 0; i < mainFoods.keys.toList().length; i++){
+      current = mainFoods.keys.toList()[i];
+      allFoods.add(FoodItemModel.withoutFoodId(current, -1, mainFoods[current].toInt(), "Main Food"));
+    }
+
+    for(int i = 0; i < sidesMeatsFoods.keys.toList().length; i++){
+      current = sidesMeatsFoods.keys.toList()[i];
+      allFoods.add(FoodItemModel.withoutFoodId( current, -1, sidesMeatsFoods[current].toInt(), "Side Non Veg Food"));
+    }
+
+    for(int i = 0; i < sidesFoods.keys.toList().length; i++){
+      current = sidesFoods.keys.toList()[i];
+      allFoods.add(FoodItemModel.withoutFoodId(current, -1, sidesFoods[current].toInt(), "Side Veg Food"));
+    }
+
+    for(int i = 0; i < deserts.keys.toList().length; i++){
+      current = deserts.keys.toList()[i];
+      allFoods.add(FoodItemModel.withoutFoodId(current, -1, deserts[current].toInt(), "Desert"));
+    }
+
+    return "Data download successful";
+
   }
 }

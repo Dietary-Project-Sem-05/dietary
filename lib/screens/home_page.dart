@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       drawer: NavDrawer(),
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: const Text('Home Page'),
         backgroundColor: Colors.black38,
       ),
       body: Container(

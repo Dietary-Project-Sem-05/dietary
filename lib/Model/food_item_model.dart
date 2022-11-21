@@ -23,4 +23,5 @@ class FoodItemModel {
   set setFoodId(int food_id) {
     this.food_id = food_id;
   }
+
 }
