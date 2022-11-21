@@ -51,7 +51,7 @@ class _SetGoalsEditPageState extends State<SetGoalsEditPage> {
         0);
 
     await dbHandler.saveGoalDetails(ugModel);
-    return Fluttertoast.showToast(
+    Fluttertoast.showToast(
       msg: "Successfully Added!",
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.TOP,
@@ -60,6 +60,7 @@ class _SetGoalsEditPageState extends State<SetGoalsEditPage> {
       textColor: Colors.black87,
       fontSize: 16.0,
     );
+    Navigator.pop(context);
     // print(goalId);
   }
 
@@ -209,18 +210,17 @@ class _SetGoalsEditPageState extends State<SetGoalsEditPage> {
         body: Container(
             constraints: const BoxConstraints.expand(),
             decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("lib/assets/images/food_bg.jpg"),
-                repeat: ImageRepeat.repeat,
-              ),
-            ),
+                image: DecorationImage(
+                  image: AssetImage("lib/assets/images/home_bg.jpg"),
+                  repeat: ImageRepeat.repeat,
+                )),
             child: SingleChildScrollView(
               child: Container(
                 height: 400.0,
                 width: 350.0,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: Colors.black.withOpacity(0.7),
+                  color: Colors.black.withOpacity(0.8),
                 ),
                 margin: const EdgeInsets.symmetric(
                   horizontal: 45.0,
@@ -259,26 +259,52 @@ class _SetGoalsEditPageState extends State<SetGoalsEditPage> {
                       const SizedBox(
                         height: 50.0,
                       ),
-                      Container(
-                        child: ElevatedButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                _formKey.currentState!.save();
-                                saveData();
-                              }
-                            },
-                            child: FittedBox(
-                              fit: BoxFit.fill,
-                              child: Row(
-                                children: const [
-                                  Text(
-                                    "Update",
-                                    style: TextStyle(letterSpacing: 3),
-                                  ),
-                                  Icon(Icons.flag),
-                                ],
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                fixedSize: const Size(100, 20),
                               ),
-                            )),
+                              child: FittedBox(
+                                fit: BoxFit.fill,
+                                child: Row(
+                                  children: const [
+                                    Text(
+                                      "Back",
+                                      style: TextStyle(letterSpacing: 3),
+                                    ),
+                                    Icon(Icons.exit_to_app),
+                                  ],
+                                ),
+                              )),
+                          ElevatedButton(
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  _formKey.currentState!.save();
+                                  saveData();
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                fixedSize: const Size(100, 20),
+                              ),
+                              child: FittedBox(
+                                fit: BoxFit.fill,
+                                child: Row(
+                                  children: const [
+                                    Text(
+                                      "Update",
+                                      style: TextStyle(letterSpacing: 3),
+                                    ),
+                                    Icon(Icons.flag),
+                                  ],
+                                ),
+                              )),
+
+                        ],
                       ),
                     ],
                   ),

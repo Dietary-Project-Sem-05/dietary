@@ -39,9 +39,9 @@ class _AddFoodItemState extends State<AddFoodItem> {
 
     await dbHandler.checkDuplicateFoodItem(ftModel).then((check) async {
       print(check);
-      if(check){
+      if (check) {
         await dbHandler.sendFoodRequest(ftModel).then((value) {
-          return Fluttertoast.showToast(
+          Fluttertoast.showToast(
               msg: "Request Sent!",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.TOP,
@@ -50,8 +50,8 @@ class _AddFoodItemState extends State<AddFoodItem> {
               textColor: Colors.black87,
               fontSize: 16.0);
         });
-      }else{
-        return Fluttertoast.showToast(
+      } else {
+        Fluttertoast.showToast(
             msg: "Duplicate Found!",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.TOP,
@@ -60,9 +60,8 @@ class _AddFoodItemState extends State<AddFoodItem> {
             textColor: Colors.black87,
             fontSize: 16.0);
       }
-
+      Navigator.pop(context);
     });
-
   }
 
   List<DropdownMenuItem<String>> menuItemsType = [
@@ -217,6 +216,9 @@ class _AddFoodItemState extends State<AddFoodItem> {
                                       saveData();
                                     }
                                   },
+                                  style: ElevatedButton.styleFrom(
+                                    fixedSize: const Size(200, 20),
+                                  ),
                                   child: FittedBox(
                                     fit: BoxFit.fill,
                                     child: Row(
@@ -229,6 +231,26 @@ class _AddFoodItemState extends State<AddFoodItem> {
                                       ],
                                     ),
                                   )),
+                            ),
+                            Container(
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  fixedSize: const Size(200, 20),
+                                ),
+                                child: FittedBox(
+                                  fit: BoxFit.fill,
+                                  child: Row(
+                                    children: const [
+                                      Text("Back",
+                                          style: TextStyle(letterSpacing: 3)),
+                                      Icon(Icons.exit_to_app),
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),

@@ -86,7 +86,7 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
                           width: 350.0,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Colors.black87,
+                            color: Colors.black.withOpacity(0.8),
                           ),
                           margin: const EdgeInsets.symmetric(
                             horizontal: 45.0,

@@ -474,7 +474,7 @@ class _MealPlanPageState extends State<MealPlanPage> {
       if(usergl == null){
         userGoal = 0;
       } else{
-        userGoal = calculateGoalType(usergl!);
+        userGoal = calculateGoalType(usergl);
       }
 
       int age = userInfo?[0].years;
