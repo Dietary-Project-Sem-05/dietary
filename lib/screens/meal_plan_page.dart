@@ -154,27 +154,27 @@ class _MealPlanPageState extends State<MealPlanPage> {
 
 
 
-    String main = mains.keys.toList()[random.nextInt(deserts.length)];
-    int mainIntake = (calAmount * 50 / 100)~/mains[main];
+    String main = mains.keys.toList()[random.nextInt(mains.length)];
+    int mainIntake = (calAmount * 50 / 100)~/(mains[main]/100);
     mains.remove(main);
 
 
 
     String side1 = sidesMeat.keys.toList()[random.nextInt(sidesMeat.length)];
-    int side1Intake = (calAmount * 30 / 100)~/ sidesMeat[side1];
+    int side1Intake = (calAmount * 30 / 100)~/ (sidesMeat[side1]/100);
     sidesMeat.remove(side1);
 
 
 
     String side2 = sides.keys.toList()[random.nextInt(sides.length)];
-    int side2Intake = (calAmount * 10 / 100)~/ sides[side2];
+    int side2Intake = (calAmount * 10 / 100)~/ (sides[side2]/100);
     sides.remove(side2);
 
 
 
     String side3 = sides.keys.toList()[random.nextInt(sides.length)];
 
-    int side3Intake = (calAmount * 10 / 100)~/ sides[side3];
+    int side3Intake = (calAmount * 10 / 100)~/ (sides[side3]/100);
     sides.remove(side3);
 
     Map mealPlan = {
@@ -488,13 +488,13 @@ class _MealPlanPageState extends State<MealPlanPage> {
       Map<String, double> deserts = foods[3];
 
 
-      mains.addAll({"Rice": 1.3, "noodles": 1.38, "pasta": 1.31, "bread": 2.65, "roti": 2.97});
-      sides.addAll({"carrot": .41, "cabbage": .25, "brinjal": .25, "kankun": .19, "brocali": .34, "potato": .77, "tomato": .18, "cheese": 4.02});
-
-
-
-      sides_meat.addAll({"tuna fish": 1.3, "chicken": 2.39, "pork": 2.42, "egg": 1.55,});
-      deserts.addAll({"cake (100g)": 257, "yoghurt-cup": 59, "bannana 100g": 89, "watermelon 100g": 30});
+      // mains.addAll({"Rice": 1.3, "noodles": 1.38, "pasta": 1.31, "bread": 2.65, "roti": 2.97});
+      // sides.addAll({"carrot": .41, "cabbage": .25, "brinjal": .25, "kankun": .19, "brocali": .34, "potato": .77, "tomato": .18, "cheese": 4.02});
+      //
+      //
+      //
+      // sides_meat.addAll({"tuna fish": 1.3, "chicken": 2.39, "pork": 2.42, "egg": 1.55,});
+      // deserts.addAll({"cake (100g)": 257, "yoghurt-cup": 59, "bannana 100g": 89, "watermelon 100g": 30});
 
       print([dci, mains, sides, sides_meat, deserts]);
 
