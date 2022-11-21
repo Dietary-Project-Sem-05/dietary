@@ -136,4 +136,18 @@ class AccountDBHandler {
 
     return lst;
   }
+
+  Future<void> updateProfileInfo(int weight, int height, int accountNo) async {
+    var conn = await connection;
+
+    await conn.transaction((ctx) async {
+      await ctx.query(
+          'UPDATE "GeneralUser" SET weight=@weight, height=@height WHERE id=@user_no',
+          substitutionValues: {
+            'user_no': accountNo,
+            'height' : height,
+            'weight' : weight,
+          });
+    });
+  }
 }

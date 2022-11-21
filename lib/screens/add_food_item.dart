@@ -37,23 +37,32 @@ class _AddFoodItemState extends State<AddFoodItem> {
 
     ftModel = FoodItemModel.withoutFoodId(_name, 0, _calory, _type);
 
-    await dbHandler.sendFoodRequest(ftModel).then((value) {
-      return Fluttertoast.showToast(
-          msg: "Request Sent!",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.green,
-          textColor: Colors.black87,
-          fontSize: 16.0);
+    await dbHandler.checkDuplicateFoodItem(ftModel).then((check) async {
+      print(check);
+      if(check){
+        await dbHandler.sendFoodRequest(ftModel).then((value) {
+          return Fluttertoast.showToast(
+              msg: "Request Sent!",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.TOP,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.green,
+              textColor: Colors.black87,
+              fontSize: 16.0);
+        });
+      }else{
+        return Fluttertoast.showToast(
+            msg: "Duplicate Found!",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.TOP,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.black87,
+            fontSize: 16.0);
+      }
+
     });
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => FoodPage(),
-      ),
-    );
   }
 
   List<DropdownMenuItem<String>> menuItemsType = [
