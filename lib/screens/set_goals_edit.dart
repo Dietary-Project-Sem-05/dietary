@@ -139,6 +139,7 @@ class _SetGoalsEditPageState extends State<SetGoalsEditPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: const Text('Update Goal'),
           backgroundColor: Colors.black38,
