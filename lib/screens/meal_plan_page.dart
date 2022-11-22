@@ -1,5 +1,3 @@
-import 'dart:collection';
-import 'dart:ffi';
 import 'dart:math';
 
 import 'package:dietary_project/DatabaseHandler/AccountDBHandler.dart';
@@ -7,16 +5,12 @@ import 'package:dietary_project/DatabaseHandler/FoodItemDbHandler.dart';
 import 'package:dietary_project/DatabaseHandler/GoalDBHandler.dart';
 import 'package:dietary_project/DatabaseHandler/mealplan_database.dart';
 import 'package:dietary_project/Model/user_goal_model.dart';
-import 'package:dietary_project/screens/add_meal_plan.dart';
-import 'package:dietary_project/screens/real_intake_page.dart';
-import 'package:dietary_project/screens/set_goals.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dietary_project/utilities/constants.dart';
 import 'package:dietary_project/components/meal_plan_card.dart';
 import 'package:dietary_project/components/daily_meal_plan.dart';
-import 'package:dietary_project/components/expand_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Model/meal_plan_modal.dart';
@@ -389,13 +383,13 @@ class _MealPlanPageState extends State<MealPlanPage> {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: <Widget>[
                               Text(
-                                'All Plans',
+                                "All Plans",
                                 style: GoogleFonts.roboto(
                                   textStyle: kMealDayTextStyle,
                                   color: Colors.white,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10.0,
                               ),
                               Container(

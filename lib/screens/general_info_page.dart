@@ -91,7 +91,6 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
         value: "None", enabled: false, child: Text("Exercise Type")),
     const DropdownMenuItem(value: "Gain", child: Text("Weight Gain")),
     const DropdownMenuItem(value: "Loss", child: Text("Weight Loss")),
-    const DropdownMenuItem(value: "Maintain", child: Text("Maintain Weight")),
   ];
 
   List<DropdownMenuItem<String>> menuItemsNotification = [

@@ -36,7 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   get_storage: ^2.0.3
   crypt: ^4.2.1
-  dropdown_search: ^3.0.1
+  dropdown_search: ^5.0.1
   sqflite: ^2.0.0+3
 
 dev_dependencies:

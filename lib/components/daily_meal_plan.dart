@@ -48,11 +48,11 @@ class DailyMealPlan extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
             decoration: BoxDecoration(
-              color: Color(0xEE0277bd).withOpacity(0.8),
+              color: const Color(0xEE0277bd).withOpacity(0.8),
               // borderRadius: BorderRadius.circular(5.0),
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(5.0),
                 topRight: Radius.circular(5.0),
               ),
@@ -64,35 +64,6 @@ class DailyMealPlan extends StatelessWidget {
                   dayPlan.toString(),
                   style: GoogleFonts.roboto(
                     textStyle: kMealDayTextStyle,
-                  ),
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.blue.withOpacity(0.9),
-                    onSurface: Colors.red,
-                  ),
-                  onPressed: () {
-
-                    if(this.buttonLabel.toString() == "Real Intake"){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => RealIntakePage(),)
-                      );
-                    }
-                    else if(this.buttonLabel.toString() == "Select Plan"){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SettingsPage(),)
-                      );
-                    }
-
-
-                  },
-                  child: Text(
-                    buttonLabel.toString(),
-                    style: GoogleFonts.roboto(
-                      textStyle: kMealPlanButtonTextStyle,
-                    ),
                   ),
                 ),
               ],

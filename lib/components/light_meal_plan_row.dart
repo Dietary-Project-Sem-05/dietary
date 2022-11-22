@@ -23,6 +23,7 @@ class LightMealPlanRow extends StatelessWidget {
                 Text(
                   mealHeading.toString(),
                   style: GoogleFonts.roboto(
+                    fontSize: 14,
                     textStyle: kMealHeadingTextStyle,
                   ),
                 ),
@@ -40,11 +41,12 @@ class LightMealPlanRow extends StatelessWidget {
           ),
           Container(
             child: FittedBox(
+              fit: BoxFit.fill,
               child: Image.asset(
                 image.toString(),
+                height: 130.0,
                 width: 130.0,
               ),
-              fit: BoxFit.fill,
             ),
           ),
         ],

@@ -70,15 +70,11 @@ class _FoodPageState extends State<FoodPage> {
         onPressed: () {
           routePage();
         },
-        style: ElevatedButton.styleFrom(
-          primary: Colors.black.withOpacity(0.9),
-        ),
         child: const Text(
-          "+ Request New Food",
+          "Request New Food",
           style: TextStyle(
             letterSpacing: 6,
             wordSpacing: 5,
-            color: Colors.blue,
           ),
         ),
       ),

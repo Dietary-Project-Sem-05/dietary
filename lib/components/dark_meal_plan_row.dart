@@ -19,11 +19,12 @@ class DarkMealPlanRow extends StatelessWidget {
         children: <Widget>[
           Container(
             child: FittedBox(
+              fit: BoxFit.fill,
               child: Image.asset(
                 image.toString(),
-                width: 140.0,
+                width: 120.0,
+                height: 120.0,
               ),
-              fit: BoxFit.fill,
             ),
           ),
           Column(
@@ -33,6 +34,7 @@ class DarkMealPlanRow extends StatelessWidget {
                 mealHeading.toString(),
                 style: GoogleFonts.roboto(
                   textStyle: kMealHeadingTextStyle,
+                  fontSize: 14,
                 ),
               ),
               SizedBox(

@@ -161,7 +161,7 @@ packages:
       name: dropdown_search
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.1"
+    version: "5.0.3"
   fake_async:
     dependency: transitive
     description:
