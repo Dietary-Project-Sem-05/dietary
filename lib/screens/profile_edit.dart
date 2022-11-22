@@ -12,8 +12,8 @@ class ProfileEditPage extends StatefulWidget {
 
 class _ProfileEditPageState extends State<ProfileEditPage> {
   late int _accountNo;
-  late int _weight;
-  late int _height;
+  late String _weight;
+  late String _height;
 
   late AccountDBHandler dbHandler;
 
@@ -35,7 +35,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
     dbHandler = await AccountDBHandler();
     await dbHandler.initDatabaseConnection();
 
-    await dbHandler.updateProfileInfo(_weight, _height, _accountNo);
+    await dbHandler.updateProfileInfo(int.parse(_weight), int.parse(_height), _accountNo);
 
     return Fluttertoast.showToast(
       msg: "Successfully Added!",
@@ -56,7 +56,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
         fontSize: 12,
       ),
       onSaved: (text) {
-        _weight = int.parse(text!);
+        _weight = text!;
       },
       validator: (weight){
         return HelpValidator.validateWeight(weight);
@@ -72,7 +72,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
         fontSize: 12,
       ),
       onSaved: (text) {
-        _height = int.parse(text!);
+        _height = text!;
       },
       validator: (height){
         return HelpValidator.validateHeight(height);
@@ -239,6 +239,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
 
 class HelpValidator {
   static String? validateWeight(value) {
+    // print(value.runtimeType);
     if (value.isEmpty) {
       return "Cannot be empty";
     }

@@ -331,31 +331,30 @@ class _HomePageState extends State<HomePage> {
 }
 
 class HelpValidator {
-  static String? validateHeight(String heightString) {
-    int height = int.parse(heightString);
+  static String? validateHeight(heightString) {
+
     if (heightString.isEmpty) {
       return "Height cannot be empty";
-    } else if (height > 200) {
+    } else if (int.parse(heightString) > 200) {
       return "Height is out of range";
-    } else if (height < 0) {
+    } else if (int.parse(heightString) < 0) {
       return "Height cannot be negative";
-    } else if (height == 0) {
+    } else if (int.parse(heightString) == 0) {
       return "Height cannot be 0";
     } else {
       return null;
     }
   }
 
-  static String? validateWeight(String weightString) {
-    int weight = int.parse(weightString);
+  static String? validateWeight(weightString) {
 
     if (weightString.isEmpty) {
       return "Weight cannot be empty";
-    } else if (weight > 300) {
+    } else if (int.parse(weightString) > 300) {
       return "Weight is out of range";
-    } else if (weight < 0) {
+    } else if (int.parse(weightString) < 0) {
       return "Weight cannot be negative";
-    } else if (weight == 0) {
+    } else if (int.parse(weightString) == 0) {
       return "Weight cannot be 0";
     } else {
       return null;
