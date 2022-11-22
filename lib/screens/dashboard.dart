@@ -1,10 +1,11 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'package:dietary_project/screens/food_prefferences.dart';
+import 'package:dietary_project/screens/add_meal_plan.dart';
 import 'package:dietary_project/screens/food.dart';
 import 'package:dietary_project/screens/home_page.dart';
 import 'package:dietary_project/screens/meal_plan_page.dart';
 import 'package:dietary_project/screens/set_goals.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 
 class DashBoardPage extends StatefulWidget {
   const DashBoardPage({Key? key}) : super(key: key);
@@ -15,17 +16,21 @@ class DashBoardPage extends StatefulWidget {
 
 class _DashBoardPageState extends State<DashBoardPage> {
   int _currentIndex = 0;
+
+  final box = GetStorage();
+
   PageController _pageController = PageController();
   List<Widget> _screens = [
     HomePage(),
     MealPlanPage(),
     FoodPage(),
-    PrefPage(),
+    AddMealPlan(),
     SetGoalsPage(),
   ];
 
   void _onPageChanged(int index) {
     setState(() {
+      // print(box.read("user_id"));
       _currentIndex = index;
     });
   }
@@ -61,7 +66,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
           ),
           BottomNavyBarItem(
             icon: Icon(
-              Icons.newspaper_outlined,
+              Icons.list_alt,
               color: _currentIndex == 1 ? Colors.blue : Colors.grey,
             ),
             title: Text(
@@ -85,11 +90,11 @@ class _DashBoardPageState extends State<DashBoardPage> {
           ),
           BottomNavyBarItem(
             icon: Icon(
-              Icons.favorite,
+              Icons.add,
               color: _currentIndex == 3 ? Colors.blue : Colors.grey,
             ),
             title: Text(
-              "Preferences",
+              "New Meal",
               style: TextStyle(
                 color: _currentIndex == 3 ? Colors.blue : Colors.grey,
               ),
@@ -97,11 +102,11 @@ class _DashBoardPageState extends State<DashBoardPage> {
           ),
           BottomNavyBarItem(
             icon: Icon(
-              Icons.accessibility,
+              Icons.flag,
               color: _currentIndex == 4 ? Colors.blue : Colors.grey,
             ),
             title: Text(
-              "Set Gaols",
+              "Set Goal",
               style: TextStyle(
                 color: _currentIndex == 4 ? Colors.blue : Colors.grey,
               ),

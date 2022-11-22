@@ -12,7 +12,7 @@ class LightMealPlanRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.0),
+      padding: EdgeInsets.only(left: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -23,6 +23,7 @@ class LightMealPlanRow extends StatelessWidget {
                 Text(
                   mealHeading.toString(),
                   style: GoogleFonts.roboto(
+                    fontSize: 14,
                     textStyle: kMealHeadingTextStyle,
                   ),
                 ),
@@ -40,11 +41,12 @@ class LightMealPlanRow extends StatelessWidget {
           ),
           Container(
             child: FittedBox(
+              fit: BoxFit.fill,
               child: Image.asset(
                 image.toString(),
-                width: 120.0,
+                height: 130.0,
+                width: 130.0,
               ),
-              fit: BoxFit.fill,
             ),
           ),
         ],

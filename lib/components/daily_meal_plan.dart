@@ -1,3 +1,5 @@
+import 'package:dietary_project/screens/real_intake_page.dart';
+import 'package:dietary_project/screens/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:dietary_project/utilities/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,7 +8,7 @@ import 'light_meal_plan_row.dart';
 
 class DailyMealPlan extends StatelessWidget {
   const DailyMealPlan(
-      {this.dayPlan,
+      {super.key, this.dayPlan,
       this.buttonLabel,
       this.breakfastMealHeading,
       this.lunchMealHeading,
@@ -33,71 +35,60 @@ class DailyMealPlan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Container(
-        margin: EdgeInsets.only(left: 15.0, right: 15.0, bottom: 15.0),
-        decoration: BoxDecoration(
-          color: Color(0xFF424242),
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 10.0),
-              decoration: BoxDecoration(
-                color: Color(0xEE0277bd),
-                // borderRadius: BorderRadius.circular(5.0),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(5.0),
-                  topRight: Radius.circular(5.0),
+      margin: const EdgeInsets.only(
+          left: 15.0,
+          right: 15.0,
+          bottom: 15.0
+      ),
+      decoration: BoxDecoration(
+        color: const Color(0xFF424242).withOpacity(0.8),
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            decoration: BoxDecoration(
+              color: const Color(0xEE0277bd).withOpacity(0.8),
+              // borderRadius: BorderRadius.circular(5.0),
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(5.0),
+                topRight: Radius.circular(5.0),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  dayPlan.toString(),
+                  style: GoogleFonts.roboto(
+                    textStyle: kMealDayTextStyle,
+                  ),
                 ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    dayPlan.toString(),
-                    style: GoogleFonts.roboto(
-                      textStyle: kMealDayTextStyle,
-                    ),
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.blue,
-                      onSurface: Colors.red,
-                    ),
-                    onPressed: () {},
-                    child: Text(
-                      buttonLabel.toString(),
-                      style: GoogleFonts.roboto(
-                        textStyle: kMealPlanButtonTextStyle,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              ],
             ),
-            // SizedBox(
-            //   height: 10.0,
-            // ),
+          ),
+          // SizedBox(
+          //   height: 10.0,
+          // ),
 
-            DarkMealPlanRow(
-              image: breakfastImage,
-              mealHeading: breakfastMealHeading,
-              mealItems: breakfastMealItems,
-            ),
-            LightMealPlanRow(
-              image: lunchImage,
-              mealHeading: lunchMealHeading,
-              mealItems: lunchMealItems,
-            ),
-            DarkMealPlanRow(
-              image: dinnerImage,
-              mealHeading: dinnerMealHeading,
-              mealItems: dinnerMealItems,
-            ),
-          ],
-        ),
+          DarkMealPlanRow(
+            image: breakfastImage,
+            mealHeading: breakfastMealHeading,
+            mealItems: breakfastMealItems,
+          ),
+          LightMealPlanRow(
+            image: lunchImage,
+            mealHeading: lunchMealHeading,
+            mealItems: lunchMealItems,
+          ),
+          DarkMealPlanRow(
+            image: dinnerImage,
+            mealHeading: dinnerMealHeading,
+            mealItems: dinnerMealItems,
+          ),
+        ],
       ),
     );
   }

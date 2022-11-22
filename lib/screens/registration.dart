@@ -1,8 +1,10 @@
+import 'package:dietary_project/screens/general_info_page.dart';
 import 'package:dietary_project/screens/login_page.dart';
 import 'package:flutter/material.dart';
-import 'package:dietary_project/DatabaseHandler/AccountDbHelper.dart';
 import 'package:dietary_project/Model/account_model.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:dietary_project/DatabaseHandler/AccountDBHandler.dart';
+import 'package:crypt/crypt.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -20,18 +22,23 @@ class _RegisterPageState extends State<RegisterPage> {
   var _email;
   var _username;
   var dbHelper;
+  var dbHandler;
 
   @override
   void initState() {
     super.initState();
-    dbHelper = AccountDbHelper();
+    dbHandler = AccountDBHandler();
+    dbHandler.initDatabaseConnection();
   }
 
-  signUp() async{
-    AccountModel userMd = AccountModel(_firstName, _lastName, _username, _email, _password);
+  signUp() async {
+    String hashedPassword = await Crypt.sha256(_password).toString();
 
-    await dbHelper.checkUserName(_username).then((userData) {
-      if (userData != null){
+    AccountModel userMd =
+       await  AccountModel(_firstName, _lastName, _username, _email, hashedPassword);
+
+    await dbHandler.checkUserName(_username).then((userData) {
+      if (userData == "Error") {
         return Fluttertoast.showToast(
             msg: "Username exist!",
             toastLength: Toast.LENGTH_SHORT,
@@ -39,35 +46,36 @@ class _RegisterPageState extends State<RegisterPage> {
             timeInSecForIosWeb: 1,
             backgroundColor: Colors.red,
             textColor: Colors.black87,
-            fontSize: 16.0
-        );
+            fontSize: 16.0);
+      } else {
+        dbHandler.saveRegistrationData(userMd).then((userData) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => GeneralInfoPage(
+                        account_no: userData,
+                      )));
+
+          return Fluttertoast.showToast(
+              msg: "Successfully Saved",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.TOP,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.green,
+              textColor: Colors.black87,
+              fontSize: 16.0);
+        }).catchError((error) {
+          print(error);
+          return Fluttertoast.showToast(
+              msg: "Not Saved $error",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.TOP,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.black87,
+              fontSize: 16.0);
+        });
       }
-    });
-
-    await dbHelper.saveData(userMd).then((userData) {
-      Fluttertoast.showToast(
-          msg: "Successfully Saved",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.green,
-          textColor: Colors.black87,
-          fontSize: 16.0
-      );
-
-       Navigator.push(
-           context, MaterialPageRoute(builder: (_) => LogInPage()));
-    }).catchError((error) {
-      print(error);
-      Fluttertoast.showToast(
-          msg: "Not Saved "+ error,
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.TOP,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.black87,
-          fontSize: 16.0
-      );
     });
   }
 
@@ -77,6 +85,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _buildFirstNameField() {
     return TextFormField(
+      key: Key("firstName"),
       maxLength: 30,
       keyboardType: TextInputType.text,
       decoration: const InputDecoration(
@@ -99,6 +108,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _buildLastNameField() {
     return TextFormField(
+      key: Key("lastName"),
       maxLength: 30,
       keyboardType: TextInputType.text,
       decoration: const InputDecoration(
@@ -121,6 +131,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _buildUserNameField() {
     return TextFormField(
+      key: Key("username"),
       maxLength: 30,
       keyboardType: TextInputType.text,
       decoration: const InputDecoration(
@@ -143,6 +154,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _buildEmailField() {
     return TextFormField(
+      key: Key("email"),
       maxLength: 50,
       keyboardType: TextInputType.emailAddress,
       decoration: const InputDecoration(
@@ -165,6 +177,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _buildPasswordField() {
     return TextFormField(
+      key: Key("password"),
       maxLength: 30,
       keyboardType: TextInputType.text,
       obscureText: true,
@@ -188,6 +201,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _buildAgainPasswordField() {
     return TextFormField(
+      key: Key("againPassword"),
       maxLength: 30,
       keyboardType: TextInputType.text,
       obscureText: true,
@@ -220,69 +234,74 @@ class _RegisterPageState extends State<RegisterPage> {
               Navigator.pop(context, LogInPage());
             },
           )),
-      body: SingleChildScrollView(
-        child: Container(
-          height: 600.0,
-          width: 300.0,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            image: const DecorationImage(
-              image: AssetImage("assets/back.jpg"),
-              fit: BoxFit.cover,
-            ),
+      body: Container(
+        constraints: const BoxConstraints.expand(),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          image: const DecorationImage(
+            image: AssetImage("lib/assets/images/food_bg.jpg"),
+            repeat: ImageRepeat.repeat,
           ),
-          margin: const EdgeInsets.symmetric(horizontal: 45.0, vertical: 40.0),
-          padding: const EdgeInsets.all(10.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: _buildFirstNameField(),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: _buildLastNameField(),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: _buildEmailField(),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: _buildUserNameField(),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: _buildPasswordField(),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: _buildAgainPasswordField(),
-                ),
-                const SizedBox(
-                  height: 30.0,
-                ),
-                Container(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState!.save();
-                        print(_username);
-                        print(_password);
-                        print(_firstName);
-                        print(_lastName);
-                        print(_email);
-                        signUp();
-                      } else {
-                        print("Not Saved");
-                      }
-                    },
-                    child: const Text("Sign In"),
+        ),
+        child: SingleChildScrollView(
+          child: Container(
+            height: 600.0,
+            width: 300.0,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.black87,
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 45.0, vertical: 40.0),
+            padding: const EdgeInsets.all(10.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(5.0),
+                    child: _buildFirstNameField(),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: EdgeInsets.all(5.0),
+                    child: _buildLastNameField(),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(5.0),
+                    child: _buildEmailField(),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(5.0),
+                    child: _buildUserNameField(),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(5.0),
+                    child: _buildPasswordField(),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(5.0),
+                    child: _buildAgainPasswordField(),
+                  ),
+                  const SizedBox(
+                    height: 30.0,
+                  ),
+                  Container(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState!.save();
+                          signUp();
+                        } else {
+                          print("Not Saved");
+                        }
+                      },
+                      child: const Text(
+                        "Sign Up",
+                        style: TextStyle(letterSpacing: 2),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

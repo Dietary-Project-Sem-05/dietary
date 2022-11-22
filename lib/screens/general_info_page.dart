@@ -1,8 +1,14 @@
+import 'package:dietary_project/screens/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:dietary_project/Model/general_user_model.dart';
 import 'package:intl/intl.dart';
+import 'package:dietary_project/DatabaseHandler/AccountDBHandler.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class GeneralInfoPage extends StatefulWidget {
-  const GeneralInfoPage({Key? key}) : super(key: key);
+  final int account_no;
+
+  const GeneralInfoPage({Key? key, required this.account_no}) : super(key: key);
 
   @override
   State<GeneralInfoPage> createState() => _GeneralInfoPageState();
@@ -10,6 +16,8 @@ class GeneralInfoPage extends StatefulWidget {
 
 class _GeneralInfoPageState extends State<GeneralInfoPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  var dbHandler;
 
   TextEditingController dateinput = TextEditingController();
 
@@ -23,6 +31,35 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
   var _medicalCondition;
   var _notificationDay;
   var _startingDay;
+
+  saveData() async {
+    GeneralUserModel gModel = GeneralUserModel(
+        _dob,
+        _gender,
+        int.parse(_weight),
+        int.parse(_height),
+        _activityType,
+        _exerciseType,
+        _preferenceType,
+        _medicalCondition,
+        _notificationDay,
+        _startingDay);
+
+    await dbHandler
+        .saveGeneralInfoData(gModel, widget.account_no)
+        .then((userData) {
+      Navigator.push(context, MaterialPageRoute(builder: (_) => LogInPage()));
+
+      return Fluttertoast.showToast(
+          msg: "Successfully Added!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.black87,
+          fontSize: 16.0);
+    });
+  }
 
   List<DropdownMenuItem<String>> menuItemsActivity = [
     const DropdownMenuItem(
@@ -44,9 +81,9 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
   List<DropdownMenuItem<String>> menuItemsGender = [
     const DropdownMenuItem(
         value: "None", enabled: false, child: Text("Gender")),
-    const DropdownMenuItem(value: "Male", child: Text("Male")),
-    const DropdownMenuItem(value: "Female", child: Text("Female")),
-    const DropdownMenuItem(value: "Other", child: Text("Other")),
+    const DropdownMenuItem(value: "MALE", child: Text("Male")),
+    const DropdownMenuItem(value: "FEMALE", child: Text("Female")),
+    const DropdownMenuItem(value: "OTHER", child: Text("Other")),
   ];
 
   List<DropdownMenuItem<String>> menuItemsExercise = [
@@ -54,7 +91,6 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
         value: "None", enabled: false, child: Text("Exercise Type")),
     const DropdownMenuItem(value: "Gain", child: Text("Weight Gain")),
     const DropdownMenuItem(value: "Loss", child: Text("Weight Loss")),
-    const DropdownMenuItem(value: "Maintain", child: Text("Maintain Weight")),
   ];
 
   List<DropdownMenuItem<String>> menuItemsNotification = [
@@ -105,10 +141,14 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
   void initState() {
     dateinput.text = ""; //set the initial value of text field
     super.initState();
+
+    dbHandler = AccountDBHandler();
+    dbHandler.initDatabaseConnection();
   }
 
   Widget _buildDobField(BuildContext context) {
     return TextFormField(
+      key: Key("dob"),
       controller: dateinput,
       //editing controller of this TextField
       decoration: const InputDecoration(
@@ -153,6 +193,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
 
   Widget _buildWeightField() {
     return TextFormField(
+      key: Key("weight"),
       maxLength: 30,
       keyboardType: TextInputType.number,
       decoration: const InputDecoration(
@@ -176,6 +217,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
 
   Widget _buildHeightField() {
     return TextFormField(
+      key: Key("height"),
       maxLength: 30,
       keyboardType: TextInputType.number,
       decoration: const InputDecoration(
@@ -199,6 +241,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
 
   Widget _buildActivityType() {
     return DropdownButtonFormField(
+      key: Key("activityType"),
       value: selectedValueActivity,
       onChanged: (String? newValue) {
         setState(() {
@@ -224,6 +267,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
 
   Widget _buildGenderType() {
     return DropdownButtonFormField(
+      key: Key("genderType"),
       value: selectedValueGender,
       onChanged: (String? newValue) {
         setState(() {
@@ -249,6 +293,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
 
   Widget _buildExerciseType() {
     return DropdownButtonFormField(
+      key: Key("exerciseType"),
       value: selectedValueExercise,
       onChanged: (String? newValue) {
         setState(() {
@@ -267,13 +312,14 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
         return HelpValidator.validateExerciseType(_exerciseType);
       },
       onSaved: (text) {
-        _activityType = text;
+        _exerciseType = text;
       },
     );
   }
 
   Widget _buildMealPreferenceType() {
     return DropdownButtonFormField(
+      key: Key("mealPreferenceType"),
       value: selectedValueMealPreference,
       onChanged: (String? newValue) {
         setState(() {
@@ -292,13 +338,14 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
         return HelpValidator.validateMealPreference(_preferenceType);
       },
       onSaved: (text) {
-        _activityType = text;
+        _preferenceType = text;
       },
     );
   }
 
   Widget _buildMedicalField() {
     return TextFormField(
+      key: Key("medicalField"),
       maxLength: 30,
       maxLines: 2,
       keyboardType: TextInputType.text,
@@ -323,6 +370,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
 
   Widget _buildStartingDayType() {
     return DropdownButtonFormField(
+      key: Key("startingDayType"),
       value: selectedValueStarting,
       onChanged: (String? newValue) {
         setState(() {
@@ -348,6 +396,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
 
   Widget _buildNotificationDayType() {
     return DropdownButtonFormField(
+      key: Key("notificationDayType"),
       value: selectedValueNotification,
       onChanged: (String? newValue) {
         setState(() {
@@ -381,71 +430,82 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
         backgroundColor: Colors.black87,
       ),
       body: Container(
-        height: 600.0,
-        width: 350.0,
+        constraints: const BoxConstraints.expand(),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           image: const DecorationImage(
-            image: AssetImage("lib/assets/images/back.jpg"),
-            fit: BoxFit.cover,
+            image: AssetImage("lib/assets/images/food_bg.jpg"),
+            repeat: ImageRepeat.repeat,
           ),
         ),
-        margin: const EdgeInsets.symmetric(horizontal: 45.0, vertical: 45.0),
-        padding: const EdgeInsets.all(20.0),
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Row(
-                  children: [
-                    Expanded(flex: 1, child: _buildHeightField()),
-                    Expanded(flex: 1, child: _buildWeightField()),
-                  ],
-                ),
-                _buildDobField(context),
-                _buildActivityType(),
-                Row(
-                  children: [
-                    Expanded(flex: 1, child: _buildGenderType()),
-                    Expanded(flex: 1, child: _buildExerciseType()),
-                  ],
-                ),
-                _buildMealPreferenceType(),
-                _buildMedicalField(),
-                Row(
-                  children: [
-                    Expanded(flex: 1, child: _buildNotificationDayType()),
-                    Expanded(flex: 1, child: _buildStartingDayType()),
-                  ],
-                ),
-                const SizedBox(
-                  height: 50.0,
-                ),
-                Container(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState!.save();
-                        // print(_dob);
-                        // print(_height);
-                        // print(_weight);
-                        // print(_gender);
-                        // print(_activityType);
-                        // print(_exerciseType);
-                        // print(_preferenceType);
-                        // print(_medicalCondition);
-                        // print(_notificationDay);
-                        // print(_startingDay);
-                      } else {
-                        print("Not Saved");
-                      }
-                    },
-                    child: const Text("Save"),
+            child: Container(
+              height: 600.0,
+              width: 300.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.black87,
+              ),
+              margin: const EdgeInsets.symmetric(
+                horizontal: 45.0,
+                vertical: 40.0,
+              ),
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(flex: 1, child: _buildHeightField()),
+                      Expanded(flex: 1, child: _buildWeightField()),
+                    ],
                   ),
-                ),
-              ],
+                  _buildDobField(context),
+                  _buildActivityType(),
+                  Row(
+                    children: [
+                      Expanded(flex: 1, child: _buildGenderType()),
+                      Expanded(flex: 1, child: _buildExerciseType()),
+                    ],
+                  ),
+                  _buildMealPreferenceType(),
+                  _buildMedicalField(),
+                  Row(
+                    children: [
+                      Expanded(flex: 1, child: _buildNotificationDayType()),
+                      Expanded(flex: 1, child: _buildStartingDayType()),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 50.0,
+                  ),
+                  Container(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState!.save();
+                          // print(_dob);
+                          // print(_height);
+                          // print(_weight);
+                          // print(_gender);
+                          // print(_activityType);
+                          // print(_exerciseType);
+                          // print(_preferenceType);
+                          // print(_medicalCondition);
+                          // print(_notificationDay);
+                          // print(_startingDay);
+                          saveData();
+                        } else {
+                          print("Not Saved");
+                        }
+                      },
+                      child: const Text("Save"),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

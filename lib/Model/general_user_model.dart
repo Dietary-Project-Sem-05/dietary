@@ -1,17 +1,27 @@
 import 'package:dietary_project/Model/account_model.dart';
 
-
-class GeneralUserModel extends AccountModel{
-  DateTime? dob;
+class GeneralUserModel {
+  String? dob;
   String? gender;
   int? weight;
   int? height;
-  String? activity_time;
-  String? goal_type;
-  String? diet_goal;
-  String? medical_conditions;
-  
+  String? activityType;
+  String? exerciseType;
+  String? preferenceType;
+  String? medicalCondition;
+  String? notificationDay;
+  String? startingDay;
 
-  GeneralUserModel(super.first_name, super.last_name, super.user_name, super.email, super.password);
-
+  GeneralUserModel(
+    this.dob,
+    this.gender,
+    this.weight,
+    this.height,
+    this.activityType,
+    this.exerciseType,
+    this.preferenceType,
+    this.medicalCondition,
+    this.notificationDay,
+    this.startingDay,
+  );
 }
