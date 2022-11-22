@@ -423,6 +423,7 @@ class _GeneralInfoPageState extends State<GeneralInfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text(
           "General Information",

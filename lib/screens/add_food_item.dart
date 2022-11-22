@@ -152,6 +152,7 @@ class _AddFoodItemState extends State<AddFoodItem> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('Add New Food Item'),
         backgroundColor: Colors.black38,
@@ -300,24 +301,28 @@ class _AddFoodItemState extends State<AddFoodItem> {
 class HelpValidator {
   static String? validateName(value) {
     if (value.isEmpty) {
-      return "Weight cannot be empty";
+      return "Name cannot be empty";
+    }else if (!RegExp(r'^[A-Za-z]+$').hasMatch(value)) {
+      return "Name contains invalid chars";
     }
     return null;
   }
 
   static String? validateWeight(value) {
     if (value.isEmpty) {
-      return "Weight cannot be empty";
-    }
-    if (int.parse(value) <= 0) {
-      return "Weight must be positive";
+      return "Calorie count cannot be empty";
+    } else if (int.parse(value) < 0) {
+      return "Calorie count must be positive";
+    } else if (int.parse(value) == 0) {
+      return "Calorie count cannot be 0";
     }
     return null;
   }
 
   static String? validateType(value) {
+
     if (value == null) {
-      return "Date cannot be empty";
+      return "Food type cannot be empty";
     }
     return null;
   }
