@@ -61,23 +61,22 @@ class GoalDBHandler {
     });
   }
 
-  Future<int?> getWeight(int accountNo) async {
+  Future<List?> getWeightAndGoalType(int accountNo) async {
     var conn = await connection;
 
     List<List<dynamic>>? weightResults;
 
     await conn.transaction((ctx) async {
       weightResults = await ctx.query(
-          'SELECT weight FROM "GeneralUser" WHERE "id" = @id',
+          'SELECT weight, "goalType"  FROM "GeneralUser" WHERE "id" = @id',
           substitutionValues: {
             "id": accountNo,
           });
     });
 
     if ((weightResults?.length)! > 0) {
-      int weight = weightResults?.first.first;
 
-      return weight;
+      return weightResults?.first;
     } else {
       return null;
     }

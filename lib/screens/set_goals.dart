@@ -45,9 +45,15 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
     dbHandler = await GoalDBHandler();
     await dbHandler.initDatabaseConnection();
     UserGoalModel? userGl = await dbHandler.getUserGoal(_accountNo);
-    int? weight = await dbHandler.getWeight(_accountNo);
+    List? details = await dbHandler.getWeightAndGoalType(_accountNo);
+
+    int weight = details![0];
+    String goal = details[1];
 
     box.write("cWeight", weight);
+    box.write("cGoal", goal);
+
+    print(goal);
 
     if (userGl == null) {
       _text = "Set Your Goals and be the best among the best in life 😁";
@@ -63,12 +69,20 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
       _expectedDate = await userGl.endDate;
       _expectedWeight = await userGl.endWeight;
 
-      if(_expectedWeight>weight){
+      if(_expectedWeight>weight && goal=="Gain"){
         int behind = _expectedWeight - weight;
-        _text = "You are $behind behind kilograms before the target date";
+        _text = "You are $behind kilograms behind before the target date";
+      }
+      else if(_expectedWeight<weight && goal=="Loss"){
+        num behind = weight - _expectedWeight;
+        _text = "You are $behind kilograms behind before the target date";
+      }
+      else if((_expectedWeight<=weight && goal=="Gain")){
+        num front = weight - _expectedWeight;
+        _text = "Congratulations You have achieved your target!!!";
       }
       else{
-        num front = weight! - _expectedWeight;
+        num behind = weight - _expectedWeight;
         _text = "Congratulations You have achieved your target!!!";
       }
     }
