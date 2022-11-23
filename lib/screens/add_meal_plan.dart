@@ -247,7 +247,7 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                                     _bmmName = text;
                                                   },
                                                   validator: (text) {
-                                                    return _ValidatorHelper
+                                                    return ValidatorHelper
                                                         .dropdownMain(text);
                                                   },
                                                 )),
@@ -274,7 +274,7 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                                   _bmmAmount = int.parse(text!);
                                                 },
                                                 validator: (text) {
-                                                  return _ValidatorHelper
+                                                  return ValidatorHelper
                                                       .amountFiledMain(text);
                                                 },
                                               ),
@@ -525,7 +525,7 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                                     _lmmName = text;
                                                   },
                                                   validator: (text) {
-                                                    return _ValidatorHelper
+                                                    return ValidatorHelper
                                                         .dropdownMain(text);
                                                   },
                                                 )),
@@ -552,7 +552,7 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                                   _lmmAmount = int.parse(text!);
                                                 },
                                                 validator: (text) {
-                                                  return _ValidatorHelper
+                                                  return ValidatorHelper
                                                       .amountFiledMain(text);
                                                 },
                                               ),
@@ -806,7 +806,7 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                                     _dmmName = text;
                                                   },
                                                   validator: (text) {
-                                                    return _ValidatorHelper
+                                                    return ValidatorHelper
                                                         .dropdownMain(text);
                                                   },
                                                 )),
@@ -833,7 +833,7 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                                   _dmmAmount = int.parse(text!);
                                                 },
                                                 validator: (text) {
-                                                  return _ValidatorHelper
+                                                  return ValidatorHelper
                                                       .amountFiledMain(text);
                                                 },
                                               ),
@@ -1140,7 +1140,7 @@ class _AddMealPlanState extends State<AddMealPlan> {
   }
 }
 
-class _ValidatorHelper {
+class ValidatorHelper {
   static String? dropdownMain(value) {
     if (value == null) {
       return "Main meal can't be empty";

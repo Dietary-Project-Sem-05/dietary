@@ -65,23 +65,20 @@ class _SetGoalsPageState extends State<SetGoalsPage> {
       return "NULL";
     } else {
       _startingDate = await userGl.startDate;
-      _currentWeight = await userGl.startWeight;
+      _currentWeight = await weight;
       _expectedDate = await userGl.endDate;
       _expectedWeight = await userGl.endWeight;
 
-      if(_expectedWeight>weight && goal=="Gain"){
+      if (_expectedWeight > weight && goal == "Gain") {
         int behind = _expectedWeight - weight;
-        _text = "You are $behind kilograms behind before the target date";
-      }
-      else if(_expectedWeight<weight && goal=="Loss"){
+        _text = "You are $behind kilograms behind the goal";
+      } else if (_expectedWeight < weight && goal == "Loss") {
         num behind = weight - _expectedWeight;
-        _text = "You are $behind kilograms behind before the target date";
-      }
-      else if((_expectedWeight<=weight && goal=="Gain")){
+        _text = "You are $behind kilograms behind the goal";
+      } else if ((_expectedWeight <= weight && goal == "Gain")) {
         num front = weight - _expectedWeight;
         _text = "Congratulations You have achieved your target!!!";
-      }
-      else{
+      } else {
         num behind = weight - _expectedWeight;
         _text = "Congratulations You have achieved your target!!!";
       }
