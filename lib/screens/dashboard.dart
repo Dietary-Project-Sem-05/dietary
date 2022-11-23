@@ -90,7 +90,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
           ),
           BottomNavyBarItem(
             icon: Icon(
-              Icons.add,
+              Icons.add_box_outlined,
               color: _currentIndex == 3 ? Colors.blue : Colors.grey,
             ),
             title: Text(

@@ -302,7 +302,7 @@ class HelpValidator {
   static String? validateName(value) {
     if (value.isEmpty) {
       return "Name cannot be empty";
-    }else if (!RegExp(r'^[A-Za-z]+$').hasMatch(value)) {
+    } else if (!RegExp(r'^[A-Za-z ]+$').hasMatch(value)) {
       return "Name contains invalid chars";
     }
     return null;
@@ -320,7 +320,6 @@ class HelpValidator {
   }
 
   static String? validateType(value) {
-
     if (value == null) {
       return "Food type cannot be empty";
     }
