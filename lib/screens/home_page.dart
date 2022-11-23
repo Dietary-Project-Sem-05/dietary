@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
 
   final _random = new Random();
   int element = 0;
-  String text = "You are what you eat, so don’t be fast, cheap, easy, or fake.";
+  String motivationQuoteString = "You are what you eat, so don’t be fast, cheap, easy, or fake.";
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late int _accountNo;
@@ -207,6 +207,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController tipCtrl = TextEditingController(text: motivationQuoteString);
+
     return Scaffold(
       drawer: NavDrawer(),
       appBar: AppBar(
@@ -272,10 +274,12 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         // TODO: This is the place where you should upload the daily tip
-                        Text(
-                          text,
+                        TextFormField(
+                          controller: tipCtrl,
+                          enabled: false,
+                          maxLines: 3,
                           textAlign: TextAlign.justify,
-                          style: TextStyle(letterSpacing: 2),
+                          style: const TextStyle(letterSpacing: 2),
                         ),
                       ],
                     )),
@@ -295,8 +299,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                         onPressed: () {
                           element = _random.nextInt(tips.length);
-                          text = tips[element];
-                          // TODO: THis is where previous tip should added
+                          motivationQuoteString = tips[element];
+                          tipCtrl.text = motivationQuoteString;
                           print("Clicked previous tip");
                         },
                         highlightColor: Colors.black12,
@@ -315,7 +319,9 @@ class _HomePageState extends State<HomePage> {
                           Icons.arrow_forward_ios_rounded,
                         ),
                         onPressed: () {
-                          // TODO: THis is where previous tip should added
+                          element = _random.nextInt(tips.length);
+                          motivationQuoteString = tips[element];
+                          tipCtrl.text = motivationQuoteString;
                           print("Clicked next tip");
                         },
                         highlightColor: Colors.black12,

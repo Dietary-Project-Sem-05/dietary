@@ -216,7 +216,7 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                   child: Column(
                                     children: [
                                       Text(
-                                        "Breakfast Plan ${total_calories! * 30 ~/ 100}",
+                                        "Breakfast Plan : Calories ${total_calories! * 30 ~/ 100}",
                                         textAlign: TextAlign.left,
                                         style: const TextStyle(
                                           fontSize: 20,
@@ -493,7 +493,7 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                   child: Column(
                                     children: [
                                       Text(
-                                        "Lunch Plan ${total_calories! * 45 ~/ 100}",
+                                        "Lunch Plan : Calories ${total_calories! * 45 ~/ 100}",
                                         textAlign: TextAlign.left,
                                         style: const TextStyle(
                                           fontSize: 20,
@@ -767,7 +767,7 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                   child: Column(
                                     children: [
                                       Text(
-                                        "Dinner Plan ${total_calories! * 25 ~/ 100}",
+                                        "Dinner Plan : Calories ${total_calories! * 25 ~/ 100}",
                                         textAlign: TextAlign.left,
                                         style: const TextStyle(
                                           fontSize: 20,
