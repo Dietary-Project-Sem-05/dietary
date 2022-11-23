@@ -230,18 +230,24 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                             SizedBox(
                                                 width: 230,
                                                 child: DropdownSearch<String>(
-                                                  items: mainFoods.keys.toList(),
-                                                  dropdownDecoratorProps: const DropDownDecoratorProps(
-                                                    dropdownSearchDecoration: InputDecoration(
+                                                  items:
+                                                      mainFoods.keys.toList(),
+                                                  dropdownDecoratorProps:
+                                                      const DropDownDecoratorProps(
+                                                    dropdownSearchDecoration:
+                                                        InputDecoration(
                                                       labelText: "Main Meal",
-                                                      hintText: "Your main food",
+                                                      hintText:
+                                                          "Your main food",
                                                     ),
                                                   ),
-                                                  popupProps: const PopupProps.menu(
+                                                  popupProps:
+                                                      const PopupProps.menu(
                                                     showSearchBox: true,
                                                     fit: FlexFit.loose,
                                                     //comment this if you want that the items do not takes all available height
-                                                    constraints: BoxConstraints.tightFor(),
+                                                    constraints: BoxConstraints
+                                                        .tightFor(),
                                                   ),
                                                   onSaved: (text) {
                                                     _bmmName = text;
@@ -291,17 +297,21 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                                 child: DropdownSearch<String>(
                                                   items: sidesMeatsFoods.keys
                                                       .toList(),
-                                                  dropdownDecoratorProps: const DropDownDecoratorProps(
-                                                    dropdownSearchDecoration: InputDecoration(
+                                                  dropdownDecoratorProps:
+                                                      const DropDownDecoratorProps(
+                                                    dropdownSearchDecoration:
+                                                        InputDecoration(
                                                       labelText: "Side 1",
                                                       hintText: "Non veg side",
                                                     ),
                                                   ),
-                                                  popupProps: const PopupProps.menu(
+                                                  popupProps:
+                                                      const PopupProps.menu(
                                                     showSearchBox: true,
                                                     fit: FlexFit.loose,
                                                     //comment this if you want that the items do not takes all available height
-                                                    constraints: BoxConstraints.tightFor(),
+                                                    constraints: BoxConstraints
+                                                        .tightFor(),
                                                   ),
                                                   onSaved: (text) {
                                                     _bs1Name = text;
@@ -346,17 +356,22 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                                 child: DropdownSearch<String>(
                                                   items:
                                                       sidesFoods.keys.toList(),
-                                                  dropdownDecoratorProps: const DropDownDecoratorProps(
-                                                    dropdownSearchDecoration: InputDecoration(
+                                                  dropdownDecoratorProps:
+                                                      const DropDownDecoratorProps(
+                                                    dropdownSearchDecoration:
+                                                        InputDecoration(
                                                       labelText: "Side 2",
-                                                      hintText: "Veg side option 1",
+                                                      hintText:
+                                                          "Veg side option 1",
                                                     ),
                                                   ),
-                                                  popupProps: const PopupProps.menu(
+                                                  popupProps:
+                                                      const PopupProps.menu(
                                                     showSearchBox: true,
                                                     fit: FlexFit.loose,
                                                     //comment this if you want that the items do not takes all available height
-                                                    constraints: BoxConstraints.tightFor(),
+                                                    constraints: BoxConstraints
+                                                        .tightFor(),
                                                   ),
                                                   onSaved: (text) {
                                                     _bs2Name = text;
@@ -401,17 +416,21 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                                 child: DropdownSearch<String>(
                                                   items:
                                                       sidesFoods.keys.toList(),
-                                                  dropdownDecoratorProps: const DropDownDecoratorProps(
-                                                    dropdownSearchDecoration: InputDecoration(
+                                                  dropdownDecoratorProps:
+                                                      const DropDownDecoratorProps(
+                                                    dropdownSearchDecoration:
+                                                        InputDecoration(
                                                       labelText: "Side 3",
                                                       hintText: "Veg option 2",
                                                     ),
                                                   ),
-                                                  popupProps: const PopupProps.menu(
+                                                  popupProps:
+                                                      const PopupProps.menu(
                                                     showSearchBox: true,
                                                     fit: FlexFit.loose,
                                                     //comment this if you want that the items do not takes all available height
-                                                    constraints: BoxConstraints.tightFor(),
+                                                    constraints: BoxConstraints
+                                                        .tightFor(),
                                                   ),
                                                   onChanged: (text) {
                                                     _bs3Name = text;
@@ -509,17 +528,22 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                                 child: DropdownSearch<String>(
                                                   items:
                                                       mainFoods.keys.toList(),
-                                                  dropdownDecoratorProps: const DropDownDecoratorProps(
-                                                    dropdownSearchDecoration: InputDecoration(
+                                                  dropdownDecoratorProps:
+                                                      const DropDownDecoratorProps(
+                                                    dropdownSearchDecoration:
+                                                        InputDecoration(
                                                       labelText: "Main Meal",
-                                                      hintText: "Your main food",
+                                                      hintText:
+                                                          "Your main food",
                                                     ),
                                                   ),
-                                                  popupProps: const PopupProps.menu(
+                                                  popupProps:
+                                                      const PopupProps.menu(
                                                     showSearchBox: true,
                                                     fit: FlexFit.loose,
                                                     //comment this if you want that the items do not takes all available height
-                                                    constraints: BoxConstraints.tightFor(),
+                                                    constraints: BoxConstraints
+                                                        .tightFor(),
                                                   ),
                                                   onSaved: (text) {
                                                     _lmmName = text;
@@ -567,19 +591,23 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                             SizedBox(
                                                 width: 230,
                                                 child: DropdownSearch<String>(
-                                                  dropdownDecoratorProps: const DropDownDecoratorProps(
-                                                    dropdownSearchDecoration: InputDecoration(
+                                                  dropdownDecoratorProps:
+                                                      const DropDownDecoratorProps(
+                                                    dropdownSearchDecoration:
+                                                        InputDecoration(
                                                       labelText: "Side 1",
                                                       hintText: "Non veg side",
                                                     ),
                                                   ),
                                                   items: sidesMeatsFoods.keys
                                                       .toList(),
-                                                  popupProps: const PopupProps.menu(
+                                                  popupProps:
+                                                      const PopupProps.menu(
                                                     showSearchBox: true,
                                                     fit: FlexFit.loose,
                                                     //comment this if you want that the items do not takes all available height
-                                                    constraints: BoxConstraints.tightFor(),
+                                                    constraints: BoxConstraints
+                                                        .tightFor(),
                                                   ),
                                                   onSaved: (text) {
                                                     _ls1Name = text;
@@ -624,17 +652,22 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                                 child: DropdownSearch<String>(
                                                   items:
                                                       sidesFoods.keys.toList(),
-                                                  dropdownDecoratorProps: const DropDownDecoratorProps(
-                                                    dropdownSearchDecoration: InputDecoration(
+                                                  dropdownDecoratorProps:
+                                                      const DropDownDecoratorProps(
+                                                    dropdownSearchDecoration:
+                                                        InputDecoration(
                                                       labelText: "Side 2",
-                                                      hintText: "Veg side option 1",
+                                                      hintText:
+                                                          "Veg side option 1",
                                                     ),
                                                   ),
-                                                  popupProps: const PopupProps.menu(
+                                                  popupProps:
+                                                      const PopupProps.menu(
                                                     showSearchBox: true,
                                                     fit: FlexFit.loose,
                                                     //comment this if you want that the items do not takes all available height
-                                                    constraints: BoxConstraints.tightFor(),
+                                                    constraints: BoxConstraints
+                                                        .tightFor(),
                                                   ),
                                                   onSaved: (text) {
                                                     _ls2Name = text;
@@ -679,17 +712,21 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                                 child: DropdownSearch<String>(
                                                   items:
                                                       sidesFoods.keys.toList(),
-                                                  dropdownDecoratorProps: const DropDownDecoratorProps(
-                                                    dropdownSearchDecoration: InputDecoration(
+                                                  dropdownDecoratorProps:
+                                                      const DropDownDecoratorProps(
+                                                    dropdownSearchDecoration:
+                                                        InputDecoration(
                                                       labelText: "Side 3",
                                                       hintText: "Veg option 2",
                                                     ),
                                                   ),
-                                                  popupProps: const PopupProps.menu(
+                                                  popupProps:
+                                                      const PopupProps.menu(
                                                     showSearchBox: true,
                                                     fit: FlexFit.loose,
                                                     //comment this if you want that the items do not takes all available height
-                                                    constraints: BoxConstraints.tightFor(),
+                                                    constraints: BoxConstraints
+                                                        .tightFor(),
                                                   ),
                                                   onSaved: (text) {
                                                     _ls3Name = text;
@@ -733,17 +770,21 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                                 width: 230,
                                                 child: DropdownSearch<String>(
                                                   items: deserts.keys.toList(),
-                                                  dropdownDecoratorProps: const DropDownDecoratorProps(
-                                                    dropdownSearchDecoration: InputDecoration(
+                                                  dropdownDecoratorProps:
+                                                      const DropDownDecoratorProps(
+                                                    dropdownSearchDecoration:
+                                                        InputDecoration(
                                                       labelText: "Desert",
                                                       hintText: "Desert",
                                                     ),
                                                   ),
-                                                  popupProps: const PopupProps.menu(
+                                                  popupProps:
+                                                      const PopupProps.menu(
                                                     showSearchBox: true,
                                                     fit: FlexFit.loose,
                                                     //comment this if you want that the items do not takes all available height
-                                                    constraints: BoxConstraints.tightFor(),
+                                                    constraints: BoxConstraints
+                                                        .tightFor(),
                                                   ),
                                                   onSaved: (text) {
                                                     _ldName = text;
@@ -783,17 +824,22 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                                 child: DropdownSearch<String>(
                                                   items:
                                                       mainFoods.keys.toList(),
-                                                  dropdownDecoratorProps: const DropDownDecoratorProps(
-                                                    dropdownSearchDecoration: InputDecoration(
+                                                  dropdownDecoratorProps:
+                                                      const DropDownDecoratorProps(
+                                                    dropdownSearchDecoration:
+                                                        InputDecoration(
                                                       labelText: "Main Meal",
-                                                      hintText: "Your main food",
+                                                      hintText:
+                                                          "Your main food",
                                                     ),
                                                   ),
-                                                  popupProps: const PopupProps.menu(
+                                                  popupProps:
+                                                      const PopupProps.menu(
                                                     showSearchBox: true,
                                                     fit: FlexFit.loose,
                                                     //comment this if you want that the items do not takes all available height
-                                                    constraints: BoxConstraints.tightFor(),
+                                                    constraints: BoxConstraints
+                                                        .tightFor(),
                                                   ),
                                                   // validator: (String? text){
                                                   //   if (text == null){
@@ -850,17 +896,21 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                                 child: DropdownSearch<String>(
                                                   items: sidesMeatsFoods.keys
                                                       .toList(),
-                                                  dropdownDecoratorProps: const DropDownDecoratorProps(
-                                                    dropdownSearchDecoration: InputDecoration(
+                                                  dropdownDecoratorProps:
+                                                      const DropDownDecoratorProps(
+                                                    dropdownSearchDecoration:
+                                                        InputDecoration(
                                                       labelText: "Side 1",
                                                       hintText: "Non veg side",
                                                     ),
                                                   ),
-                                                  popupProps: const PopupProps.menu(
+                                                  popupProps:
+                                                      const PopupProps.menu(
                                                     showSearchBox: true,
                                                     fit: FlexFit.loose,
                                                     //comment this if you want that the items do not takes all available height
-                                                    constraints: BoxConstraints.tightFor(),
+                                                    constraints: BoxConstraints
+                                                        .tightFor(),
                                                   ),
                                                   onChanged: (text) {
                                                     _ds1Name = text;
@@ -905,17 +955,22 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                                 child: DropdownSearch<String>(
                                                   items:
                                                       sidesFoods.keys.toList(),
-                                                  dropdownDecoratorProps: const DropDownDecoratorProps(
-                                                    dropdownSearchDecoration: InputDecoration(
+                                                  dropdownDecoratorProps:
+                                                      const DropDownDecoratorProps(
+                                                    dropdownSearchDecoration:
+                                                        InputDecoration(
                                                       labelText: "Side 2",
-                                                      hintText: "Veg side option 1",
+                                                      hintText:
+                                                          "Veg side option 1",
                                                     ),
                                                   ),
-                                                  popupProps: const PopupProps.menu(
+                                                  popupProps:
+                                                      const PopupProps.menu(
                                                     showSearchBox: true,
                                                     fit: FlexFit.loose,
                                                     //comment this if you want that the items do not takes all available height
-                                                    constraints: BoxConstraints.tightFor(),
+                                                    constraints: BoxConstraints
+                                                        .tightFor(),
                                                   ),
                                                   onChanged: (text) {
                                                     _ds2Name = text;
@@ -960,17 +1015,21 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                                 child: DropdownSearch<String>(
                                                   items:
                                                       sidesFoods.keys.toList(),
-                                                  dropdownDecoratorProps: const DropDownDecoratorProps(
-                                                    dropdownSearchDecoration: InputDecoration(
+                                                  dropdownDecoratorProps:
+                                                      const DropDownDecoratorProps(
+                                                    dropdownSearchDecoration:
+                                                        InputDecoration(
                                                       labelText: "Side 3",
                                                       hintText: "Veg option 2",
                                                     ),
                                                   ),
-                                                  popupProps: const PopupProps.menu(
+                                                  popupProps:
+                                                      const PopupProps.menu(
                                                     showSearchBox: true,
                                                     fit: FlexFit.loose,
                                                     //comment this if you want that the items do not takes all available height
-                                                    constraints: BoxConstraints.tightFor(),
+                                                    constraints: BoxConstraints
+                                                        .tightFor(),
                                                   ),
                                                   onChanged: (text) {
                                                     _ds3Name = text;
@@ -1014,17 +1073,21 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                                 width: 230,
                                                 child: DropdownSearch<String>(
                                                   items: deserts.keys.toList(),
-                                                  dropdownDecoratorProps: const DropDownDecoratorProps(
-                                                    dropdownSearchDecoration: InputDecoration(
+                                                  dropdownDecoratorProps:
+                                                      const DropDownDecoratorProps(
+                                                    dropdownSearchDecoration:
+                                                        InputDecoration(
                                                       labelText: "Desert",
                                                       hintText: "Desert",
                                                     ),
                                                   ),
-                                                  popupProps: const PopupProps.menu(
+                                                  popupProps:
+                                                      const PopupProps.menu(
                                                     showSearchBox: true,
                                                     fit: FlexFit.loose,
                                                     //comment this if you want that the items do not takes all available height
-                                                    constraints: BoxConstraints.tightFor(),
+                                                    constraints: BoxConstraints
+                                                        .tightFor(),
                                                   ),
                                                   onChanged: (text) {
                                                     _ddName = text;
@@ -1090,7 +1153,7 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                             toastLength: Toast.LENGTH_SHORT,
                                             gravity: ToastGravity.TOP,
                                             timeInSecForIosWeb: 1,
-                                            backgroundColor: Colors.red,
+                                            backgroundColor: Colors.green,
                                             textColor: Colors.black87,
                                             fontSize: 16.0);
                                       }
