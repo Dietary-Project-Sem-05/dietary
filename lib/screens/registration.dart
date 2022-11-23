@@ -34,8 +34,8 @@ class _RegisterPageState extends State<RegisterPage> {
   signUp() async {
     String hashedPassword = await Crypt.sha256(_password).toString();
 
-    AccountModel userMd =
-       await  AccountModel(_firstName, _lastName, _username, _email, hashedPassword);
+    AccountModel userMd = await AccountModel(
+        _firstName, _lastName, _username, _email, hashedPassword);
 
     await dbHandler.checkUserName(_username).then((userData) {
       if (userData == "Error") {
@@ -223,7 +223,6 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: AppBar(
           title: const Text(
             "Sign Up",
@@ -252,7 +251,8 @@ class _RegisterPageState extends State<RegisterPage> {
               borderRadius: BorderRadius.circular(10),
               color: Colors.black87,
             ),
-            margin: const EdgeInsets.symmetric(horizontal: 45.0, vertical: 40.0),
+            margin:
+                const EdgeInsets.symmetric(horizontal: 45.0, vertical: 40.0),
             padding: const EdgeInsets.all(10.0),
             child: Form(
               key: _formKey,

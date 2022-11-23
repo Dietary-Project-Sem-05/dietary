@@ -216,7 +216,7 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                   child: Column(
                                     children: [
                                       Text(
-                                        "Breakfast Plan ${total_calories! * 30 ~/ 100}",
+                                        "Breakfast Plan : Calories ${total_calories! * 30 ~/ 100}",
                                         textAlign: TextAlign.left,
                                         style: const TextStyle(
                                           fontSize: 20,
@@ -247,7 +247,7 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                                     _bmmName = text;
                                                   },
                                                   validator: (text) {
-                                                    return _ValidatorHelper
+                                                    return ValidatorHelper
                                                         .dropdownMain(text);
                                                   },
                                                 )),
@@ -274,7 +274,7 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                                   _bmmAmount = int.parse(text!);
                                                 },
                                                 validator: (text) {
-                                                  return _ValidatorHelper
+                                                  return ValidatorHelper
                                                       .amountFiledMain(text);
                                                 },
                                               ),
@@ -493,7 +493,7 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                   child: Column(
                                     children: [
                                       Text(
-                                        "Lunch Plan ${total_calories! * 45 ~/ 100}",
+                                        "Lunch Plan : Calories ${total_calories! * 45 ~/ 100}",
                                         textAlign: TextAlign.left,
                                         style: const TextStyle(
                                           fontSize: 20,
@@ -525,7 +525,7 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                                     _lmmName = text;
                                                   },
                                                   validator: (text) {
-                                                    return _ValidatorHelper
+                                                    return ValidatorHelper
                                                         .dropdownMain(text);
                                                   },
                                                 )),
@@ -552,7 +552,7 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                                   _lmmAmount = int.parse(text!);
                                                 },
                                                 validator: (text) {
-                                                  return _ValidatorHelper
+                                                  return ValidatorHelper
                                                       .amountFiledMain(text);
                                                 },
                                               ),
@@ -767,7 +767,7 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                   child: Column(
                                     children: [
                                       Text(
-                                        "Dinner Plan ${total_calories! * 25 ~/ 100}",
+                                        "Dinner Plan : Calories ${total_calories! * 25 ~/ 100}",
                                         textAlign: TextAlign.left,
                                         style: const TextStyle(
                                           fontSize: 20,
@@ -806,7 +806,7 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                                     _dmmName = text;
                                                   },
                                                   validator: (text) {
-                                                    return _ValidatorHelper
+                                                    return ValidatorHelper
                                                         .dropdownMain(text);
                                                   },
                                                 )),
@@ -833,7 +833,7 @@ class _AddMealPlanState extends State<AddMealPlan> {
                                                   _dmmAmount = int.parse(text!);
                                                 },
                                                 validator: (text) {
-                                                  return _ValidatorHelper
+                                                  return ValidatorHelper
                                                       .amountFiledMain(text);
                                                 },
                                               ),
@@ -1140,7 +1140,7 @@ class _AddMealPlanState extends State<AddMealPlan> {
   }
 }
 
-class _ValidatorHelper {
+class ValidatorHelper {
   static String? dropdownMain(value) {
     if (value == null) {
       return "Main meal can't be empty";
