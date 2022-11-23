@@ -92,7 +92,8 @@ class _HomePageState extends State<HomePage> {
 
   final _random = new Random();
   int element = 0;
-  String motivationQuoteString = "You are what you eat, so don’t be fast, cheap, easy, or fake.";
+  String motivationQuoteString =
+      "You are what you eat, so don’t be fast, cheap, easy, or fake.";
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late int _accountNo;
@@ -207,7 +208,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController tipCtrl = TextEditingController(text: motivationQuoteString);
+    TextEditingController tipCtrl =
+        TextEditingController(text: motivationQuoteString);
 
     return Scaffold(
       drawer: NavDrawer(),
@@ -280,6 +282,9 @@ class _HomePageState extends State<HomePage> {
                           maxLines: 3,
                           textAlign: TextAlign.justify,
                           style: const TextStyle(letterSpacing: 2),
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                          ),
                         ),
                       ],
                     )),
@@ -338,7 +343,6 @@ class _HomePageState extends State<HomePage> {
 
 class HelpValidator {
   static String? validateHeight(heightString) {
-
     if (heightString.isEmpty) {
       return "Height cannot be empty";
     } else if (int.parse(heightString) > 200) {
@@ -353,7 +357,6 @@ class HelpValidator {
   }
 
   static String? validateWeight(weightString) {
-
     if (weightString.isEmpty) {
       return "Weight cannot be empty";
     } else if (int.parse(weightString) > 300) {
