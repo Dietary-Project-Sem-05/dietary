@@ -3,15 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class DbConnector{
   PostgreSQLConnection connection = PostgreSQLConnection(
-    "dietary.postgres.database.azure.com",
-    5432,
-    "dietary",
-    username: "chamod",
-    password: "computer!9",
-    timeoutInSeconds: 3600,
-    queryTimeoutInSeconds: 3600,
-    useSSL: true,
-    allowClearTextPassword: true,
+    
   );
 
   PostgreSQLConnection get getConnection{
